@@ -1,0 +1,47 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block title %}Конструктор{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'main/css/create.css' %}">
+{% endblock %}
+
+{% block content %}
+{% load static %}
+<div class="main-constr">
+    <a class="go-main-constr" href="{% url 'home' %}">На главную</a>
+    <div class="constr-main-block">
+        <div class="model">
+            
+        </div>
+        <div class="constr-creator">
+            <h1 class="m-name">Model Name</h1>
+            <label class="label-constr">
+                <select class="consrt-select" name="" id="">
+                    <option value="">Передний бампер</option>
+                </select>
+                <select class="consrt-select" name="" id="">
+                    <option value="">Задний бампер</option>
+                </select>
+                <select class="consrt-select" name="" id="">
+                    <option value="">Капот</option>
+                </select>
+                <select class="consrt-select" name="" id="">
+                    <option value="">Диски</option>
+                </select>
+            </label>
+            <div class="price-block">
+                <div class="price">
+                    <h2>Цена</h2>
+                    <h3>5000RUB</h3>
+                </div>
+                <button class="go-basket"><img src="{% static 'main/images/akar-icons_basket.svg' %}" alt="корзинка" class="basket-icon"/>Добавить в корзину</button>
+            </div>
+        </div>
+    </div>
+    <div class="constr-info">
+        
+    </div>
+</div>
+{% endblock %}

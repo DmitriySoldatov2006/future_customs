@@ -1,0 +1,141 @@
+.order-page{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 3vh;
+    box-sizing: border-box;
+
+    h1{
+            color: #fff;
+            font-size: 3.7vh;
+    }
+
+    .column-wrapper{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        width: 100%;
+        margin-top: 3vh;
+    }
+
+    .flex-container{
+            display: flex;
+            flex-direction: column;
+            width: 40%;
+            background-color: #4e5868;
+            padding: 3vh;
+            padding-right: 4vh;
+            border-radius: 2vh;
+
+            h2{
+                color: white;
+                margin: 2vh 0;
+            }
+
+            .input-container{
+                display: flex;
+                box-sizing: content-box;
+                flex-direction: row;
+                width: 100%;
+                justify-content: space-between;
+                margin-bottom: 3vh;
+                align-items: center;
+            }
+
+            h2{
+                margin: 0 0 2vh 0;
+                padding: 0;
+            }
+
+            h3{
+                color: white;
+                font-weight: 400;
+            }
+
+            .order-input{
+                background-color: #fff;
+                width: 50%;
+                height: 4.5vh;
+                border-radius: 10px;
+                outline: #CBE857 3px solid;
+                outline-offset: 0px;
+                padding-left: 20px;
+                color: black;
+                border: none;
+                font-size: 2vh;
+                transition: 0.1s;
+            }
+
+            .order-input:focus {
+                outline: #C68DFF 3px solid;
+            }
+    }
+
+    .main-price-order{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: #C68DFF;
+        border-radius: 15px;
+        width: 18%;
+        padding: 30px 0 20px 0;
+        margin-left: 3%;
+        height: fit-content;
+        box-sizing: border-box;
+
+        .grid-box{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            h3{
+                color: white;
+                font-weight: 400;
+                justify-self: self-start;
+                font-size: 2.3vh;
+            }
+
+            h4{
+                justify-self: self-end;
+                font-size: 2.3vh;
+            }
+        }
+
+        h1{
+            font-size: 3.5vh;
+            margin-bottom: 1vh;
+        }
+        
+        h2{
+            margin: 0;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        p{
+            font-size: 4vh;
+            font-weight: 700;
+            color: #CBE857;
+            text-decoration: underline;
+        }
+
+        button{
+            border: none; 
+            background-color: #CBE857;
+            width: 70%;
+            height: 5vh;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-weight: 700;
+            font-size: 2vh;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover{
+            background-color: #000;
+            color: #CBE857;
+        }
+    }
+}

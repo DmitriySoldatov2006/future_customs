@@ -1,0 +1,58 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block title %}Создать пост{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'main/css/order.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="order-page">
+    <h1>Оформление заказа</h1>
+        <div class="column-wrapper">
+            <div class="flex-container">
+                <h2>Контактная информация</h2>
+                <div class="input-container">
+                    <h3>ФИО</h3>
+                    <input class='order-input' type="text" name="name" placeholder="Иванов Иван Иванович"/>
+                </div>
+                <div class="input-container">
+                    <h3>Номер телефона</h3>
+                    <input class='order-input' type="tel" name='number' placeholder="+7(000)000-00-00"/>
+                </div>
+                <div class="input-container">
+                    <h3>Email</h3>
+                    <input class='order-input' type="email" name="email" placeholder="example@index.com"/>
+                </div>
+                <h2>Адрес доставки</h2>
+                <div class="input-container">
+                    <h3>Регион</h3>
+                    <input class='order-input' type="text" name='region' placeholder="Ульяновская область"/>     
+                </div>
+                <div class="input-container">
+                    <h3>Город</h3>
+                    <input class='order-input' type="text" name='city' placeholder="Ульяновск"/>
+                </div>
+                <div class="input-container">
+                    <h3>Улица, дом, квартира</h3>
+                    <input class='order-input' type="text" name='street' placeholder="Гончарова 1, 1"/>
+                </div>
+            </div>
+        <div class="main-price-order">
+            <h1>Ваш заказ</h1>
+            <div class="grid-box">
+                <h3>Товары</h3>
+                <h4>5000р</h4>
+                <h3>Доставка</h3>
+                <h4>100р</h4>
+                <h3>Скидка</h3>
+                <h4>0р</h4>
+            </div>
+            <h2>Итого</h2>
+            <p>5100р</p>
+            <button>Оплатить</button>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,101 @@
+*{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+}
+
+body{
+    background-color: #323843;
+    color: #fff;
+    font-family: sansation;
+    width: 100%;
+    height: 100%;
+}
+
+header{
+    display: flex;
+    background-color: #C68DFF;
+    height: 70px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    box-sizing: border-box;
+    ul{
+        display: flex;
+        flex-direction: row;
+        li a{
+            margin-left: 20px;
+            color: #fff;
+        }
+    }
+}
+
+.main-page{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 100vh;
+    background-image: url('../images/f7b63bd4-b7ba-49a3-a2f6-e60b12d8cdc8.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    h1{
+        font-size: 50px;
+    }
+    a{
+        width: 150px;
+        height: 40px;
+        font-weight: 700;
+        border: 0;
+        border-radius: 15px;
+        background-color: #C68DFF;
+        cursor: pointer;
+        transition: 0.2s ease;
+        font-family: sansation;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #000;
+    }
+    a:hover{
+        box-shadow: 0 0 30px 1px #C68DFF;
+        transform: scale(1.05);
+    }
+}
+
+.main-select{
+    font-family: sansation;
+    width: 170px;
+    margin: 30px 10px;
+    height: 40px;
+    border-radius: 10px;
+    padding-left: 10px;
+    box-sizing: border-box;
+    border: none;
+    appearance: none;
+    background-color: #CBE857;
+    cursor: pointer;
+    transition: 0.2s ease;
+    outline: none;
+    background-image: url(/bytesize_chevron-bottom.svg);
+    background-repeat: no-repeat;
+    background-size: 13px;
+    background-position: 92% 50%;
+}
+
+.selected{
+    display: none;
+}
+
+.main-select:hover{
+    box-shadow: 0 0 40px 10px #CBE857;
+}
+
+option{
+    border: none;
+    outline: none;
+}
+
