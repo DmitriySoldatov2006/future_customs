@@ -23,3 +23,9 @@ def register(request):
 
 def login(request):
     return render(request, 'main/login.html')
+
+def catalog(request):
+    return render(request, 'main/catalog.html')
+
+def product_detail(request):
+    return render(request, 'main/product_detail.html')

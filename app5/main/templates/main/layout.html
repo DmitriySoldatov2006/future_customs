@@ -9,21 +9,32 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}?v=20260509-3">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+    <script type="importmap">
+    {
+      "imports": {
+        "motion": "https://cdn.jsdelivr.net/npm/motion@11.11.17/+esm"
+      }
+    }
+    </script>
     {% block extra_css %}
     {% endblock %}
 </head>
 <body>
     <header>
-        <h1 class="logo">3D TUNE</h1>
+        <h1 class="logo">FUTURE PARTS</h1>
         <ul>
             <li><a href="{% url 'home' %}">Главная</a></li>
+            <li><a href="{% url 'catalog' %}">Каталог</a></li>
             <li><a href="{% url 'basket' %}">Корзина</a></li>
             <li><a href="{% url 'register' %}">Регистрация</a></li>
         </ul>
     </header>
     {% block content %}
+    {% endblock %}
+    {% block extra_js %}
     {% endblock %}
 </body>
 </html>

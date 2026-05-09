@@ -4,7 +4,7 @@
 {% block title %}Вход в аккаунт{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'main/css/register.css' %}">
+<link rel="stylesheet" href="{% static 'main/css/register.css' %}?v=20260509-3">
 {% endblock %}
 
 {% block content %}
@@ -12,7 +12,7 @@
     <div class="login-wrapper">
         <h1>Войдите в аккаунт</h1>
         <input class='login-input' type="text" name="username" placeholder='Имя'/>
-        <input class='login-input' type="password" name="password" placeholder='Пороль'/>
+        <input class='login-input' type="password" name="password" placeholder='Пароль'/>
         <button>Войти</button>
         <h2>Нет аккаунта? <a class='go-reg' href="{% url 'register' %}">Регистрация</a></h2>
     </div>

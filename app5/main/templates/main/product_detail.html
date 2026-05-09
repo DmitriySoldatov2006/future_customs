@@ -1,0 +1,260 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}Карточка товара{% endblock %}
+
+{% block content %}
+<div class="parallax-bg" data-parallax-layer data-speed="-0.12"></div>
+
+<section class="product-page info-section">
+  <div class="info-content">
+    <nav class="breadcrumb" aria-label="Навигация">
+      <a href="{% url 'home' %}">Главная</a>
+      <span>/</span>
+      <a href="{% url 'catalog' %}">Каталог</a>
+      <span>/</span>
+      <a href="{% url 'catalog' %}">Тормозные колодки</a>
+      <span>/</span>
+      <strong>Brembo Prime Brake Pads Set P 85 020</strong>
+    </nav>
+
+    <div class="product-detail-layout">
+      <div class="product-gallery">
+        <div class="product-gallery__main">Фото товара</div>
+        <div class="product-gallery__thumbs">
+          <div>Фото 1</div>
+          <div>Фото 2</div>
+          <div>Фото 3</div>
+          <div>Фото 4</div>
+        </div>
+      </div>
+
+      <div class="product-summary">
+        <p class="section-kicker">Карточка товара</p>
+        <h1>Brembo Prime Brake Pads Set P 85 020</h1>
+        <div class="product-meta">Brembo · Артикул P 85 020 · Передняя ось</div>
+        <div class="product-price-row">
+          <strong>$189</strong>
+          <span class="stock-badge">В наличии</span>
+        </div>
+        <p class="product-copy">
+          Комплект передних тормозных колодок для повседневной езды и уверенного замедления.
+          Подходит для европейских седанов и кроссоверов, совместимость подтверждается по VIN.
+        </p>
+
+        <div class="purchase-box">
+          <div class="quantity-picker" data-quantity>
+            <button type="button" data-qty-minus>-</button>
+            <input type="number" value="1" min="1">
+            <button type="button" data-qty-plus>+</button>
+          </div>
+          <button class="hero-button purchase-box__cta" type="button">В корзину</button>
+        </div>
+
+        <a class="wishlist-link" href="#">♡ В избранное</a>
+
+        <div class="spec-table">
+          <div><span>Материал</span><b>Ceramic compound</b></div>
+          <div><span>Датчик износа</span><b>Included</b></div>
+          <div><span>Ось</span><b>Front</b></div>
+          <div><span>Ширина</span><b>155.2 mm</b></div>
+          <div><span>Толщина</span><b>17.8 mm</b></div>
+          <div><span>Совместимость</span><b>BMW 3 / 4 Series, Audi A4, VW Passat</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="info-section info-section--alt" data-reveal>
+  <div class="info-content product-detail-sections">
+    <div class="detail-copy">
+      <p class="section-kicker">Описание</p>
+      <h2>Описание</h2>
+      <p>
+        Эта позиция рассчитана на стабильную работу при городской езде, трассе и умеренных нагрузках.
+        Состав фрикционного материала подобран так, чтобы сохранить баланс между ресурсом, шумом и
+        прогнозируемым торможением.
+      </p>
+      <p>
+        Колодки поставляются комплектом на ось и подходят для установки на штатные тормозные системы
+        совместимых моделей. Перед покупкой рекомендуется сверить VIN или OEM-номер старой детали.
+      </p>
+      <p>
+        Для сервисов и корпоративных клиентов доступны оптовые условия, подбор аналогов и резервирование
+        остатков на складе до подтверждения заказа.
+      </p>
+    </div>
+
+    <div class="detail-copy">
+      <p class="section-kicker">Совместимые автомобили</p>
+      <h2>Совместимые автомобили</h2>
+      <div class="vehicle-tags">
+        <span>BMW 320i F30</span>
+        <span>BMW 328i F30</span>
+        <span>BMW 420i F32</span>
+        <span>Audi A4 B9</span>
+        <span>Volkswagen Passat B8</span>
+        <span>Skoda Superb III</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="info-section" data-reveal>
+  <div class="info-content">
+    <p class="section-kicker">Похожие товары</p>
+    <h2>Похожие товары</h2>
+    <div class="related-row">
+      <article class="product-card product-card--stock" data-product-card data-href="{% url 'product_detail' %}" tabindex="0" role="link">
+        <div class="product-card__media"><span>Фото</span></div>
+        <div class="product-card__body">
+          <div class="stock-badge">В наличии</div>
+          <h3>Brembo Prime Front Rotor 09.C398.11</h3>
+          <p>Brembo</p>
+          <strong>$248</strong>
+          <div class="product-card__cart" data-cart-state>
+            <button class="add-cart" type="button" data-cart-add>В корзину</button>
+            <div class="card-qty" aria-label="Количество">
+              <button type="button" data-qty-minus>-</button>
+              <span data-qty-value>1</span>
+              <button type="button" data-qty-plus>+</button>
+              <i>&#10003;</i>
+            </div>
+          </div>
+          <span class="card-cart-badge">&#10003;</span>
+        </div>
+      </article>
+      <article class="product-card product-card--stock" data-product-card data-href="{% url 'product_detail' %}" tabindex="0" role="link">
+        <div class="product-card__media"><span>Фото</span></div>
+        <div class="product-card__body">
+          <div class="stock-badge">В наличии</div>
+          <h3>ATE Brake Fluid SL.6 1L</h3>
+          <p>ATE</p>
+          <strong>$22</strong>
+          <div class="product-card__cart" data-cart-state>
+            <button class="add-cart" type="button" data-cart-add>В корзину</button>
+            <div class="card-qty" aria-label="Количество">
+              <button type="button" data-qty-minus>-</button>
+              <span data-qty-value>1</span>
+              <button type="button" data-qty-plus>+</button>
+              <i>&#10003;</i>
+            </div>
+          </div>
+          <span class="card-cart-badge">&#10003;</span>
+        </div>
+      </article>
+      <article class="product-card product-card--low" data-product-card data-href="{% url 'product_detail' %}" tabindex="0" role="link">
+        <div class="product-card__media"><span>Фото</span></div>
+        <div class="product-card__body">
+          <div class="stock-badge">Заканчивается</div>
+          <h3>TRW Wear Sensor GIC264</h3>
+          <p>TRW</p>
+          <strong>$18</strong>
+          <div class="product-card__cart" data-cart-state>
+            <button class="add-cart" type="button" data-cart-add>В корзину</button>
+            <div class="card-qty" aria-label="Количество">
+              <button type="button" data-qty-minus>-</button>
+              <span data-qty-value>1</span>
+              <button type="button" data-qty-plus>+</button>
+              <i>&#10003;</i>
+            </div>
+          </div>
+          <span class="card-cart-badge">&#10003;</span>
+        </div>
+      </article>
+      <article class="product-card product-card--stock" data-product-card data-href="{% url 'product_detail' %}" tabindex="0" role="link">
+        <div class="product-card__media"><span>Фото</span></div>
+        <div class="product-card__body">
+          <div class="stock-badge">В наличии</div>
+          <h3>Meyle Brake Hardware Kit 014 042 0037</h3>
+          <p>Meyle</p>
+          <strong>$36</strong>
+          <div class="product-card__cart" data-cart-state>
+            <button class="add-cart" type="button" data-cart-add>В корзину</button>
+            <div class="card-qty" aria-label="Количество">
+              <button type="button" data-qty-minus>-</button>
+              <span data-qty-value>1</span>
+              <button type="button" data-qty-plus>+</button>
+              <i>&#10003;</i>
+            </div>
+          </div>
+          <span class="card-cart-badge">&#10003;</span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script type="module">
+  import { inView, animate } from 'motion';
+
+  document.querySelectorAll('[data-reveal]').forEach((el) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(48px)';
+    inView(el, () => {
+      animate(el, { opacity: [0, 1], y: [48, 0] }, { duration: 0.7, ease: 'easeOut' });
+    }, { amount: 0.2 });
+  });
+
+  const quantity = document.querySelector('[data-quantity]');
+  if (quantity) {
+    const input = quantity.querySelector('input');
+    quantity.querySelector('[data-qty-minus]').addEventListener('click', () => {
+      input.value = Math.max(1, Number(input.value) - 1);
+    });
+    quantity.querySelector('[data-qty-plus]').addEventListener('click', () => {
+      input.value = Number(input.value) + 1;
+    });
+  }
+
+  document.querySelectorAll('[data-product-card]').forEach((card) => {
+    const href = card.dataset.href;
+    const cart = card.querySelector('[data-cart-state]');
+    const addButton = card.querySelector('[data-cart-add]');
+    const qtyValue = card.querySelector('[data-qty-value]');
+    const minusButton = card.querySelector('[data-qty-minus]');
+    const plusButton = card.querySelector('[data-qty-plus]');
+
+    const setCardState = (quantity) => {
+      const nextQuantity = Math.max(0, quantity);
+      card.classList.toggle('is-added', nextQuantity > 0);
+      qtyValue.textContent = String(Math.max(1, nextQuantity));
+    };
+
+    addButton?.addEventListener('click', (event) => {
+      event.stopPropagation();
+      setCardState(1);
+    });
+
+    minusButton?.addEventListener('click', (event) => {
+      event.stopPropagation();
+      const current = Number(qtyValue.textContent);
+      setCardState(current - 1);
+    });
+
+    plusButton?.addEventListener('click', (event) => {
+      event.stopPropagation();
+      const current = Number(qtyValue.textContent);
+      setCardState(current + 1);
+    });
+
+    cart?.addEventListener('click', (event) => {
+      event.stopPropagation();
+    });
+
+    card.addEventListener('click', (event) => {
+      if (event.target.closest('[data-cart-state]')) return;
+      if (href) window.location.href = href;
+    });
+
+    card.addEventListener('keydown', (event) => {
+      if ((event.key === 'Enter' || event.key === ' ') && !event.target.closest('[data-cart-state]')) {
+        event.preventDefault();
+        if (href) window.location.href = href;
+      }
+    });
+  });
+</script>
+{% endblock %}

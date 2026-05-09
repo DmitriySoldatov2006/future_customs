@@ -4,7 +4,7 @@
 {% block title %}Создать пост{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'main/css/order.css' %}">
+<link rel="stylesheet" href="{% static 'main/css/order.css' %}?v=20260509-3">
 {% endblock %}
 
 {% block content %}
@@ -51,6 +51,7 @@
             </div>
             <h2>Итого</h2>
             <p>5100р</p>
+            <span class="order-note">Менеджер проверит совместимость перед оплатой</span>
             <button>Оплатить</button>
         </div>
     </div>

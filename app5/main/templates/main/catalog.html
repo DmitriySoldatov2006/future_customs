@@ -1,0 +1,401 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}Каталог{% endblock %}
+
+{% block content %}
+<div class="parallax-bg" data-parallax-layer data-speed="-0.18"></div>
+
+<section class="catalog-hero">
+  <div class="parallax-grid" data-parallax-layer data-speed="0.08"></div>
+  <div class="catalog-hero__inner">
+    <div class="catalog-hero__copy" data-parallax-layer data-speed="0.05">
+      <p class="eyebrow">VIN Поиск</p>
+      <h1>Найти детали по VIN-номеру</h1>
+      <p>
+        Проверяем совместимость по VIN, OEM-номеру и параметрам автомобиля, чтобы вы сразу видели
+        подходящие детали, наличие и сроки поставки.
+      </p>
+      <form class="vin-banner" action="{% url 'catalog' %}">
+        <label class="sr-only" for="vin-search">VIN-номер</label>
+        <input id="vin-search" type="text" placeholder="Введите VIN-номер, например WBA5A7C50GG123456">
+        <button type="submit">Найти</button>
+      </form>
+    </div>
+    <div class="hero-panel catalog-hero__panel" data-parallax-layer data-speed="0.12">
+      <div class="panel-header">
+        <span>Подбор в каталоге</span>
+        <strong>3 шага</strong>
+      </div>
+      <div class="panel-line">
+        <span>VIN или OEM номер</span>
+        <b>ввод</b>
+      </div>
+      <div class="panel-line">
+        <span>Проверка бренда и применимости</span>
+        <b>онлайн</b>
+      </div>
+      <div class="panel-line">
+        <span>Результаты с ценой и остатком</span>
+        <b>сразу</b>
+      </div>
+      <div class="panel-meter"><span></span></div>
+      <p>VIN поиск работает отдельно от общего поиска по названиям и артикулам.</p>
+    </div>
+  </div>
+</section>
+
+<section class="catalog-search-shell info-section" data-reveal>
+  <div class="info-content">
+    <!-- position: sticky; top: 72px; z-index: 100; -->
+    <form class="catalog-search">
+      <label class="sr-only" for="catalog-search">Поиск по каталогу</label>
+      <input id="catalog-search" type="search" placeholder="Поиск по названию, артикулу или бренду...">
+      <button type="submit" aria-label="Найти">
+        <span></span>
+      </button>
+    </form>
+  </div>
+</section>
+
+<section class="catalog-main info-section info-section--alt" data-reveal>
+  <div class="info-content">
+    <div class="catalog-toolbar">
+      <div>
+        <p class="section-kicker">Каталог</p>
+        <h2>Тормозные системы, подвеска и OEM-позиции под ваш автомобиль</h2>
+      </div>
+      <button class="filter-toggle" type="button" data-filter-toggle>Фильтры</button>
+    </div>
+
+    <div class="catalog-layout">
+      <aside class="catalog-filters" data-filter-panel>
+        <!-- Sort param: name_asc / name_desc / price_asc / price_desc / default -->
+        <div class="filter-card">
+          <div class="filter-card__head">
+            <h3>Сортировка</h3>
+          </div>
+          <label class="sort-option"><input type="radio" name="sort" value="default" checked> <span>По умолчанию</span></label>
+          <label class="sort-option"><input type="radio" name="sort" value="name_asc"> <span>По названию: А → Я</span></label>
+          <label class="sort-option"><input type="radio" name="sort" value="name_desc"> <span>По названию: Я → А</span></label>
+          <label class="sort-option"><input type="radio" name="sort" value="price_asc"> <span>Сначала дешевле</span></label>
+          <label class="sort-option"><input type="radio" name="sort" value="price_desc"> <span>Сначала дороже</span></label>
+        </div>
+
+        <div class="filter-card">
+          <div class="filter-card__head">
+            <h3>Цена</h3>
+          </div>
+          <div class="price-row">
+            <label>
+              <span>От</span>
+              <div class="field-wrap">
+                <input type="number" placeholder="120">
+                <i>$</i>
+              </div>
+            </label>
+            <label>
+              <span>До</span>
+              <div class="field-wrap">
+                <input type="number" placeholder="650">
+                <i>$</i>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="filter-card">
+          <div class="filter-card__head">
+            <h3>Тип детали</h3>
+          </div>
+          <label class="select-row">
+            <select>
+              <option selected>Выберите тип детали</option>
+              <option>Тормозные колодки</option>
+              <option>Тормозные диски</option>
+              <option>Рычаги подвески</option>
+              <option>Амортизаторы</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="filter-card">
+          <div class="filter-card__head">
+            <h3>Бренд</h3>
+          </div>
+          <label class="select-row">
+            <select>
+              <option selected>Выберите бренд</option>
+              <option>Brembo</option>
+              <option>ATE</option>
+              <option>TRW</option>
+              <option>KYB</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="filter-card filter-card--dynamic">
+          <div class="filter-card__head">
+            <h3>Характеристики</h3>
+          </div>
+          <div class="dynamic-row">
+            <span>Ось</span>
+            <label class="select-row">
+              <select>
+                <option selected>Передняя ось</option>
+                <option>Задняя ось</option>
+              </select>
+            </label>
+          </div>
+          <div class="dynamic-row">
+            <span>Материал</span>
+            <div class="checkbox-group">
+              <label><input type="checkbox" checked> Керамика</label>
+              <label><input type="checkbox"> Низкометаллические</label>
+            </div>
+          </div>
+          <div class="dynamic-row">
+            <span>Датчик износа</span>
+            <label class="select-row">
+              <select>
+                <option selected>В комплекте</option>
+                <option>Не входит</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <button class="apply-filters" type="button">Применить фильтры</button>
+      </aside>
+
+      <div class="catalog-products">
+        <div class="catalog-stats">
+          <span>Найдено 186 товаров</span>
+          <span>3 колонки / 2 колонки / 1 колонка</span>
+        </div>
+
+        <div class="product-grid">
+          <article class="product-card product-card--stock" data-card data-product-card data-href="{% url 'product_detail' %}" tabindex="0" role="link">
+            <div class="product-card__media"><span>Фото</span></div>
+            <div class="product-card__body">
+              <div class="stock-badge">В наличии</div>
+              <h3>Brembo Prime Brake Pads Set P 85 020</h3>
+              <p>Brembo</p>
+              <strong>$189</strong>
+              <div class="product-card__cart" data-cart-state>
+                <button class="add-cart" type="button" data-cart-add>В корзину</button>
+                <div class="card-qty" aria-label="Количество">
+                  <button type="button" data-qty-minus>-</button>
+                  <span data-qty-value>1</span>
+                  <button type="button" data-qty-plus>+</button>
+                  <i>&#10003;</i>
+                </div>
+              </div>
+              <span class="card-cart-badge">&#10003;</span>
+            </div>
+          </article>
+
+          <article class="product-card product-card--low" data-card data-product-card data-href="{% url 'product_detail' %}" tabindex="0" role="link">
+            <div class="product-card__media"><span>Фото</span></div>
+            <div class="product-card__body">
+              <div class="stock-badge">Заканчивается</div>
+              <h3>ATE PowerDisc Front Brake Rotor 24.0325-0150.1</h3>
+              <p>ATE</p>
+              <strong>$224</strong>
+              <div class="product-card__cart" data-cart-state>
+                <button class="add-cart" type="button" data-cart-add>В корзину</button>
+                <div class="card-qty" aria-label="Количество">
+                  <button type="button" data-qty-minus>-</button>
+                  <span data-qty-value>1</span>
+                  <button type="button" data-qty-plus>+</button>
+                  <i>&#10003;</i>
+                </div>
+              </div>
+              <span class="card-cart-badge">&#10003;</span>
+            </div>
+          </article>
+
+          <article class="product-card product-card--stock" data-card data-product-card data-href="{% url 'product_detail' %}" tabindex="0" role="link">
+            <div class="product-card__media"><span>Фото</span></div>
+            <div class="product-card__body">
+              <div class="stock-badge">В наличии</div>
+              <h3>TRW Front Control Arm Kit JTC1423 + JTC1424</h3>
+              <p>TRW</p>
+              <strong>$312</strong>
+              <div class="product-card__cart" data-cart-state>
+                <button class="add-cart" type="button" data-cart-add>В корзину</button>
+                <div class="card-qty" aria-label="Количество">
+                  <button type="button" data-qty-minus>-</button>
+                  <span data-qty-value>1</span>
+                  <button type="button" data-qty-plus>+</button>
+                  <i>&#10003;</i>
+                </div>
+              </div>
+              <span class="card-cart-badge">&#10003;</span>
+            </div>
+          </article>
+
+          <article class="product-card product-card--stock" data-card data-product-card data-href="{% url 'product_detail' %}" tabindex="0" role="link">
+            <div class="product-card__media"><span>Фото</span></div>
+            <div class="product-card__body">
+              <div class="stock-badge">В наличии</div>
+              <h3>KYB Excel-G Rear Shock Absorber 348006</h3>
+              <p>KYB</p>
+              <strong>$146</strong>
+              <div class="product-card__cart" data-cart-state>
+                <button class="add-cart" type="button" data-cart-add>В корзину</button>
+                <div class="card-qty" aria-label="Количество">
+                  <button type="button" data-qty-minus>-</button>
+                  <span data-qty-value>1</span>
+                  <button type="button" data-qty-plus>+</button>
+                  <i>&#10003;</i>
+                </div>
+              </div>
+              <span class="card-cart-badge">&#10003;</span>
+            </div>
+          </article>
+
+          <article class="product-card product-card--low" data-card data-product-card data-href="{% url 'product_detail' %}" tabindex="0" role="link">
+            <div class="product-card__media"><span>Фото</span></div>
+            <div class="product-card__body">
+              <div class="stock-badge">Заканчивается</div>
+              <h3>MANN Oil Filter HU 816 X for turbo petrol engines</h3>
+              <p>MANN-FILTER</p>
+              <strong>$28</strong>
+              <div class="product-card__cart" data-cart-state>
+                <button class="add-cart" type="button" data-cart-add>В корзину</button>
+                <div class="card-qty" aria-label="Количество">
+                  <button type="button" data-qty-minus>-</button>
+                  <span data-qty-value>1</span>
+                  <button type="button" data-qty-plus>+</button>
+                  <i>&#10003;</i>
+                </div>
+              </div>
+              <span class="card-cart-badge">&#10003;</span>
+            </div>
+          </article>
+
+          <article class="product-card product-card--stock" data-card data-product-card data-href="{% url 'product_detail' %}" tabindex="0" role="link">
+            <div class="product-card__media"><span>Фото</span></div>
+            <div class="product-card__body">
+              <div class="stock-badge">В наличии</div>
+              <h3>Osram Night Breaker Laser H7 Twin Pack</h3>
+              <p>Osram</p>
+              <strong>$54</strong>
+              <div class="product-card__cart" data-cart-state>
+                <button class="add-cart" type="button" data-cart-add>В корзину</button>
+                <div class="card-qty" aria-label="Количество">
+                  <button type="button" data-qty-minus>-</button>
+                  <span data-qty-value>1</span>
+                  <button type="button" data-qty-plus>+</button>
+                  <i>&#10003;</i>
+                </div>
+              </div>
+              <span class="card-cart-badge">&#10003;</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<button class="sticky-filter-button" type="button" data-filter-toggle>Фильтры и сортировка</button>
+{% endblock %}
+
+{% block extra_js %}
+<script type="module">
+  import { inView, animate } from 'motion';
+
+  document.querySelectorAll('[data-reveal]').forEach((el) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(48px)';
+    inView(el, () => {
+      animate(el, { opacity: [0, 1], y: [48, 0] }, { duration: 0.7, ease: 'easeOut' });
+    }, { amount: 0.2 });
+  });
+
+  document.querySelectorAll('[data-card]').forEach((card, i) => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(28px)';
+    inView(card, () => {
+      animate(card, { opacity: [0, 1], y: [28, 0] }, { duration: 0.55, delay: i * 0.06, ease: 'easeOut' });
+    }, { amount: 0.25 });
+  });
+
+  const stickySearch = document.querySelector('.catalog-search');
+  const header = document.querySelector('header');
+  const getStickyOffset = () => (header ? header.offsetHeight : 72);
+  const syncStickyOffset = () => {
+    document.documentElement.style.setProperty('--catalog-sticky-top', `${getStickyOffset()}px`);
+  };
+  const updateStickyState = () => {
+    if (!stickySearch) return;
+    stickySearch.classList.toggle('is-stuck', stickySearch.getBoundingClientRect().top <= getStickyOffset() + 1);
+  };
+
+  const panel = document.querySelector('[data-filter-panel]');
+  document.querySelectorAll('[data-filter-toggle]').forEach((button) => {
+    button.addEventListener('click', () => {
+      if (panel) {
+        panel.classList.toggle('is-open');
+      }
+    });
+  });
+
+  document.querySelectorAll('[data-product-card]').forEach((card) => {
+    const href = card.dataset.href;
+    const cart = card.querySelector('[data-cart-state]');
+    const addButton = card.querySelector('[data-cart-add]');
+    const qtyValue = card.querySelector('[data-qty-value]');
+    const minusButton = card.querySelector('[data-qty-minus]');
+    const plusButton = card.querySelector('[data-qty-plus]');
+
+    const setCardState = (quantity) => {
+      const nextQuantity = Math.max(0, quantity);
+      card.classList.toggle('is-added', nextQuantity > 0);
+      qtyValue.textContent = String(Math.max(1, nextQuantity));
+    };
+
+    addButton?.addEventListener('click', (event) => {
+      event.stopPropagation();
+      setCardState(1);
+    });
+
+    minusButton?.addEventListener('click', (event) => {
+      event.stopPropagation();
+      const current = Number(qtyValue.textContent);
+      setCardState(current - 1);
+    });
+
+    plusButton?.addEventListener('click', (event) => {
+      event.stopPropagation();
+      const current = Number(qtyValue.textContent);
+      setCardState(current + 1);
+    });
+
+    cart?.addEventListener('click', (event) => {
+      event.stopPropagation();
+    });
+
+    card.addEventListener('click', (event) => {
+      if (event.target.closest('[data-cart-state]')) return;
+      if (href) window.location.href = href;
+    });
+
+    card.addEventListener('keydown', (event) => {
+      if ((event.key === 'Enter' || event.key === ' ') && !event.target.closest('[data-cart-state]')) {
+        event.preventDefault();
+        if (href) window.location.href = href;
+      }
+    });
+  });
+
+  syncStickyOffset();
+  updateStickyState();
+  window.addEventListener('scroll', updateStickyState, { passive: true });
+  window.addEventListener('resize', () => {
+    syncStickyOffset();
+    updateStickyState();
+  });
+</script>
+{% endblock %}
