@@ -210,7 +210,6 @@
 
 {% block extra_js %}
 <script type="module">
-  import { inView, animate } from 'motion';
   import {
     DEFAULT_FILTERS,
     collectBrandCharacteristics,
@@ -220,23 +219,35 @@
     hasActiveCriteria,
     isPriceRangeInvalid,
     sanitizePriceInput,
-  } from "{% static 'main/js/catalogFilters.mjs' %}?v=20260511-1";
+  } from "{% static 'main/js/catalogFilters.mjs' %}?v=20260511-2";
 
-  document.querySelectorAll('[data-reveal]').forEach((el) => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(48px)';
-    inView(el, () => {
-      animate(el, { opacity: [0, 1], y: [48, 0] }, { duration: 0.7, ease: 'easeOut' });
-    }, { amount: 0.2 });
-  });
+  const setupRevealAnimations = async () => {
+    try {
+      const { inView, animate } = await import('motion');
+      document.querySelectorAll('[data-reveal]').forEach((el) => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(48px)';
+        inView(el, () => {
+          animate(el, { opacity: [0, 1], y: [48, 0] }, { duration: 0.7, ease: 'easeOut' });
+        }, { amount: 0.2 });
+      });
 
-  document.querySelectorAll('[data-card]').forEach((card, i) => {
-    card.style.opacity = '0';
-    card.style.transform = 'translateY(28px)';
-    inView(card, () => {
-      animate(card, { opacity: [0, 1], y: [28, 0] }, { duration: 0.55, delay: i * 0.06, ease: 'easeOut' });
-    }, { amount: 0.25 });
-  });
+      document.querySelectorAll('[data-card]').forEach((card, i) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(28px)';
+        inView(card, () => {
+          animate(card, { opacity: [0, 1], y: [28, 0] }, { duration: 0.55, delay: i * 0.06, ease: 'easeOut' });
+        }, { amount: 0.25 });
+      });
+    } catch (error) {
+      document.querySelectorAll('[data-reveal], [data-card]').forEach((el) => {
+        el.style.opacity = '';
+        el.style.transform = '';
+      });
+    }
+  };
+
+  setupRevealAnimations();
 
   const productsDataNode = document.getElementById('catalog-products-data');
   const grid = document.querySelector('[data-product-grid]');
