@@ -1,4 +1,3 @@
-from django.db.models import Q
 from django.shortcuts import get_object_or_404, render
 
 from cart.cart import CartSession, serialize_product, serialize_products
@@ -12,14 +11,6 @@ def catalog_view(request):
     search_query = request.GET.get('q', '').strip()
 
     products = Product.objects.select_related('category').filter(in_stock=True)
-
-    if category_slug:
-        products = products.filter(category__slug=category_slug)
-
-    if search_query:
-        products = products.filter(
-            Q(name__icontains=search_query) | Q(short_description__icontains=search_query)
-        )
 
     cart_quantities = CartSession(request).get_quantities()
     serialized_products = serialize_products(products, cart_quantities)
@@ -49,4 +40,3 @@ def product_detail_view(request, slug):
         'related_products': related,
     }
     return render(request, 'catalog/product_detail.html', context)
-

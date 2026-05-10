@@ -32,6 +32,20 @@ class CartFlowTests(TestCase):
             {'quantity': 2, 'price_snapshot': '18900.00'},
         )
 
+    def test_ajax_cart_add_returns_quantity_without_redirect(self):
+        response = self.client.post(
+            reverse('cart_add'),
+            {'product_id': self.product.pk, 'quantity': 1},
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest',
+            HTTP_ACCEPT='application/json',
+        )
+
+        self.assertEqual(response.status_code, 200)
+        payload = response.json()
+        self.assertEqual(payload['product_id'], str(self.product.pk))
+        self.assertEqual(payload['quantity'], 1)
+        self.assertEqual(payload['cart_count'], 1)
+
     def test_cart_update_changes_quantity(self):
         self.client.post(reverse('cart_add'), {'product_id': self.product.pk, 'quantity': 1})
 
@@ -42,6 +56,37 @@ class CartFlowTests(TestCase):
 
         self.assertRedirects(response, reverse('cart_view'))
         self.assertEqual(self.client.session['cart'][str(self.product.pk)]['quantity'], 4)
+
+    def test_ajax_cart_update_increments_cart_count(self):
+        self.client.post(reverse('cart_add'), {'product_id': self.product.pk, 'quantity': 1})
+
+        response = self.client.post(
+            reverse('cart_update'),
+            {'product_id': self.product.pk, 'quantity': 2},
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest',
+            HTTP_ACCEPT='application/json',
+        )
+
+        self.assertEqual(response.status_code, 200)
+        payload = response.json()
+        self.assertEqual(payload['quantity'], 2)
+        self.assertEqual(payload['cart_count'], 2)
+
+    def test_ajax_cart_update_to_zero_removes_product(self):
+        self.client.post(reverse('cart_add'), {'product_id': self.product.pk, 'quantity': 1})
+
+        response = self.client.post(
+            reverse('cart_update'),
+            {'product_id': self.product.pk, 'quantity': 0},
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest',
+            HTTP_ACCEPT='application/json',
+        )
+
+        self.assertEqual(response.status_code, 200)
+        payload = response.json()
+        self.assertEqual(payload['quantity'], 0)
+        self.assertEqual(payload['cart_count'], 0)
+        self.assertNotIn(str(self.product.pk), self.client.session.get('cart', {}))
 
     def test_cart_remove_deletes_item(self):
         self.client.post(reverse('cart_add'), {'product_id': self.product.pk, 'quantity': 1})

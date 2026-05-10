@@ -672,6 +672,7 @@ header ul li a:hover {
 
 .vin-banner button,
 .apply-filters,
+.reset-filters,
 .filter-toggle,
 .sticky-filter-button,
 .add-cart {
@@ -703,6 +704,16 @@ header ul li a:hover {
 .sticky-filter-button:hover {
   transform: translateY(-2px);
   box-shadow: 0 22px 42px rgba(203, 232, 87, 0.24);
+}
+
+.apply-filters:disabled {
+  opacity: 0.48;
+  cursor: not-allowed;
+}
+
+.apply-filters:disabled:hover {
+  transform: none;
+  box-shadow: none;
 }
 
 .catalog-hero__panel {
@@ -934,6 +945,13 @@ header ul li a:hover {
   line-height: 1.5;
 }
 
+.filter-error {
+  margin-top: 12px;
+  color: #ffb8b8;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
 .dynamic-row + .dynamic-row {
   margin-top: 14px;
 }
@@ -946,6 +964,22 @@ header ul li a:hover {
 
 .apply-filters {
   width: 100%;
+}
+
+.filter-actions {
+  display: grid;
+  gap: 10px;
+}
+
+.reset-filters {
+  min-height: 44px;
+  border: 1px solid rgba(66, 232, 195, 0.34);
+  border-radius: 10px;
+  background: rgba(66, 232, 195, 0.08);
+  color: #d6fff6;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
 }
 
 .catalog-products {
@@ -970,6 +1004,11 @@ header ul li a:hover {
 
 .product-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.catalog-empty-state,
+.catalog-load-error {
+  grid-column: 1 / -1;
 }
 
 .product-card {
@@ -1082,7 +1121,7 @@ header ul li a:hover {
 
 .card-qty {
   display: none;
-  grid-template-columns: 44px minmax(0, 1fr) 44px 36px;
+  grid-template-columns: 44px minmax(0, 1fr) 44px;
   gap: 8px;
 }
 
@@ -1462,7 +1501,7 @@ header ul li a:hover {
     min-height: 52px;
   }
   .card-qty {
-    grid-template-columns: 44px minmax(0, 1fr) 44px 44px;
+    grid-template-columns: 44px minmax(0, 1fr) 44px;
   }
   .product-card__body h3 {
     min-height: 0;

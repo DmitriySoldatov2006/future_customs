@@ -1,4 +1,5 @@
 {% extends 'main/layout.html' %}
+{% load static %}
 
 {% block title %}Каталог{% endblock %}
 
@@ -46,12 +47,9 @@
 
 <section class="catalog-search-shell info-section" data-reveal>
   <div class="info-content">
-    <form class="catalog-search" method="get" action="{% url 'catalog' %}">
-      {% if active_category %}
-      <input type="hidden" name="category" value="{{ active_category }}">
-      {% endif %}
+    <form class="catalog-search" method="get" action="{% url 'catalog' %}" data-catalog-search>
       <label class="sr-only" for="catalog-search">Поиск по каталогу</label>
-      <input id="catalog-search" type="search" name="q" value="{{ search_query }}" placeholder="Поиск по названию, артикулу или бренду...">
+      <input id="catalog-search" type="search" name="q" value="{{ search_query }}" placeholder="Поиск по названию, артикулу или бренду..." data-search-input>
       <button type="submit" aria-label="Найти">
         <span></span>
       </button>
@@ -71,16 +69,16 @@
 
     <div class="catalog-layout">
       <aside class="catalog-filters" data-filter-panel>
-        <form method="get">
+        <form method="get" data-filter-form novalidate>
           <div class="filter-card">
             <div class="filter-card__head">
               <h3>Сортировка</h3>
             </div>
-            <label class="sort-option"><input type="radio" name="sort" value="default" checked> <span>По умолчанию</span></label>
-            <label class="sort-option"><input type="radio" name="sort" value="name_asc" disabled> <span>По названию: А → Я</span></label>
-            <label class="sort-option"><input type="radio" name="sort" value="name_desc" disabled> <span>По названию: Я → А</span></label>
-            <label class="sort-option"><input type="radio" name="sort" value="price_asc" disabled> <span>Сначала дешевле</span></label>
-            <label class="sort-option"><input type="radio" name="sort" value="price_desc" disabled> <span>Сначала дороже</span></label>
+            <label class="sort-option"><input type="radio" name="sort" value="default" data-filter-field="sort" checked> <span>По умолчанию</span></label>
+            <label class="sort-option"><input type="radio" name="sort" value="name_asc" data-filter-field="sort"> <span>По названию: А → Я</span></label>
+            <label class="sort-option"><input type="radio" name="sort" value="name_desc" data-filter-field="sort"> <span>По названию: Я → А</span></label>
+            <label class="sort-option"><input type="radio" name="sort" value="price_asc" data-filter-field="sort"> <span>Сначала дешевле</span></label>
+            <label class="sort-option"><input type="radio" name="sort" value="price_desc" data-filter-field="sort"> <span>Сначала дороже</span></label>
           </div>
 
           <div class="filter-card">
@@ -91,35 +89,30 @@
               <label>
                 <span>От</span>
                 <div class="field-wrap">
-                  <input type="number" placeholder="2800" disabled>
+                  <input type="text" inputmode="numeric" name="minPrice" placeholder="2800" autocomplete="off" data-price-input data-filter-field="minPrice">
                   <i>₽</i>
                 </div>
               </label>
               <label>
                 <span>До</span>
                 <div class="field-wrap">
-                  <input type="number" placeholder="31200" disabled>
+                  <input type="text" inputmode="numeric" name="maxPrice" placeholder="31200" autocomplete="off" data-price-input data-filter-field="maxPrice">
                   <i>₽</i>
                 </div>
               </label>
             </div>
+            <p class="filter-error" data-price-error hidden>Минимальная цена не может быть больше максимальной</p>
           </div>
 
           <div class="filter-card">
             <div class="filter-card__head">
-              <h3>Категория</h3>
+              <h3>Тип детали</h3>
             </div>
             <label class="select-row">
-              <select name="category">
-                <option value=""{% if not active_category %} selected{% endif %}>Все категории</option>
-                {% for cat in categories %}
-                <option value="{{ cat.slug }}"{% if active_category == cat.slug %} selected{% endif %}>{{ cat.name }}</option>
-                {% endfor %}
+              <select name="category" data-filter-field="partType" data-part-type-select>
+                <option value="">Все типы</option>
               </select>
             </label>
-            {% if search_query %}
-            <input type="hidden" name="q" value="{{ search_query }}">
-            {% endif %}
           </div>
 
           <div class="filter-card">
@@ -127,60 +120,34 @@
               <h3>Бренд</h3>
             </div>
             <label class="select-row">
-              <select disabled>
-                <option selected>Выберите бренд</option>
-                <option>Brembo</option>
-                <option>ATE</option>
-                <option>TRW</option>
-                <option>KYB</option>
-                <option>Osram</option>
+              <select name="brand" data-filter-field="brand" data-brand-select>
+                <option value="">Все бренды</option>
               </select>
             </label>
           </div>
 
-          <div class="filter-card filter-card--dynamic">
+          <div class="filter-card filter-card--dynamic" data-characteristics-section hidden>
             <div class="filter-card__head">
               <h3>Характеристики</h3>
             </div>
-            <div class="dynamic-row">
-              <span>Ось</span>
-              <label class="select-row">
-                <select disabled>
-                  <option selected>Передняя ось</option>
-                  <option>Задняя ось</option>
-                </select>
-              </label>
-            </div>
-            <div class="dynamic-row">
-              <span>Материал</span>
-              <div class="checkbox-group">
-                <label><input type="checkbox" checked disabled> Керамика</label>
-                <label><input type="checkbox" disabled> Металл</label>
-              </div>
-            </div>
-            <div class="dynamic-row">
-              <span>Наличие</span>
-              <label class="select-row">
-                <select disabled>
-                  <option selected>В наличии</option>
-                  <option>Под заказ</option>
-                </select>
-              </label>
-            </div>
+            <div data-characteristics-fields></div>
           </div>
 
-          <button class="apply-filters" type="submit">Применить фильтры</button>
+          <div class="filter-actions">
+            <button class="apply-filters" type="submit" data-apply-filters disabled>Применить фильтры</button>
+            <button class="reset-filters" type="button" data-reset-filters>Сбросить фильтры</button>
+          </div>
         </form>
       </aside>
 
       <div class="catalog-products">
         <div class="catalog-stats">
-          <span>Найдено {{ results_count }} товаров</span>
+          <span data-results-count>Найдено {{ results_count }} товаров</span>
         </div>
 
-        <div class="product-grid">
+        <div class="product-grid" data-product-grid>
           {% for product in products %}
-          <article class="product-card {{ product.stock_class }}" data-card data-product-card data-href="{{ product.detail_url }}" tabindex="0" role="link">
+          <article class="product-card {{ product.stock_class }}{% if product.in_cart %} is-added{% endif %}" data-card data-product-card data-product-id="{{ product.id }}" data-href="{{ product.detail_url }}" tabindex="0" role="link">
             <div class="product-card__media">
               {% if product.image_url %}
               <img src="{{ product.image_url }}" alt="{{ product.name }}">
@@ -194,17 +161,18 @@
               <p>{% if product.brand %}{{ product.brand }}{% else %}{{ product.category_name }}{% endif %}</p>
               <p>{{ product.short_description }}</p>
               <strong>{{ product.price_display }}</strong>
-              <form class="product-card__cart" method="post" action="{% url 'cart_add' %}">
+              <form class="product-card__cart" method="post" action="{% url 'cart_add' %}" data-cart-form>
                 {% csrf_token %}
                 <input type="hidden" name="product_id" value="{{ product.id }}">
-                <input type="hidden" name="quantity" value="1">
-                <button class="add-cart" type="submit">
-                  {% if product.in_cart %}Добавить ещё{% else %}В корзину{% endif %}
-                </button>
+                <input type="hidden" name="quantity" value="1" data-cart-quantity>
+                <button class="add-cart" type="submit" data-add-cart>В корзину</button>
+                <div class="card-qty" data-card-qty aria-label="Количество в корзине">
+                  <button type="button" data-cart-minus aria-label="Уменьшить количество">−</button>
+                  <span data-cart-qty>{{ product.quantity|default:0 }}</span>
+                  <button type="button" data-cart-plus aria-label="Увеличить количество">+</button>
+                </div>
               </form>
-              {% if product.quantity %}
-              <span class="card-cart-badge is-visible">{{ product.quantity }}</span>
-              {% endif %}
+              <span class="card-cart-badge{% if product.quantity %} is-visible{% endif %}" data-card-badge>{{ product.quantity|default:0 }}</span>
             </div>
           </article>
           {% empty %}
@@ -216,6 +184,20 @@
             <a class="hero-link" href="{% url 'catalog' %}">Сбросить фильтры</a>
           </div>
           {% endfor %}
+          <div class="catalog-empty-state filter-card" data-empty-state hidden>
+            <div class="filter-card__head">
+              <h3>По вашему запросу ничего не найдено</h3>
+            </div>
+            <p>Ничего не найдено. Попробуйте изменить параметры поиска или сбросить фильтры.</p>
+            <button class="reset-filters" type="button" data-empty-reset>Сбросить фильтры</button>
+          </div>
+          <div class="catalog-load-error filter-card" data-load-error hidden>
+            <div class="filter-card__head">
+              <h3>Не удалось загрузить товары</h3>
+            </div>
+            <p>Не удалось загрузить товары. Попробуйте обновить страницу.</p>
+            <button class="reset-filters" type="button" data-reload-page>Обновить</button>
+          </div>
         </div>
       </div>
     </div>
@@ -223,11 +205,22 @@
 </section>
 
 <button class="sticky-filter-button" type="button" data-filter-toggle>Фильтры и сортировка</button>
+{{ products|json_script:"catalog-products-data" }}
 {% endblock %}
 
 {% block extra_js %}
 <script type="module">
   import { inView, animate } from 'motion';
+  import {
+    DEFAULT_FILTERS,
+    collectBrandCharacteristics,
+    collectUniqueBrands,
+    collectUniquePartTypes,
+    filterProducts,
+    hasActiveCriteria,
+    isPriceRangeInvalid,
+    sanitizePriceInput,
+  } from "{% static 'main/js/catalogFilters.mjs' %}?v=20260511-1";
 
   document.querySelectorAll('[data-reveal]').forEach((el) => {
     el.style.opacity = '0';
@@ -244,6 +237,346 @@
       animate(card, { opacity: [0, 1], y: [28, 0] }, { duration: 0.55, delay: i * 0.06, ease: 'easeOut' });
     }, { amount: 0.25 });
   });
+
+  const productsDataNode = document.getElementById('catalog-products-data');
+  const grid = document.querySelector('[data-product-grid]');
+  const resultCount = document.querySelector('[data-results-count]');
+  const searchForm = document.querySelector('[data-catalog-search]');
+  const searchInput = document.querySelector('[data-search-input]');
+  const filterForm = document.querySelector('[data-filter-form]');
+  const partTypeSelect = document.querySelector('[data-part-type-select]');
+  const brandSelect = document.querySelector('[data-brand-select]');
+  const characteristicsSection = document.querySelector('[data-characteristics-section]');
+  const characteristicsFields = document.querySelector('[data-characteristics-fields]');
+  const priceError = document.querySelector('[data-price-error]');
+  const applyButton = document.querySelector('[data-apply-filters]');
+  const emptyState = document.querySelector('[data-empty-state]');
+  const loadError = document.querySelector('[data-load-error]');
+  const reloadButton = document.querySelector('[data-reload-page]');
+  const cartUpdateUrl = "{% url 'cart_update' %}";
+
+  let products = [];
+  try {
+    products = JSON.parse(productsDataNode?.textContent || '[]');
+  } catch (error) {
+    if (loadError) loadError.hidden = false;
+  }
+
+  const productCards = [...document.querySelectorAll('[data-product-card]')];
+  const cardsById = new Map(productCards.map((card) => [String(card.dataset.productId), card]));
+  const productsById = new Map(products.map((product) => [String(product.id), product]));
+  const state = {
+    query: searchInput?.value || '',
+    filters: {
+      ...DEFAULT_FILTERS,
+      characteristics: {},
+    },
+  };
+
+  const pluralizeProducts = (count) => {
+    const mod10 = count % 10;
+    const mod100 = count % 100;
+    if (mod10 === 1 && mod100 !== 11) return 'товар';
+    if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return 'товара';
+    return 'товаров';
+  };
+
+  const setSelectOptions = (select, defaultLabel, options, selectedValue = '') => {
+    if (!select) return;
+    select.replaceChildren();
+
+    const defaultOption = document.createElement('option');
+    defaultOption.value = '';
+    defaultOption.textContent = defaultLabel;
+    select.append(defaultOption);
+
+    options.forEach((option) => {
+      const optionNode = document.createElement('option');
+      optionNode.value = option.value;
+      optionNode.textContent = option.label;
+      select.append(optionNode);
+    });
+
+    select.value = selectedValue;
+  };
+
+  const readUrlState = () => {
+    const params = new URLSearchParams(window.location.search);
+    state.query = params.get('q') || state.query || '';
+    state.filters.sort = params.get('sort') || 'default';
+    state.filters.partType = params.get('category') || params.get('type') || '';
+    state.filters.brand = params.get('brand') || '';
+    state.filters.minPrice = sanitizePriceInput(params.get('minPrice') || '');
+    state.filters.maxPrice = sanitizePriceInput(params.get('maxPrice') || '');
+
+    params.forEach((value, key) => {
+      if (!key.startsWith('char_')) return;
+      const characteristicKey = key.replace('char_', '');
+      state.filters.characteristics[characteristicKey] = value.split(',').filter(Boolean);
+    });
+  };
+
+  const writeUrlState = () => {
+    const params = new URLSearchParams();
+    if (state.query.trim()) params.set('q', state.query.trim());
+    if (state.filters.partType) params.set('category', state.filters.partType);
+    if (state.filters.brand) params.set('brand', state.filters.brand);
+    if (state.filters.sort && state.filters.sort !== 'default') params.set('sort', state.filters.sort);
+    if (state.filters.minPrice) params.set('minPrice', state.filters.minPrice);
+    if (state.filters.maxPrice) params.set('maxPrice', state.filters.maxPrice);
+
+    Object.entries(state.filters.characteristics).forEach(([key, values]) => {
+      if (values.length) params.set(`char_${key}`, values.join(','));
+    });
+
+    const query = params.toString();
+    const nextUrl = query ? `${window.location.pathname}?${query}` : window.location.pathname;
+    window.history.replaceState({}, '', nextUrl);
+  };
+
+  const syncControlsFromState = () => {
+    if (searchInput) searchInput.value = state.query;
+    filterForm?.querySelectorAll('input[name="sort"]').forEach((input) => {
+      input.checked = input.value === state.filters.sort;
+    });
+    filterForm?.querySelector('[data-filter-field="minPrice"]')?.setAttribute('value', state.filters.minPrice);
+    filterForm?.querySelector('[data-filter-field="maxPrice"]')?.setAttribute('value', state.filters.maxPrice);
+    const minInput = filterForm?.querySelector('[data-filter-field="minPrice"]');
+    const maxInput = filterForm?.querySelector('[data-filter-field="maxPrice"]');
+    if (minInput) minInput.value = state.filters.minPrice;
+    if (maxInput) maxInput.value = state.filters.maxPrice;
+    if (partTypeSelect) partTypeSelect.value = state.filters.partType;
+    if (brandSelect) brandSelect.value = state.filters.brand;
+  };
+
+  const updatePriceError = () => {
+    const invalid = isPriceRangeInvalid(state.filters);
+    if (priceError) priceError.hidden = !invalid;
+    filterForm?.classList.toggle('has-price-error', invalid);
+    return invalid;
+  };
+
+  const updateApplyButton = () => {
+    if (!applyButton) return;
+    const minInput = filterForm?.querySelector('[data-filter-field="minPrice"]');
+    const maxInput = filterForm?.querySelector('[data-filter-field="maxPrice"]');
+    const filtersForButton = {
+      ...state.filters,
+      minPrice: sanitizePriceInput(minInput?.value || state.filters.minPrice),
+      maxPrice: sanitizePriceInput(maxInput?.value || state.filters.maxPrice),
+    };
+    applyButton.disabled = !hasActiveCriteria({ query: state.query, filters: filtersForButton });
+  };
+
+  const renderCharacteristicControls = () => {
+    if (!characteristicsSection || !characteristicsFields) return;
+    characteristicsFields.replaceChildren();
+
+    if (!state.filters.brand) {
+      state.filters.characteristics = {};
+      characteristicsSection.hidden = true;
+      return;
+    }
+
+    const characteristics = collectBrandCharacteristics(products, state.filters.brand);
+    if (!characteristics.length) {
+      state.filters.characteristics = {};
+      characteristicsSection.hidden = true;
+      return;
+    }
+
+    characteristicsSection.hidden = false;
+    const validKeys = new Set(characteristics.map((item) => item.key));
+    Object.keys(state.filters.characteristics).forEach((key) => {
+      if (!validKeys.has(key)) delete state.filters.characteristics[key];
+    });
+
+    characteristics.forEach((characteristic) => {
+      const row = document.createElement('div');
+      row.className = 'dynamic-row';
+
+      const label = document.createElement('span');
+      label.textContent = characteristic.label;
+      row.append(label);
+
+      const selectedValues = state.filters.characteristics[characteristic.key] || [];
+      if (characteristic.values.length <= 6) {
+        const group = document.createElement('div');
+        group.className = 'checkbox-group';
+
+        characteristic.values.forEach((value) => {
+          const optionLabel = document.createElement('label');
+          const checkbox = document.createElement('input');
+          checkbox.type = 'checkbox';
+          checkbox.value = value;
+          checkbox.checked = selectedValues.includes(value);
+          checkbox.dataset.characteristicKey = characteristic.key;
+          checkbox.addEventListener('change', () => {
+            const checkedValues = [...group.querySelectorAll('input:checked')].map((input) => input.value);
+            state.filters.characteristics[characteristic.key] = checkedValues;
+            runFilterPipeline();
+          });
+          optionLabel.append(checkbox, document.createTextNode(` ${value}`));
+          group.append(optionLabel);
+        });
+
+        row.append(group);
+      } else {
+        const selectLabel = document.createElement('label');
+        selectLabel.className = 'select-row';
+        const select = document.createElement('select');
+        select.dataset.characteristicKey = characteristic.key;
+
+        const defaultOption = document.createElement('option');
+        defaultOption.value = '';
+        defaultOption.textContent = 'Все значения';
+        select.append(defaultOption);
+
+        characteristic.values.forEach((value) => {
+          const option = document.createElement('option');
+          option.value = value;
+          option.textContent = value;
+          select.append(option);
+        });
+
+        select.value = selectedValues[0] || '';
+        select.addEventListener('change', () => {
+          state.filters.characteristics[characteristic.key] = select.value ? [select.value] : [];
+          runFilterPipeline();
+        });
+
+        selectLabel.append(select);
+        row.append(selectLabel);
+      }
+
+      characteristicsFields.append(row);
+    });
+  };
+
+  const renderProducts = (visibleProducts) => {
+    if (!grid) return;
+    const visibleIds = new Set(visibleProducts.map((product) => String(product.id)));
+
+    productCards.forEach((card) => {
+      card.hidden = !visibleIds.has(String(card.dataset.productId));
+    });
+
+    visibleProducts.forEach((product) => {
+      const card = cardsById.get(String(product.id));
+      if (card) grid.append(card);
+    });
+
+    if (emptyState) {
+      emptyState.hidden = visibleProducts.length > 0;
+      grid.append(emptyState);
+    }
+    if (loadError) grid.append(loadError);
+
+    if (resultCount) {
+      resultCount.textContent = `Найдено ${visibleProducts.length} ${pluralizeProducts(visibleProducts.length)}`;
+    }
+  };
+
+  function runFilterPipeline({ syncUrl = true } = {}) {
+    updatePriceError();
+    const visibleProducts = filterProducts(products, {
+      query: state.query,
+      filters: state.filters,
+    });
+    renderProducts(visibleProducts);
+    updateApplyButton();
+    if (syncUrl) writeUrlState();
+  }
+
+  const commitPriceInputs = () => {
+    const minInput = filterForm?.querySelector('[data-filter-field="minPrice"]');
+    const maxInput = filterForm?.querySelector('[data-filter-field="maxPrice"]');
+    state.filters.minPrice = sanitizePriceInput(minInput?.value || '');
+    state.filters.maxPrice = sanitizePriceInput(maxInput?.value || '');
+    syncControlsFromState();
+  };
+
+  const resetFilters = () => {
+    state.query = '';
+    state.filters = {
+      ...DEFAULT_FILTERS,
+      characteristics: {},
+    };
+    setSelectOptions(partTypeSelect, 'Все типы', collectUniquePartTypes(products), '');
+    setSelectOptions(brandSelect, 'Все бренды', collectUniqueBrands(products), '');
+    syncControlsFromState();
+    renderCharacteristicControls();
+    runFilterPipeline();
+  };
+
+  const initializeCatalogControls = () => {
+    if (!products.length) return;
+    readUrlState();
+    setSelectOptions(partTypeSelect, 'Все типы', collectUniquePartTypes(products), state.filters.partType);
+    setSelectOptions(brandSelect, 'Все бренды', collectUniqueBrands(products), state.filters.brand);
+    syncControlsFromState();
+    renderCharacteristicControls();
+    runFilterPipeline({ syncUrl: false });
+  };
+
+  searchForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    state.query = searchInput?.value || '';
+    runFilterPipeline();
+  });
+
+  searchInput?.addEventListener('input', () => {
+    state.query = searchInput.value;
+    runFilterPipeline();
+  });
+
+  filterForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    commitPriceInputs();
+    runFilterPipeline();
+  });
+
+  filterForm?.querySelectorAll('input[name="sort"]').forEach((input) => {
+    input.addEventListener('change', () => {
+      state.filters.sort = input.value;
+      runFilterPipeline();
+    });
+  });
+
+  partTypeSelect?.addEventListener('change', () => {
+    state.filters.partType = partTypeSelect.value;
+    runFilterPipeline();
+  });
+
+  brandSelect?.addEventListener('change', () => {
+    state.filters.brand = brandSelect.value;
+    state.filters.characteristics = {};
+    renderCharacteristicControls();
+    runFilterPipeline();
+  });
+
+  filterForm?.querySelectorAll('[data-price-input]').forEach((input) => {
+    input.addEventListener('input', () => {
+      input.value = sanitizePriceInput(input.value);
+      updateApplyButton();
+    });
+    input.addEventListener('blur', () => {
+      commitPriceInputs();
+      runFilterPipeline();
+    });
+    input.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter') return;
+      event.preventDefault();
+      commitPriceInputs();
+      runFilterPipeline();
+    });
+  });
+
+  document.querySelectorAll('[data-reset-filters], [data-empty-reset]').forEach((button) => {
+    button.addEventListener('click', resetFilters);
+  });
+
+  reloadButton?.addEventListener('click', () => window.location.reload());
 
   const stickySearch = document.querySelector('.catalog-search');
   const header = document.querySelector('header');
@@ -265,8 +598,94 @@
     });
   });
 
+  const setHeaderCartCount = (count) => {
+    document.querySelectorAll('[data-cart-count]').forEach((counter) => {
+      counter.textContent = String(count);
+    });
+  };
+
+  const setCardQuantity = (card, quantity) => {
+    const safeQuantity = Math.max(0, Number(quantity) || 0);
+    const product = productsById.get(String(card.dataset.productId));
+    if (product) {
+      product.quantity = safeQuantity;
+      product.in_cart = safeQuantity > 0;
+    }
+
+    card.classList.toggle('is-added', safeQuantity > 0);
+    const quantityText = card.querySelector('[data-cart-qty]');
+    const badge = card.querySelector('[data-card-badge]');
+    if (quantityText) quantityText.textContent = String(safeQuantity);
+    if (badge) {
+      badge.textContent = String(safeQuantity);
+      badge.classList.toggle('is-visible', safeQuantity > 0);
+    }
+  };
+
+  const submitCartRequest = async (url, productId, quantity) => {
+    const formData = new FormData();
+    formData.set('product_id', productId);
+    formData.set('quantity', quantity);
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRFToken': document.querySelector('[name="csrfmiddlewaretoken"]')?.value || '',
+      },
+      body: formData,
+    });
+
+    if (!response.ok) throw new Error('Cart request failed');
+    return response.json();
+  };
+
+  const getCardQuantity = (card) => Number(card.querySelector('[data-cart-qty]')?.textContent || 0);
+
   document.querySelectorAll('[data-product-card]').forEach((card) => {
     const href = card.dataset.href;
+    const form = card.querySelector('[data-cart-form]');
+    const productId = card.dataset.productId;
+
+    form?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      try {
+        const payload = await submitCartRequest(form.action, productId, 1);
+        setCardQuantity(card, payload.quantity);
+        setHeaderCartCount(payload.cart_count);
+      } catch (error) {
+        form.submit();
+      }
+    });
+
+    card.querySelector('[data-cart-plus]')?.addEventListener('click', async (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      try {
+        const nextQuantity = getCardQuantity(card) + 1;
+        const payload = await submitCartRequest(cartUpdateUrl, productId, nextQuantity);
+        setCardQuantity(card, payload.quantity);
+        setHeaderCartCount(payload.cart_count);
+      } catch (error) {
+        window.location.href = "{% url 'cart_view' %}";
+      }
+    });
+
+    card.querySelector('[data-cart-minus]')?.addEventListener('click', async (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      try {
+        const nextQuantity = Math.max(0, getCardQuantity(card) - 1);
+        const payload = await submitCartRequest(cartUpdateUrl, productId, nextQuantity);
+        setCardQuantity(card, payload.quantity);
+        setHeaderCartCount(payload.cart_count);
+      } catch (error) {
+        window.location.href = "{% url 'cart_view' %}";
+      }
+    });
+
     card.querySelectorAll('form, button, a').forEach((interactive) => {
       interactive.addEventListener('click', (event) => {
         event.stopPropagation();
@@ -288,6 +707,7 @@
 
   syncStickyOffset();
   updateStickyState();
+  initializeCatalogControls();
   window.addEventListener('scroll', updateStickyState, { passive: true });
   window.addEventListener('resize', () => {
     syncStickyOffset();

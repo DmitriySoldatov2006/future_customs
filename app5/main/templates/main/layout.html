@@ -35,10 +35,10 @@
 
             <ul class="nav-links">
                 <li><a href="{% url 'catalog' %}" class="nav-link">Каталог</a></li>
+                <li><a href="{% url 'cart_view' %}" class="nav-link">Корзина (<span data-cart-count>{{ cart_count }}</span>)</a></li>
 
                 {% if request.user.is_authenticated %}
                     <li><a href="{% url 'profile' %}" class="nav-link">Профиль</a></li>
-                    <li><a href="{% url 'cart_view' %}" class="nav-link">Корзина ({{ cart_count }})</a></li>
                     <li>
                         <form method="post" action="{% url 'logout' %}" class="nav-inline-form">
                             {% csrf_token %}

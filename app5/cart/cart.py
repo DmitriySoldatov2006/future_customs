@@ -21,13 +21,26 @@ def _split_description(description: str, fallback: str) -> list[str]:
 
 def serialize_product(product, quantity: int = 0) -> dict[str, Any]:
     category_name = product.category.name if product.category else ''
+    category_slug = product.category.slug if product.category else ''
+    article = product.vin_number or product.slug or str(product.pk)
+    characteristics = {}
+    if product.vin_number:
+        characteristics['vin_number'] = {
+            'label': 'VIN номер',
+            'value': product.vin_number,
+        }
     return {
         'id': str(product.pk),
         'pk': product.pk,
         'brand': product.brand,
         'vin_number': product.vin_number,
+        'article': article,
         'name': product.name,
         'category_name': category_name,
+        'category_slug': category_slug,
+        'part_type': category_slug,
+        'part_type_label': category_name,
+        'characteristics': characteristics,
         'short_description': product.short_description,
         'description': _split_description(product.description, product.short_description),
         'price': product.price,
@@ -91,6 +104,9 @@ class CartSession:
     def get_quantities(self) -> dict[str, int]:
         return {product_id: item.get('quantity', 0) for product_id, item in self.cart.items()}
 
+    def count(self) -> int:
+        return sum(item.get('quantity', 0) for item in self.cart.values() if isinstance(item, dict))
+
     def add(self, product_id: str | None, quantity: Any = 1) -> None:
         product = get_product(product_id)
         if not product:
@@ -115,7 +131,14 @@ class CartSession:
         product_key = str(product_id or '')
         if product_key not in self.cart:
             return
-        self.cart[product_key]['quantity'] = self._coerce_quantity(quantity)
+        try:
+            parsed_quantity = int(quantity)
+        except (TypeError, ValueError):
+            parsed_quantity = 1
+        if parsed_quantity <= 0:
+            self.remove(product_key)
+            return
+        self.cart[product_key]['quantity'] = parsed_quantity
         self.session.modified = True
 
     def remove(self, product_id: str | None) -> None:
