@@ -1,0 +1,23 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block title %}Заказ оформлен!{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'main/css/register.css' %}?v=20260510-3">
+{% endblock %}
+
+{% block content %}
+<div class="parallax-bg" data-parallax-layer data-speed="-0.16"></div>
+
+<section class="login-page info-section">
+  <div class="info-content">
+    <div class="login-wrapper filter-card checkout-success">
+      <p class="section-kicker">Заказ</p>
+      <h1>Заказ оформлен!</h1>
+      <p>Спасибо за покупку. Мы свяжемся с вами в ближайшее время.</p>
+      <a class="hero-link" href="{% url 'home' %}">Вернуться на главную</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

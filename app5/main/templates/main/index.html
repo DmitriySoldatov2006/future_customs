@@ -3,12 +3,170 @@
 {% block title %}Главная страница{% endblock %}
 
 {% block content %}
-<div class="main-page">
-  <h1>TUNE YOUR RIDE</h1>
-  <p>Выбирите авто</p>
-  <div class="main-wrapper">
-    
+<div class="parallax-bg" data-parallax-layer data-speed="-0.22"></div>
+
+<section class="parts-hero">
+  <div class="parallax-grid" data-parallax-layer data-speed="0.12"></div>
+  
+
+  <div class="parts-hero__inner">
+    <div class="parts-hero__content" data-parallax-layer data-speed="0.06">
+      <p class="eyebrow">Автозапчасти под ваш автомобиль</p>
+      <h1>FUTURE CUSTOMS</h1>
+      <p class="hero-lead">
+        Подбираем, проверяем и доставляем запчасти для ремонта, обслуживания и тюнинга.
+        Работаем с оригинальными деталями и надежными аналогами.
+      </p>
+      <div class="hero-actions">
+        <a class="hero-button" href="{% url 'catalog' %}">Подобрать запчасть</a>
+        <a class="hero-link" href="{% url 'cart_view' %}">Перейти в корзину</a>
+      </div>
+    </div>
+
+    <div class="hero-panel" data-parallax-layer data-speed="0.18">
+      <div class="panel-header">
+        <span>Каталог</span>
+        <strong>18 000+</strong>
+      </div>
+      <div class="panel-line">
+        <span>Тормозные системы</span>
+        <b>в наличии</b>
+      </div>
+      <div class="panel-line">
+        <span>Подвеска и рулевое</span>
+        <b>в наличии</b>
+      </div>
+      <div class="panel-line">
+        <span>Кузовные элементы</span>
+        <b>в наличии</b>
+      </div>
+      <div class="panel-meter"><span></span></div>
+      <p>Проверка совместимости по VIN перед оформлением заказа.</p>
+    </div>
   </div>
-  <a href="{% url 'create' %}">Создать</a>
-</div>
+</section>
+
+<section class="info-section intro-section" data-reveal>
+  <div class="info-content two-column">
+    <div>
+      <p class="section-kicker">О компании</p>
+      <h2>Мы закрываем весь путь от подбора до установки</h2>
+    </div>
+    <p>
+      Future Parts — магазин автозапчастей для водителей, сервисов и энтузиастов. Мы помогаем найти
+      совместимые детали, сравнить оригинал и аналоги, заранее проверить сроки поставки и избежать
+      покупки неподходящей позиции.
+    </p>
+  </div>
+</section>
+
+<section class="info-section info-section--alt" data-reveal>
+  <div class="info-content">
+    <p class="section-kicker">Основные направления</p>
+    <h2>Запчасти для ремонта, ТО и кастомных проектов</h2>
+    <div class="parts-grid">
+      <article class="part-card" data-card>
+        <span>01</span>
+        <h3>Расходники</h3>
+        <p>Фильтры, масла, свечи, ремни, жидкости и комплекты для регулярного обслуживания.</p>
+      </article>
+      <article class="part-card" data-card>
+        <span>02</span>
+        <h3>Ходовая часть</h3>
+        <p>Амортизаторы, рычаги, ступицы, сайлентблоки, рулевые наконечники и тяги.</p>
+      </article>
+      <article class="part-card" data-card>
+        <span>03</span>
+        <h3>Тормоза</h3>
+        <p>Диски, колодки, суппорты, шланги, датчики износа и готовые комплекты замены.</p>
+      </article>
+      <article class="part-card" data-card>
+        <span>04</span>
+        <h3>Кузов и свет</h3>
+        <p>Бамперы, оптика, зеркала, крепеж, панели и элементы внешнего восстановления.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="info-section process-section" data-reveal>
+  <div class="info-content">
+    <p class="section-kicker">Как мы работаем</p>
+    <h2>Подбор без угадывания и лишних возвратов</h2>
+    <ul class="steps">
+      <li><span>1</span><div><strong>Получаем VIN или параметры авто</strong><p>Марка, модель, год, двигатель и нужная группа деталей.</p></div></li>
+      <li><span>2</span><div><strong>Сравниваем варианты</strong><p>Показываем оригинал, качественные аналоги.</p></div></li>
+      <li><span>3</span><div><strong>Проверяем совместимость</strong><p>Сверяем номер детали с каталогами.</p></div></li>
+      <li><span>4</span><div><strong>Передаем заказ</strong><p>Доставляем деталь или готовим выдачу для сервиса и самостоятельной установки.</p></div></li>
+    </ul>
+  </div>
+</section>
+
+<section class="info-section info-section--dark" data-reveal>
+  <div class="info-content">
+    <p class="section-kicker">Почему выбирают нас</p>
+    <h2>Склад, экспертиза и честная совместимость</h2>
+    <div class="advantage-grid">
+      <div class="advantage" data-card><strong>24 часа</strong><span>быстрый подбор популярных позиций</span></div>
+      <div class="advantage" data-card><strong>12 мес.</strong><span>гарантия на большинство деталей</span></div>
+      <div class="advantage" data-card><strong>VIN</strong><span>контроль совместимости перед заказом</span></div>
+      <div class="advantage" data-card><strong>OEM</strong><span>оригиналы и проверенные аналоги</span></div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script type="module">
+  import { scroll, animate, inView } from 'motion';
+
+  document.querySelectorAll('[data-parallax-layer]').forEach((layer) => {
+    const speed = Number(layer.dataset.speed || 0);
+    scroll(
+      animate(layer, { y: [0, speed * 520] }, { ease: 'linear' }),
+      { offset: ['start start', 'end start'] }
+    );
+  });
+
+  const hero = document.querySelector('.parts-hero');
+  if (hero) {
+    scroll(
+      animate(hero, { opacity: [1, 0.2], scale: [1, 0.96] }, { ease: 'linear' }),
+      { target: hero, offset: ['start start', 'end start'] }
+    );
+  }
+
+  document.querySelectorAll('[data-reveal]').forEach((el) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(60px)';
+    inView(el, () => {
+      animate(
+        el,
+        { opacity: [0, 1], y: [60, 0] },
+        { duration: 0.8, ease: [0.17, 0.55, 0.55, 1] }
+      );
+    }, { amount: 0.2 });
+  });
+
+  document.querySelectorAll('[data-card]').forEach((card, i) => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(40px) scale(0.9)';
+    inView(card, () => {
+      animate(
+        card,
+        { opacity: [0, 1], y: [40, 0], scale: [0.9, 1] },
+        { duration: 0.6, delay: i * 0.1, ease: 'easeOut' }
+      );
+    }, { amount: 0.3 });
+  });
+
+  if (hero) {
+    hero.addEventListener('pointermove', (event) => {
+      const x = (event.clientX / window.innerWidth - 0.5) * 16;
+      const y = (event.clientY / window.innerHeight - 0.5) * 16;
+      document.documentElement.style.setProperty('--mouse-x', `${x}px`);
+      document.documentElement.style.setProperty('--mouse-y', `${y}px`);
+    });
+  }
+</script>
 {% endblock %}

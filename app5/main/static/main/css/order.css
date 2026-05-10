@@ -1,10 +1,21 @@
 .order-page {
+  position: relative;
+  isolation: isolate;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
+  min-height: calc(100vh - 72px);
   padding: 3vh;
   box-sizing: border-box;
+  background-image: linear-gradient(90deg, rgba(8, 12, 17, 0.88), rgba(8, 12, 17, 0.54)), url("../images/chto-takoe-avtotyuning-i-chem-on-otlichaetsya-ot-stajlinga.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+.order-page > * {
+  position: relative;
+  z-index: 1;
 }
 .order-page h1 {
   color: #fff;
@@ -21,7 +32,9 @@
   display: flex;
   flex-direction: column;
   width: 40%;
-  background-color: #4e5868;
+  background-color: rgba(30, 39, 50, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(14px);
   padding: 3vh;
   padding-right: 4vh;
   border-radius: 2vh;
@@ -68,7 +81,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #C68DFF;
+  background-color: rgba(198, 141, 255, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(14px);
   border-radius: 15px;
   width: 18%;
   padding: 30px 0 20px 0;
@@ -122,4 +137,110 @@
 .order-page .main-price-order button:hover {
   background-color: #000;
   color: #CBE857;
+}
+
+.order-page {
+  background-image: radial-gradient(circle at 18% 18%, rgba(198, 141, 255, 0.24), transparent 34%), linear-gradient(120deg, rgba(8, 12, 17, 0.97), rgba(38, 21, 55, 0.86) 50%, rgba(8, 12, 17, 0.82)), linear-gradient(180deg, rgba(8, 12, 17, 0.3), rgba(8, 12, 17, 0.76)), url("../images/chto-takoe-avtotyuning-i-chem-on-otlichaetsya-ot-stajlinga.jpg");
+  background-blend-mode: normal, normal, normal, luminosity;
+}
+.order-page h1 {
+  text-shadow: 0 12px 34px rgba(0, 0, 0, 0.42);
+}
+.order-page .flex-container {
+  background: linear-gradient(145deg, rgba(19, 25, 35, 0.86), rgba(67, 34, 98, 0.62));
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.32);
+}
+.order-page .flex-container .order-input {
+  outline-color: rgba(203, 232, 87, 0.88);
+}
+.order-page .flex-container .order-input:focus {
+  outline-color: #C68DFF;
+  box-shadow: 0 0 0 4px rgba(198, 141, 255, 0.18);
+}
+.order-page .main-price-order {
+  background: linear-gradient(145deg, rgba(198, 141, 255, 0.92), rgba(123, 77, 255, 0.78));
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.32), 0 0 60px rgba(198, 141, 255, 0.18);
+}
+.order-page .main-price-order button {
+  background: linear-gradient(135deg, #CBE857, #42e8c3);
+}
+
+@media (max-width: 980px) {
+  .order-page .column-wrapper {
+    flex-direction: column;
+    gap: 24px;
+  }
+  .order-page .flex-container,
+  .order-page .main-price-order {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+.order-page {
+  padding: clamp(24px, 4vw, 56px);
+}
+.order-page > h1 {
+  font-size: clamp(34px, 5vw, 56px);
+  line-height: 1;
+}
+.order-page .column-wrapper {
+  width: min(1120px, 100%);
+  gap: 28px;
+}
+.order-page .flex-container {
+  flex: 1 1 680px;
+  width: auto;
+  border-radius: 8px;
+  padding: clamp(22px, 4vw, 36px);
+}
+.order-page .flex-container h2 {
+  color: #42e8c3;
+  font-size: 14px;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+.order-page .flex-container .input-container {
+  gap: 18px;
+}
+.order-page .flex-container h3 {
+  color: rgba(246, 251, 255, 0.82);
+  min-width: 180px;
+}
+.order-page .flex-container .order-input {
+  min-height: 50px;
+  border-radius: 8px;
+}
+.order-page .main-price-order {
+  width: min(320px, 100%);
+  padding: 28px;
+  border-radius: 8px;
+}
+.order-page .main-price-order .grid-box {
+  width: 100%;
+  gap: 12px 24px;
+  margin-top: 10px;
+}
+.order-page .main-price-order p {
+  text-decoration: none;
+}
+.order-page .order-note {
+  color: rgba(255, 255, 255, 0.72);
+  text-align: center;
+  line-height: 1.45;
+  margin-top: 8px;
+}
+.order-page .main-price-order button {
+  min-height: 52px;
+  border-radius: 8px;
+}
+
+@media (max-width: 640px) {
+  .order-page .flex-container .input-container {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .order-page .flex-container .order-input {
+    width: 100%;
+  }
 }/*# sourceMappingURL=order.css.map */

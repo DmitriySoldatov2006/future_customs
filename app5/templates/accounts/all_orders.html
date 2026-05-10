@@ -1,0 +1,43 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}Все заказы{% endblock %}
+
+{% block content %}
+<div class="parallax-bg" data-parallax-layer data-speed="-0.14"></div>
+
+<section class="profile-page info-section">
+  <div class="info-content">
+    <p class="section-kicker">Аккаунт</p>
+    <h1>Все заказы</h1>
+
+    <section class="filter-card profile-card profile-section">
+      <div class="filter-card__head">
+        <h3>История заказов</h3>
+      </div>
+
+      {% if orders %}
+        <div class="profile-history">
+          {% for entry in orders %}
+            <div class="profile-order-row">
+              <div class="profile-order-row__items">
+                {{ entry.item_names|join:", " }}{% if entry.extra_count %} и ещё {{ entry.extra_count }} товаров{% endif %}
+              </div>
+              <div class="profile-order-row__total">{{ entry.total_display }}</div>
+              <div class="profile-order-row__meta">{{ entry.order.created_at|date:"d.m.Y" }}</div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="profile-empty">
+          <p>У вас пока нет заказов</p>
+          <a class="hero-link" href="{% url 'catalog' %}">Перейти в каталог</a>
+        </div>
+      {% endif %}
+
+      <div class="profile-orders-footer">
+        <a class="hero-link" href="{% url 'profile' %}">Вернуться в профиль</a>
+      </div>
+    </section>
+  </div>
+</section>
+{% endblock %}

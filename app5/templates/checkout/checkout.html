@@ -1,0 +1,117 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}Оформление заказа{% endblock %}
+
+{% block content %}
+<div class="parallax-bg" data-parallax-layer data-speed="-0.14"></div>
+
+<section class="checkout-page info-section">
+  <div class="info-content">
+    <p class="section-kicker">Ваш заказ</p>
+    <h1>Оформление заказа</h1>
+
+    <form method="post" class="checkout-layout">
+      {% csrf_token %}
+
+      <div class="filter-card checkout-panel">
+        {% if form.non_field_errors %}
+        <div class="checkout-form-error" role="alert">
+          {{ form.non_field_errors.0 }}
+        </div>
+        {% endif %}
+
+        <section class="checkout-section">
+          <div class="filter-card__head">
+            <h3>Контактная информация</h3>
+          </div>
+
+          <div class="checkout-fields">
+            <div class="checkout-field">
+              <label for="{{ form.full_name.id_for_label }}">ФИО</label>
+              <div class="field-wrap">{{ form.full_name }}</div>
+              {% if form.full_name.errors %}
+              <span role="alert">{{ form.full_name.errors.0 }}</span>
+              {% endif %}
+            </div>
+
+            <div class="checkout-field">
+              <label for="{{ form.phone.id_for_label }}">Номер телефона</label>
+              <div class="field-wrap">{{ form.phone }}</div>
+              {% if form.phone.errors %}
+              <span role="alert">{{ form.phone.errors.0 }}</span>
+              {% endif %}
+            </div>
+          </div>
+        </section>
+
+        <section class="checkout-section">
+          <div class="filter-card__head">
+            <h3>Адрес доставки</h3>
+          </div>
+
+          <div class="checkout-fields">
+            <div class="checkout-field">
+              <label for="{{ form.region.id_for_label }}">Регион</label>
+              <div class="select-row">
+                <select name="{{ form.region.html_name }}" id="{{ form.region.id_for_label }}" required>
+                  <option value="" disabled {% if not form.region.value %}selected{% endif %}>Выберите регион</option>
+                  {% for value, label in form.region.field.choices %}
+                  <option value="{{ value }}"{% if form.region.value == value %} selected{% endif %}>{{ label }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              {% if form.region.errors %}
+              <span role="alert">{{ form.region.errors.0 }}</span>
+              {% endif %}
+            </div>
+
+            <div class="checkout-field">
+              <label for="{{ form.city.id_for_label }}">Населённый пункт</label>
+              <div class="field-wrap">{{ form.city }}</div>
+              {% if form.city.errors %}
+              <span role="alert">{{ form.city.errors.0 }}</span>
+              {% endif %}
+            </div>
+
+            <div class="checkout-field">
+              <label for="{{ form.address.id_for_label }}">Улица, дом, квартира</label>
+              <div class="field-wrap">{{ form.address }}</div>
+              {% if form.address.errors %}
+              <span role="alert">{{ form.address.errors.0 }}</span>
+              {% endif %}
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <aside class="filter-card checkout-summary">
+        <div class="filter-card__head">
+          <h3>Ваш заказ</h3>
+        </div>
+
+        <div class="checkout-summary__items">
+          {% for item in cart_items %}
+          <div class="checkout-summary__item">
+            <span class="checkout-summary__name">{{ item.name }}</span>
+            <span class="checkout-summary__qty">×{{ item.quantity }}</span>
+            <strong>{{ item.total_price_display }}</strong>
+          </div>
+          {% endfor %}
+        </div>
+
+        <div class="checkout-summary__row checkout-summary__row--delivery">
+          <span>Доставка</span>
+          <strong>Бесплатно</strong>
+        </div>
+
+        <div class="checkout-summary__row checkout-summary__row--total">
+          <span>Итого:</span>
+          <strong>{{ cart_total_display }}</strong>
+        </div>
+
+        <button class="hero-button" type="submit">Оплатить</button>
+      </aside>
+    </form>
+  </div>
+</section>
+{% endblock %}

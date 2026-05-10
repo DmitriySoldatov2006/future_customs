@@ -1,0 +1,12 @@
+{
+  "name": "future_customs",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev:all": "node scripts/dev-all.mjs",
+    "dev": "npm run dev:all"
+  },
+  "dependencies": {
+    "framer-motion": "^12.38.0"
+  }
+}

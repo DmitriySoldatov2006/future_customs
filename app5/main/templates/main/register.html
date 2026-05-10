@@ -4,18 +4,64 @@
 {% block title %}Регистрация{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'main/css/register.css' %}">
+<link rel="stylesheet" href="{% static 'main/css/register.css' %}?v=20260510-3">
 {% endblock %}
 
 {% block content %}
-<div class="login-page">
-    <div class="login-wrapper">
-        <h1>Регистрация аккаунта</h1>
-        <input class='login-input' type="email" name="email" placeholder='Электронная почта'/>
-        <input class='login-input' type="text" name="username" placeholder='Имя'/>
-        <input class='login-input' type="password" name="password" placeholder='Пороль'/>
-        <button>Зарегестрироваться</button>
-        <h2>Уже есть аккаунт? <a class='go-reg' href="{% url 'login' %}">Войти</a></h2>
+<div class="parallax-bg" data-parallax-layer data-speed="-0.16"></div>
+
+<section class="login-page info-section">
+    <div class="info-content">
+        <div class="login-wrapper filter-card">
+            <p class="section-kicker">Аккаунт</p>
+            <h1>Регистрация</h1>
+
+            <form method="post">
+                {% csrf_token %}
+
+                <div>
+                    <label for="{{ form.email.id_for_label }}">Электронная почта</label>
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                    <span role="alert">{{ form.email.errors.0 }}</span>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <label for="{{ form.username.id_for_label }}">Логин</label>
+                    {{ form.username }}
+                    {% if form.username.errors %}
+                    <span role="alert">{{ form.username.errors.0 }}</span>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <label for="{{ form.password1.id_for_label }}">Пароль</label>
+                    {{ form.password1 }}
+                    {% if form.password1.errors %}
+                    <span role="alert">{{ form.password1.errors.0 }}</span>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <label for="{{ form.password2.id_for_label }}">Повторите пароль</label>
+                    {{ form.password2 }}
+                    {% if form.password2.errors %}
+                    <span role="alert">{{ form.password2.errors.0 }}</span>
+                    {% endif %}
+                </div>
+
+                {% if form.non_field_errors %}
+                <div role="alert">
+                    {{ form.non_field_errors.0 }}
+                </div>
+                {% endif %}
+
+                <button class="hero-button" type="submit">Зарегистрироваться</button>
+            </form>
+
+            <h2>Уже есть аккаунт? <a class="go-reg" href="{% url 'login' %}">Войти</a></h2>
+        </div>
     </div>
-</div>
+</section>
 {% endblock %}

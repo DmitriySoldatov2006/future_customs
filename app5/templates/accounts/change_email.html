@@ -1,0 +1,33 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}Изменить почту{% endblock %}
+
+{% block content %}
+<div class="parallax-bg" data-parallax-layer data-speed="-0.16"></div>
+
+<section class="login-page info-section profile-change-page">
+  <div class="info-content">
+    <div class="login-wrapper filter-card account-form-card">
+      <p class="section-kicker">Аккаунт</p>
+      <h1>Изменить почту</h1>
+      <p class="account-form-intro">Обновите email, чтобы получать сообщения по заказам и входить в аккаунт без лишних шагов.</p>
+
+      <form method="post">
+        {% csrf_token %}
+        <div>
+          <label for="{{ form.email.id_for_label }}">Почта</label>
+          {{ form.email }}
+          {% if form.email.errors %}
+          <span role="alert">{{ form.email.errors.0 }}</span>
+          {% endif %}
+        </div>
+
+        <div class="account-form-actions">
+          <button class="hero-button" type="submit">Сохранить</button>
+          <a class="hero-link" href="{% url 'profile' %}">Отмена</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}
