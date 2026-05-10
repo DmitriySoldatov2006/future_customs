@@ -143,7 +143,7 @@
 .basket-page .basket-bottom .go-order:hover {
   background-color: #000;
   color: #C68DFF;
-}/*# sourceMappingURL=basket.css.map */
+}
 
 .basket-page {
   background-image: radial-gradient(circle at 16% 20%, rgba(198, 141, 255, 0.24), transparent 32%), linear-gradient(120deg, rgba(8, 12, 17, 0.97), rgba(38, 21, 55, 0.86) 48%, rgba(8, 12, 17, 0.82)), linear-gradient(180deg, rgba(8, 12, 17, 0.28), rgba(8, 12, 17, 0.78)), url("../images/arttuning-1.png");
@@ -203,7 +203,6 @@
     width: 100%;
   }
 }
-
 .basket-page {
   padding: clamp(24px, 4vw, 56px);
 }
@@ -272,4 +271,4 @@
 .basket-page .basket-bottom .go-creator,
 .basket-page .basket-bottom .go-order {
   border-radius: 8px;
-}
+}/*# sourceMappingURL=basket.css.map */

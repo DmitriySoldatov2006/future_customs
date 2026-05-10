@@ -1,0 +1,33 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}Изменить логин{% endblock %}
+
+{% block content %}
+<div class="parallax-bg" data-parallax-layer data-speed="-0.16"></div>
+
+<section class="login-page info-section profile-change-page">
+  <div class="info-content">
+    <div class="login-wrapper filter-card account-form-card">
+      <p class="section-kicker">Аккаунт</p>
+      <h1>Изменить логин</h1>
+      <p class="account-form-intro">Выберите логин, под которым будет удобно входить в аккаунт и оформлять заказы.</p>
+
+      <form method="post">
+        {% csrf_token %}
+        <div>
+          <label for="{{ form.username.id_for_label }}">Логин</label>
+          {{ form.username }}
+          {% if form.username.errors %}
+          <span role="alert">{{ form.username.errors.0 }}</span>
+          {% endif %}
+        </div>
+
+        <div class="account-form-actions">
+          <button class="hero-button" type="submit">Сохранить</button>
+          <a class="hero-link" href="{% url 'profile' %}">Отмена</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

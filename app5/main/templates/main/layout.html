@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'main/css/style.css' %}?v=20260510-3">
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}?v=20260510-5">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
     <script type="importmap">
@@ -19,8 +19,7 @@
       }
     }
     </script>
-    {% block extra_css %}
-    {% endblock %}
+    {% block extra_css %}{% endblock %}
 </head>
 <body>
     <header>
@@ -53,9 +52,18 @@
             </ul>
         </nav>
     </header>
-    {% block content %}
-    {% endblock %}
-    {% block extra_js %}
-    {% endblock %}
+
+    {% if messages %}
+    <div class="site-messages info-section">
+        <div class="info-content">
+            {% for message in messages %}
+            <div class="site-message site-message--{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+    {% block extra_js %}{% endblock %}
 </body>
 </html>

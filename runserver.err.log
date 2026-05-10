@@ -186,3 +186,234 @@ Watching for file changes with StatReloader
 [10/May/2026 10:06:57] "GET /cart/ HTTP/1.1" 200 6171
 [10/May/2026 10:07:01] "POST /cart/remove/ HTTP/1.1" 302 0
 [10/May/2026 10:07:01] "GET /cart/ HTTP/1.1" 200 4129
+[10/May/2026 10:20:45] "GET / HTTP/1.1" 200 9579
+[10/May/2026 10:20:45] "GET /static/main/css/style.css?v=20260510-3 HTTP/1.1" 200 40451
+[10/May/2026 10:20:54] "GET /cart/ HTTP/1.1" 200 4129
+[10/May/2026 10:20:58] "GET /catalog/ HTTP/1.1" 200 19715
+[10/May/2026 10:51:54] "GET /admin HTTP/1.1" 301 0
+[10/May/2026 10:51:54] "GET /admin/ HTTP/1.1" 302 0
+[10/May/2026 10:51:54] "GET /admin/login/?next=/admin/ HTTP/1.1" 200 3851
+[10/May/2026 10:51:55] "GET /static/admin/css/base.css HTTP/1.1" 200 23100
+[10/May/2026 10:51:55] "GET /static/admin/css/login.css HTTP/1.1" 200 951
+[10/May/2026 10:51:55] "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2810
+[10/May/2026 10:51:55] "GET /static/admin/css/dark_mode.css HTTP/1.1" 200 3538
+[10/May/2026 10:51:55] "GET /static/admin/css/responsive.css HTTP/1.1" 200 16273
+[10/May/2026 10:51:55] "GET /static/admin/js/theme.js HTTP/1.1" 200 1653
+[10/May/2026 10:51:55] "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+[10/May/2026 10:52:00] "POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+[10/May/2026 10:52:00] "GET /admin/ HTTP/1.1" 200 7993
+[10/May/2026 10:52:00] "GET /static/admin/css/dashboard.css HTTP/1.1" 200 441
+[10/May/2026 10:52:00] "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 200 978
+[10/May/2026 10:52:00] "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 200 593
+[10/May/2026 10:52:07] "GET /admin/auth/user/ HTTP/1.1" 200 14869
+[10/May/2026 10:52:07,205] - Broken pipe from ('127.0.0.1', 57394)
+[10/May/2026 10:52:07] "GET /static/admin/css/changelists.css HTTP/1.1" 200 7498
+[10/May/2026 10:52:07] "GET /static/admin/js/jquery.init.js HTTP/1.1" 200 347
+[10/May/2026 10:52:07] "GET /static/admin/js/core.js HTTP/1.1" 200 6208
+[10/May/2026 10:52:07] "GET /static/admin/js/actions.js HTTP/1.1" 200 8076
+[10/May/2026 10:52:07] "GET /static/admin/js/urlify.js HTTP/1.1" 200 7887
+[10/May/2026 10:52:07] "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 200 9777
+[10/May/2026 10:52:07] "GET /admin/jsi18n/ HTTP/1.1" 200 16820
+[10/May/2026 10:52:07] "GET /static/admin/js/prepopulate.js HTTP/1.1" 200 1531
+[10/May/2026 10:52:07] "GET /static/admin/img/search.svg HTTP/1.1" 200 607
+[10/May/2026 10:52:07] "GET /static/admin/img/icon-yes.svg HTTP/1.1" 200 558
+[10/May/2026 10:52:07] "GET /static/admin/img/icon-no.svg HTTP/1.1" 200 645
+[10/May/2026 10:52:07] "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 285314
+[10/May/2026 10:52:07] "GET /static/admin/js/filters.js HTTP/1.1" 200 978
+[10/May/2026 10:52:07] "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 200 325171
+[10/May/2026 10:52:07] "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 593
+[10/May/2026 10:52:07] "GET /static/admin/img/icon-viewlink.svg HTTP/1.1" 200 928
+[10/May/2026 10:52:07] "GET /static/admin/img/sorting-icons.svg HTTP/1.1" 200 1761
+[10/May/2026 10:52:26] "GET /admin/ HTTP/1.1" 200 7993
+[10/May/2026 10:52:29] "GET /admin/ HTTP/1.1" 200 7993
+[10/May/2026 10:52:30] "GET / HTTP/1.1" 200 9971
+[10/May/2026 10:52:30] "GET /static/main/css/style.css?v=20260510-3 HTTP/1.1" 304 0
+[10/May/2026 11:30:58] "GET /create/ HTTP/1.1" 200 4932
+[10/May/2026 11:30:58] "GET /static/main/css/style.css?v=20260510-3 HTTP/1.1" 304 0
+[10/May/2026 11:30:58] "GET /static/main/css/create.css?v=20260509-3 HTTP/1.1" 200 8083
+[10/May/2026 11:30:58] "GET /static/main/images/akar-icons_basket.svg HTTP/1.1" 200 920
+[10/May/2026 11:30:58] "GET /static/main/images/PkAAAgPsfuA-960.jpg HTTP/1.1" 304 0
+[10/May/2026 11:30:58] "GET /static/main/images/chto-takoe-avtotyuning-i-chem-on-otlichaetsya-ot-stajlinga.jpg HTTP/1.1" 304 0
+Not Found: /bytesize_chevron-bottom.svg
+[10/May/2026 11:30:58] "GET /bytesize_chevron-bottom.svg HTTP/1.1" 404 4770
+[10/May/2026 11:31:22] "GET /catalog/ HTTP/1.1" 200 19715
+[10/May/2026 11:31:22] "GET /static/main/images/arttuning-1.png HTTP/1.1" 304 0
+[10/May/2026 11:31:22] "GET /static/main/images/bg-order-camaro.jpg HTTP/1.1" 304 0
+[10/May/2026 11:31:24] "GET / HTTP/1.1" 200 9971
+[10/May/2026 11:31:26] "GET /create/ HTTP/1.1" 200 4932
+Not Found: /bytesize_chevron-bottom.svg
+[10/May/2026 11:31:26] "GET /bytesize_chevron-bottom.svg HTTP/1.1" 404 4770
+[10/May/2026 11:31:28] "GET / HTTP/1.1" 200 9971
+[10/May/2026 11:31:30] "GET /cart/ HTTP/1.1" 200 4129
+[10/May/2026 11:31:32] "GET /catalog/ HTTP/1.1" 200 19715
+[10/May/2026 11:31:58] "GET /catalog/product/?product=kyb-excel-g-348006 HTTP/1.1" 200 12794
+[10/May/2026 11:32:31] "POST /cart/add/ HTTP/1.1" 302 0
+[10/May/2026 11:32:31] "GET /cart/ HTTP/1.1" 200 6167
+[10/May/2026 11:32:35] "POST /cart/update/ HTTP/1.1" 302 0
+[10/May/2026 11:32:35] "GET /cart/ HTTP/1.1" 200 6167
+[10/May/2026 11:32:36] "POST /cart/update/ HTTP/1.1" 302 0
+[10/May/2026 11:32:36] "GET /cart/ HTTP/1.1" 200 6167
+[10/May/2026 11:32:38] "POST /cart/update/ HTTP/1.1" 302 0
+[10/May/2026 11:32:38] "GET /cart/ HTTP/1.1" 200 6167
+[10/May/2026 11:32:39] "POST /cart/update/ HTTP/1.1" 302 0
+[10/May/2026 11:32:39] "GET /cart/ HTTP/1.1" 200 6167
+[10/May/2026 11:32:43] "POST /cart/update/ HTTP/1.1" 302 0
+[10/May/2026 11:32:43] "GET /cart/ HTTP/1.1" 200 6167
+[10/May/2026 11:32:45] "POST /cart/update/ HTTP/1.1" 302 0
+[10/May/2026 11:32:45] "GET /cart/ HTTP/1.1" 200 6167
+[10/May/2026 11:32:50] "POST /cart/update/ HTTP/1.1" 302 0
+[10/May/2026 11:32:50] "GET /cart/ HTTP/1.1" 200 6167
+[10/May/2026 11:32:53] "GET /checkout/ HTTP/1.1" 200 18264
+[10/May/2026 11:33:18] "GET /cart/ HTTP/1.1" 200 6167
+[10/May/2026 11:33:21] "POST /cart/update/ HTTP/1.1" 302 0
+[10/May/2026 11:33:21] "GET /cart/ HTTP/1.1" 200 6167
+[10/May/2026 11:33:21] "POST /cart/update/ HTTP/1.1" 302 0
+[10/May/2026 11:33:21] "GET /cart/ HTTP/1.1" 200 6167
+[10/May/2026 11:33:23] "POST /cart/remove/ HTTP/1.1" 302 0
+[10/May/2026 11:33:23] "GET /cart/ HTTP/1.1" 200 4129
+[10/May/2026 11:33:29] "POST /accounts/logout/ HTTP/1.1" 302 0
+[10/May/2026 11:33:29] "GET / HTTP/1.1" 200 9579
+[10/May/2026 11:33:38] "GET /accounts/login/ HTTP/1.1" 200 3181
+[10/May/2026 11:33:56] "POST /accounts/login/ HTTP/1.1" 302 0
+[10/May/2026 11:33:56] "GET / HTTP/1.1" 200 9971
+[10/May/2026 11:33:59] "GET /accounts/profile/ HTTP/1.1" 200 2707
+[10/May/2026 11:34:12] "GET /catalog/ HTTP/1.1" 200 19715
+[10/May/2026 11:34:23] "GET /catalog/ HTTP/1.1" 200 19715
+[10/May/2026 11:34:25] "GET / HTTP/1.1" 200 9971
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[10/May/2026 11:49:01] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 4833
+[10/May/2026 11:52:22] "GET / HTTP/1.1" 200 9802
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[10/May/2026 11:52:22] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 4833
+[10/May/2026 11:53:12] "GET / HTTP/1.1" 200 9804
+Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\dello\Desktop\myapp\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\dello\Desktop\myapp\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\dello\Desktop\myapp\app5\main\views.py", line 13, in index
+    return render(request, 'main/index.html')
+  File "C:\Users\dello\Desktop\myapp\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\dello\Desktop\myapp\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dello\Desktop\myapp\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\dello\Desktop\myapp\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\dello\Desktop\myapp\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\dello\Desktop\myapp\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\dello\Desktop\myapp\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\dello\Desktop\myapp\venv\Lib\site-packages\django\template\loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\dello\Desktop\myapp\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\dello\Desktop\myapp\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\dello\Desktop\myapp\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\dello\Desktop\myapp\venv\Lib\site-packages\django\template\loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\dello\Desktop\myapp\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\dello\Desktop\myapp\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\dello\Desktop\myapp\venv\Lib\site-packages\django\template\defaulttags.py", line 511, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\dello\Desktop\myapp\venv\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\dello\Desktop\myapp\venv\Lib\site-packages\django\urls\resolvers.py", line 842, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'cart' not found. 'cart' is not a valid view function or pattern name.
+[10/May/2026 11:53:47] "GET / HTTP/1.1" 500 149353
+[10/May/2026 11:54:21] "GET / HTTP/1.1" 200 9805
+[10/May/2026 11:54:23] "GET /catalog/ HTTP/1.1" 200 19715
+[10/May/2026 11:54:29] "GET / HTTP/1.1" 200 9805
+[10/May/2026 11:54:31] "GET /cart/ HTTP/1.1" 200 4129
+[10/May/2026 11:54:34] "GET /catalog/ HTTP/1.1" 200 19715
+[10/May/2026 11:55:50] "GET /cart/ HTTP/1.1" 200 4129
+[10/May/2026 11:55:54] "GET /accounts/profile/ HTTP/1.1" 200 2707
+[10/May/2026 11:55:55] "GET /cart/ HTTP/1.1" 200 4129
+[10/May/2026 11:55:56] "GET /catalog/ HTTP/1.1" 200 19715
+[10/May/2026 11:55:59] "POST /cart/add/ HTTP/1.1" 302 0
+[10/May/2026 11:55:59] "GET /cart/ HTTP/1.1" 200 6171
+[10/May/2026 11:56:03] "GET /checkout/ HTTP/1.1" 200 18262
+[10/May/2026 11:56:22] "GET /catalog/ HTTP/1.1" 200 19800
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[10/May/2026 11:56:36] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 4833
+[10/May/2026 11:57:57] "GET /cart/ HTTP/1.1" 200 6148
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[10/May/2026 11:57:57] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 4833
+[10/May/2026 11:58:09] "GET /cart/ HTTP/1.1" 200 6159
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[10/May/2026 11:58:09] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 4833
+[10/May/2026 11:58:38] "GET /checkout/ HTTP/1.1" 200 18262
+[10/May/2026 11:59:32] "GET /catalog/ HTTP/1.1" 200 19800
+[10/May/2026 12:00:02] "POST /cart/add/ HTTP/1.1" 302 0
+[10/May/2026 12:00:02] "GET /cart/ HTTP/1.1" 200 6159
+[10/May/2026 12:00:05] "POST /cart/update/ HTTP/1.1" 302 0
+[10/May/2026 12:00:05] "GET /cart/ HTTP/1.1" 200 6159
+[10/May/2026 12:00:07] "POST /cart/update/ HTTP/1.1" 302 0
+[10/May/2026 12:00:07] "GET /cart/ HTTP/1.1" 200 6159
+[10/May/2026 12:00:08] "POST /cart/remove/ HTTP/1.1" 302 0
+[10/May/2026 12:00:08] "GET /cart/ HTTP/1.1" 200 4129
+[10/May/2026 12:00:10] "GET /catalog/ HTTP/1.1" 200 19715
+[10/May/2026 12:00:23] "GET /catalog/ HTTP/1.1" 200 19715
+[10/May/2026 12:00:29] "GET / HTTP/1.1" 200 9805
+[10/May/2026 12:00:31] "GET /catalog/ HTTP/1.1" 200 19715
+[10/May/2026 12:00:33] "GET / HTTP/1.1" 200 9805
+[10/May/2026 12:01:39] "GET /cart/ HTTP/1.1" 200 4129
+[10/May/2026 12:01:42] "GET /catalog/ HTTP/1.1" 200 19715
+[10/May/2026 12:02:15] "POST /accounts/logout/ HTTP/1.1" 302 0
+[10/May/2026 12:02:16] "GET / HTTP/1.1" 200 9413
+[10/May/2026 12:02:17] "GET /accounts/login/ HTTP/1.1" 200 3181
+[10/May/2026 12:02:23] "GET /accounts/register/ HTTP/1.1" 200 3779
+[10/May/2026 12:02:26] "GET /accounts/login/ HTTP/1.1" 200 3181
+[10/May/2026 12:02:28] "GET /accounts/register/ HTTP/1.1" 200 3779
+[10/May/2026 12:02:36] "GET /accounts/login/ HTTP/1.1" 200 3181
+[10/May/2026 12:03:41] "GET /accounts/login/ HTTP/1.1" 200 3163
+[10/May/2026 12:03:55] "POST /accounts/login/ HTTP/1.1" 302 0
+[10/May/2026 12:03:55] "GET / HTTP/1.1" 200 9805
+[10/May/2026 12:04:13] "GET /cart/ HTTP/1.1" 200 4129
+[10/May/2026 12:04:16] "GET /catalog/ HTTP/1.1" 200 19715
+[10/May/2026 12:05:04] "GET /accounts/profile/ HTTP/1.1" 200 2707
+[10/May/2026 12:05:06] "GET /catalog/ HTTP/1.1" 200 19715
+[10/May/2026 15:03:24] "GET / HTTP/1.1" 200 9805
+[10/May/2026 15:03:24] "GET /static/main/css/style.css?v=20260510-3 HTTP/1.1" 304 0
+[10/May/2026 15:03:40] "GET /catalog/ HTTP/1.1" 200 19715
+[10/May/2026 15:03:40] "GET /static/main/images/PkAAAgPsfuA-960.jpg HTTP/1.1" 304 0
+[10/May/2026 15:03:40] "GET /static/main/images/bg-order-camaro.jpg HTTP/1.1" 304 0
+[10/May/2026 15:03:40] "GET /static/main/images/chto-takoe-avtotyuning-i-chem-on-otlichaetsya-ot-stajlinga.jpg HTTP/1.1" 304 0
+[10/May/2026 15:03:40] "GET /static/main/images/arttuning-1.png HTTP/1.1" 304 0
+[10/May/2026 15:04:00] "POST /cart/add/ HTTP/1.1" 302 0
+[10/May/2026 15:04:00] "GET /cart/ HTTP/1.1" 200 6159
+[10/May/2026 15:04:03] "POST /cart/update/ HTTP/1.1" 302 0
+[10/May/2026 15:04:03] "GET /cart/ HTTP/1.1" 200 6159
+[10/May/2026 15:04:05] "POST /cart/update/ HTTP/1.1" 302 0
+[10/May/2026 15:04:05] "GET /cart/ HTTP/1.1" 200 6159
+[10/May/2026 15:04:08] "GET /checkout/ HTTP/1.1" 200 18262
+[10/May/2026 15:04:17] "GET /cart/ HTTP/1.1" 200 6159
+[10/May/2026 15:04:19] "POST /accounts/logout/ HTTP/1.1" 302 0
+[10/May/2026 15:04:19] "GET / HTTP/1.1" 200 9413
+[10/May/2026 15:04:23] "GET /accounts/login/ HTTP/1.1" 200 3163
+[10/May/2026 15:04:31] "POST /accounts/login/ HTTP/1.1" 302 0
+[10/May/2026 15:04:31] "GET / HTTP/1.1" 200 9805
+[10/May/2026 15:04:36] "GET /catalog/ HTTP/1.1" 200 19715
+[10/May/2026 15:04:37] "GET /accounts/profile/ HTTP/1.1" 200 2707
+[10/May/2026 15:04:44] "GET / HTTP/1.1" 200 9805

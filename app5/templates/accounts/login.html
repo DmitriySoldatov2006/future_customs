@@ -3,15 +3,19 @@
 {% block title %}Вход в аккаунт{% endblock %}
 
 {% block content %}
-<div class="parallax-bg" data-parallax-layer data-speed="-0.16"></div>
-
-<section class="login-page info-section">
-    <div class="info-content">
-        <div class="login-wrapper filter-card">
+<section class="info-section auth-page">
+    <div class="info-content auth-content">
+        <div class="filter-card auth-card">
             <p class="section-kicker">Аккаунт</p>
-            <h1>Вход в аккаунт</h1>
+            <h2 class="auth-heading">Вход</h2>
 
-            <form method="post">
+            {% if form.non_field_errors %}
+            <div class="form-error-box" role="alert">
+                {{ form.non_field_errors.0 }}
+            </div>
+            {% endif %}
+
+            <form method="post" novalidate class="auth-form">
                 {% csrf_token %}
 
                 {% if request.GET.next %}
@@ -20,32 +24,46 @@
                 <input type="hidden" name="next" value="{{ request.POST.next }}">
                 {% endif %}
 
-                <div>
-                    <label for="{{ form.email.id_for_label }}">Электронная почта или логин</label>
-                    {{ form.email }}
+                <div class="auth-form-group{% if form.email.errors %} has-error{% endif %}">
+                    <label class="form-label" for="{{ form.email.id_for_label }}">Электронная почта или логин</label>
+                    <input
+                        type="text"
+                        name="{{ form.email.html_name }}"
+                        id="{{ form.email.id_for_label }}"
+                        class="auth-input"
+                        placeholder="Введите электронную почту или логин"
+                        autocomplete="username"
+                        value="{{ form.email.value|default_if_none:'' }}"
+                        {% if form.email.errors %}aria-invalid="true"{% endif %}
+                    >
                     {% if form.email.errors %}
-                    <span role="alert">{{ form.email.errors.0 }}</span>
+                    <span class="form-error" role="alert">{{ form.email.errors.0 }}</span>
                     {% endif %}
                 </div>
 
-                <div>
-                    <label for="{{ form.password.id_for_label }}">Пароль</label>
-                    {{ form.password }}
+                <div class="auth-form-group{% if form.password.errors %} has-error{% endif %}">
+                    <label class="form-label" for="{{ form.password.id_for_label }}">Пароль</label>
+                    <input
+                        type="password"
+                        name="{{ form.password.html_name }}"
+                        id="{{ form.password.id_for_label }}"
+                        class="auth-input"
+                        placeholder="Введите пароль"
+                        autocomplete="current-password"
+                        {% if form.password.errors %}aria-invalid="true"{% endif %}
+                    >
                     {% if form.password.errors %}
-                    <span role="alert">{{ form.password.errors.0 }}</span>
+                    <span class="form-error" role="alert">{{ form.password.errors.0 }}</span>
                     {% endif %}
                 </div>
 
-                {% if form.non_field_errors %}
-                <div role="alert">
-                    {{ form.non_field_errors.0 }}
-                </div>
-                {% endif %}
-
-                <button class="hero-button" type="submit">Войти</button>
+                <button class="hero-button auth-submit" type="submit">Войти</button>
             </form>
 
-            <h2>Нет аккаунта? <a class="go-reg" href="{% url 'register' %}">Зарегистрироваться</a></h2>
+            <div class="auth-secondary-link">
+                <span class="text-muted">Нет аккаунта?</span>
+                <a href="{% url 'register' %}">Зарегистрироваться</a>
+            </div>
         </div>
     </div>
 </section>

@@ -1,6 +1,11 @@
+from decimal import Decimal
+
 from django.contrib.auth import get_user_model
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
 from django.urls import reverse
+
+from checkout.models import Order, OrderItem
 
 
 User = get_user_model()
@@ -152,3 +157,62 @@ class AccountViewsTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Пароли не совпадают')
+
+    def test_profile_requires_login(self):
+        response = self.client.get(reverse('profile'))
+
+        self.assertRedirects(response, reverse('login') + '?next=' + reverse('profile'))
+
+    def test_profile_renders_orders_and_links(self):
+        user = User.objects.create_user(username='tester', email='tester@example.com', password='StrongPass123!')
+        self.client.force_login(user)
+        order = Order.objects.create(
+            user=user,
+            full_name='Иванов Иван Иванович',
+            phone='+79991234567',
+            region='Московская область',
+            city='Москва',
+            address='ул. Ленина, д. 1',
+            total=Decimal('40600.00'),
+        )
+        OrderItem.objects.create(order=order, product_id='brembo-prime-p85-020', name='Brembo', quantity=2, price=Decimal('18900.00'))
+        OrderItem.objects.create(order=order, product_id='mann-hu-816-x', name='MANN', quantity=1, price=Decimal('2800.00'))
+
+        response = self.client.get(reverse('profile'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Профиль')
+        self.assertContains(response, 'Личная информация')
+        self.assertContains(response, 'История заказов')
+        self.assertContains(response, 'Brembo, MANN')
+
+    def test_change_username_updates_user(self):
+        user = User.objects.create_user(username='tester', email='tester@example.com', password='StrongPass123!')
+        self.client.force_login(user)
+
+        response = self.client.post(reverse('change_username'), {'username': 'new-tester'})
+
+        self.assertRedirects(response, reverse('profile'))
+        user.refresh_from_db()
+        self.assertEqual(user.username, 'new-tester')
+
+    def test_change_email_rejects_duplicate(self):
+        User.objects.create_user(username='taken', email='taken@example.com', password='StrongPass123!')
+        user = User.objects.create_user(username='tester', email='tester@example.com', password='StrongPass123!')
+        self.client.force_login(user)
+
+        response = self.client.post(reverse('change_email'), {'email': 'taken@example.com'})
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Этот email уже используется')
+
+    def test_avatar_upload_saves_file(self):
+        user = User.objects.create_user(username='tester', email='tester@example.com', password='StrongPass123!')
+        self.client.force_login(user)
+        avatar = SimpleUploadedFile('avatar.gif', b'GIF87a\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\xff\xff\xff!\xf9\x04\x01\x00\x00\x00\x00,\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02D\x01\x00;', content_type='image/gif')
+
+        response = self.client.post(reverse('avatar_upload'), {'avatar': avatar})
+
+        self.assertRedirects(response, reverse('profile'))
+        user.refresh_from_db()
+        self.assertTrue(user.profile.avatar.name.startswith('avatars/'))

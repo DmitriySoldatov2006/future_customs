@@ -137,7 +137,7 @@
 .order-page .main-price-order button:hover {
   background-color: #000;
   color: #CBE857;
-}/*# sourceMappingURL=order.css.map */
+}
 
 .order-page {
   background-image: radial-gradient(circle at 18% 18%, rgba(198, 141, 255, 0.24), transparent 34%), linear-gradient(120deg, rgba(8, 12, 17, 0.97), rgba(38, 21, 55, 0.86) 50%, rgba(8, 12, 17, 0.82)), linear-gradient(180deg, rgba(8, 12, 17, 0.3), rgba(8, 12, 17, 0.76)), url("../images/chto-takoe-avtotyuning-i-chem-on-otlichaetsya-ot-stajlinga.jpg");
@@ -176,7 +176,6 @@
     margin-left: 0;
   }
 }
-
 .order-page {
   padding: clamp(24px, 4vw, 56px);
 }
@@ -244,4 +243,4 @@
   .order-page .flex-container .order-input {
     width: 100%;
   }
-}
+}/*# sourceMappingURL=order.css.map */

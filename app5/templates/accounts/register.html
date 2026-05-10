@@ -3,59 +3,94 @@
 {% block title %}Регистрация{% endblock %}
 
 {% block content %}
-<div class="parallax-bg" data-parallax-layer data-speed="-0.16"></div>
-
-<section class="login-page info-section">
-    <div class="info-content">
-        <div class="login-wrapper filter-card">
+<section class="info-section auth-page">
+    <div class="info-content auth-content">
+        <div class="filter-card auth-card">
             <p class="section-kicker">Аккаунт</p>
-            <h1>Регистрация</h1>
+            <h2 class="auth-heading">Регистрация</h2>
 
-            <form method="post">
+            {% if form.non_field_errors %}
+            <div class="form-error-box" role="alert">
+                {{ form.non_field_errors.0 }}
+            </div>
+            {% endif %}
+
+            <form method="post" novalidate class="auth-form">
                 {% csrf_token %}
 
-                <div>
-                    <label for="{{ form.email.id_for_label }}">Электронная почта</label>
-                    {{ form.email }}
+                <div class="auth-form-group{% if form.email.errors %} has-error{% endif %}">
+                    <label class="form-label" for="{{ form.email.id_for_label }}">Электронная почта</label>
+                    <input
+                        type="email"
+                        name="{{ form.email.html_name }}"
+                        id="{{ form.email.id_for_label }}"
+                        class="auth-input"
+                        placeholder="Введите электронную почту"
+                        autocomplete="email"
+                        value="{{ form.email.value|default_if_none:'' }}"
+                        {% if form.email.errors %}aria-invalid="true"{% endif %}
+                    >
                     {% if form.email.errors %}
-                    <span role="alert">{{ form.email.errors.0 }}</span>
+                    <span class="form-error" role="alert">{{ form.email.errors.0 }}</span>
                     {% endif %}
                 </div>
 
-                <div>
-                    <label for="{{ form.username.id_for_label }}">Логин</label>
-                    {{ form.username }}
+                <div class="auth-form-group{% if form.username.errors %} has-error{% endif %}">
+                    <label class="form-label" for="{{ form.username.id_for_label }}">Логин</label>
+                    <input
+                        type="text"
+                        name="{{ form.username.html_name }}"
+                        id="{{ form.username.id_for_label }}"
+                        class="auth-input"
+                        placeholder="Придумайте логин"
+                        autocomplete="username"
+                        value="{{ form.username.value|default_if_none:'' }}"
+                        {% if form.username.errors %}aria-invalid="true"{% endif %}
+                    >
                     {% if form.username.errors %}
-                    <span role="alert">{{ form.username.errors.0 }}</span>
+                    <span class="form-error" role="alert">{{ form.username.errors.0 }}</span>
                     {% endif %}
                 </div>
 
-                <div>
-                    <label for="{{ form.password1.id_for_label }}">Пароль</label>
-                    {{ form.password1 }}
+                <div class="auth-form-group{% if form.password1.errors %} has-error{% endif %}">
+                    <label class="form-label" for="{{ form.password1.id_for_label }}">Пароль</label>
+                    <input
+                        type="password"
+                        name="{{ form.password1.html_name }}"
+                        id="{{ form.password1.id_for_label }}"
+                        class="auth-input"
+                        placeholder="Придумайте пароль"
+                        autocomplete="new-password"
+                        {% if form.password1.errors %}aria-invalid="true"{% endif %}
+                    >
                     {% if form.password1.errors %}
-                    <span role="alert">{{ form.password1.errors.0 }}</span>
+                    <span class="form-error" role="alert">{{ form.password1.errors.0 }}</span>
                     {% endif %}
                 </div>
 
-                <div>
-                    <label for="{{ form.password2.id_for_label }}">Повторите пароль</label>
-                    {{ form.password2 }}
+                <div class="auth-form-group{% if form.password2.errors %} has-error{% endif %}">
+                    <label class="form-label" for="{{ form.password2.id_for_label }}">Повторите пароль</label>
+                    <input
+                        type="password"
+                        name="{{ form.password2.html_name }}"
+                        id="{{ form.password2.id_for_label }}"
+                        class="auth-input"
+                        placeholder="Повторите пароль"
+                        autocomplete="new-password"
+                        {% if form.password2.errors %}aria-invalid="true"{% endif %}
+                    >
                     {% if form.password2.errors %}
-                    <span role="alert">{{ form.password2.errors.0 }}</span>
+                    <span class="form-error" role="alert">{{ form.password2.errors.0 }}</span>
                     {% endif %}
                 </div>
 
-                {% if form.non_field_errors %}
-                <div role="alert">
-                    {{ form.non_field_errors.0 }}
-                </div>
-                {% endif %}
-
-                <button class="hero-button" type="submit">Зарегистрироваться</button>
+                <button class="hero-button auth-submit" type="submit">Зарегистрироваться</button>
             </form>
 
-            <h2>Уже есть аккаунт? <a class="go-reg" href="{% url 'login' %}">Войти</a></h2>
+            <div class="auth-secondary-link">
+                <span class="text-muted">Уже есть аккаунт?</span>
+                <a href="{% url 'login' %}">Войти</a>
+            </div>
         </div>
     </div>
 </section>

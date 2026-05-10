@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import PasswordChangeForm, UserCreationForm
 
 
 User = get_user_model()
@@ -86,6 +86,69 @@ class LoginForm(forms.Form):
                 'class': 'login-input',
                 'placeholder': 'Пароль',
                 'autocomplete': 'current-password',
+            }
+        ),
+    )
+
+
+class UsernameChangeForm(forms.Form):
+    username = forms.CharField(
+        max_length=150,
+        label='Логин',
+        widget=forms.TextInput(
+            attrs={
+                'class': 'login-input',
+                'placeholder': 'Логин',
+                'autocomplete': 'username',
+            }
+        ),
+    )
+
+
+class EmailChangeForm(forms.Form):
+    email = forms.EmailField(
+        label='Почта',
+        widget=forms.EmailInput(
+            attrs={
+                'class': 'login-input',
+                'placeholder': 'Почта',
+                'autocomplete': 'email',
+            }
+        ),
+    )
+
+
+class StyledPasswordChangeForm(PasswordChangeForm):
+    old_password = forms.CharField(
+        label='Текущий пароль',
+        strip=False,
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'login-input',
+                'placeholder': 'Текущий пароль',
+                'autocomplete': 'current-password',
+            }
+        ),
+    )
+    new_password1 = forms.CharField(
+        label='Новый пароль',
+        strip=False,
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'login-input',
+                'placeholder': 'Новый пароль',
+                'autocomplete': 'new-password',
+            }
+        ),
+    )
+    new_password2 = forms.CharField(
+        label='Повторите новый пароль',
+        strip=False,
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'login-input',
+                'placeholder': 'Повторите новый пароль',
+                'autocomplete': 'new-password',
             }
         ),
     )

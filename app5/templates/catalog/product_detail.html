@@ -1,0 +1,159 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block content %}
+<div class="parallax-bg" data-parallax-layer data-speed="-0.12"></div>
+
+<section class="product-page info-section">
+  <div class="info-content">
+    <nav class="breadcrumb" aria-label="Навигация">
+      <a href="{% url 'home' %}">Главная</a>
+      <span>/</span>
+      <a href="{% url 'catalog' %}">Каталог</a>
+      {% if product.category_name %}
+      <span>/</span>
+      <strong>{{ product.category_name }}</strong>
+      {% endif %}
+    </nav>
+
+    <div class="product-detail-layout">
+      <div class="product-gallery">
+        <div class="product-gallery__main">
+          {% if product.image_url %}
+          <img class="product-gallery__image" src="{{ product.image_url }}" alt="{{ product.name }}">
+          {% else %}
+          <div class="product-card__media">
+            <span>Нет фото</span>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="product-summary">
+        <p class="section-kicker">Карточка товара</p>
+        <h1>{{ product.name }}</h1>
+        <div class="product-meta">
+          {% if product.brand %}{{ product.brand }}{% endif %}
+          {% if product.brand and product.vin_number %} · {% endif %}
+          {% if product.vin_number %}VIN: {{ product.vin_number }}{% endif %}
+          {% if not product.brand and not product.vin_number %}{{ product.category_name }}{% endif %}
+        </div>
+        <div class="product-price-row">
+          <strong>{{ product.price_display }}</strong>
+          <span class="stock-badge">{{ product.stock_label }}</span>
+        </div>
+        <p class="product-copy">{{ product.short_description }}</p>
+
+        <form class="purchase-box" method="post" action="{% url 'cart_add' %}">
+          {% csrf_token %}
+          <input type="hidden" name="product_id" value="{{ product.id }}">
+          <div class="quantity-picker" data-quantity>
+            <button type="button" data-qty-minus>-</button>
+            <input type="number" name="quantity" value="{% if product.quantity %}{{ product.quantity }}{% else %}1{% endif %}" min="1">
+            <button type="button" data-qty-plus>+</button>
+          </div>
+          <button class="hero-button purchase-box__cta" type="submit">Добавить в корзину</button>
+        </form>
+
+        <a class="wishlist-link" href="{% url 'cart_view' %}">Перейти в корзину</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="info-section info-section--alt" data-reveal>
+  <div class="info-content product-detail-sections">
+    <div class="detail-copy">
+      <p class="section-kicker">Описание</p>
+      <h2>Описание</h2>
+      {% for paragraph in product.description %}
+      <p>{{ paragraph }}</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% if related_products %}
+<section class="info-section" data-reveal>
+  <div class="info-content">
+    <p class="section-kicker">Похожие товары</p>
+    <h2>Похожие товары</h2>
+    <div class="related-row">
+      {% for related_product in related_products %}
+      <article class="product-card {{ related_product.stock_class }}" data-product-card data-href="{{ related_product.detail_url }}" tabindex="0" role="link">
+        <div class="product-card__media">
+          {% if related_product.image_url %}
+          <img src="{{ related_product.image_url }}" alt="{{ related_product.name }}">
+          {% else %}
+          <span>Нет фото</span>
+          {% endif %}
+        </div>
+        <div class="product-card__body">
+          <div class="stock-badge">{{ related_product.stock_label }}</div>
+          <h3>{{ related_product.name }}</h3>
+          <p>{% if related_product.brand %}{{ related_product.brand }}{% else %}{{ related_product.category_name }}{% endif %}</p>
+          <strong>{{ related_product.price_display }}</strong>
+          <form class="product-card__cart" method="post" action="{% url 'cart_add' %}">
+            {% csrf_token %}
+            <input type="hidden" name="product_id" value="{{ related_product.id }}">
+            <input type="hidden" name="quantity" value="1">
+            <button class="add-cart" type="submit">В корзину</button>
+          </form>
+          {% if related_product.quantity %}
+          <span class="card-cart-badge is-visible">{{ related_product.quantity }}</span>
+          {% endif %}
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script type="module">
+  import { inView, animate } from 'motion';
+
+  document.querySelectorAll('[data-reveal]').forEach((el) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(48px)';
+    inView(el, () => {
+      animate(el, { opacity: [0, 1], y: [48, 0] }, { duration: 0.7, ease: 'easeOut' });
+    }, { amount: 0.2 });
+  });
+
+  const quantity = document.querySelector('[data-quantity]');
+  if (quantity) {
+    const input = quantity.querySelector('input');
+    quantity.querySelector('[data-qty-minus]').addEventListener('click', () => {
+      input.value = Math.max(1, Number(input.value) - 1);
+    });
+    quantity.querySelector('[data-qty-plus]').addEventListener('click', () => {
+      input.value = Number(input.value) + 1;
+    });
+  }
+
+  document.querySelectorAll('[data-product-card]').forEach((card) => {
+    const href = card.dataset.href;
+    card.querySelectorAll('form, button, a').forEach((interactive) => {
+      interactive.addEventListener('click', (event) => {
+        event.stopPropagation();
+      });
+    });
+
+    card.addEventListener('click', (event) => {
+      if (event.target.closest('form, button, a')) return;
+      if (href) window.location.href = href;
+    });
+
+    card.addEventListener('keydown', (event) => {
+      if ((event.key === 'Enter' || event.key === ' ') && !event.target.closest('form, button, a')) {
+        event.preventDefault();
+        if (href) window.location.href = href;
+      }
+    });
+  });
+</script>
+{% endblock %}

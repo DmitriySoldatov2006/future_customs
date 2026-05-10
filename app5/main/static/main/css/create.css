@@ -203,7 +203,7 @@
   font-size: 1.7vh;
   cursor: pointer;
   background-color: #CBE857;
-}/*# sourceMappingURL=create.css.map */
+}
 
 .main-constr {
   background-image: radial-gradient(circle at 18% 18%, rgba(198, 141, 255, 0.24), transparent 34%), linear-gradient(120deg, rgba(8, 12, 17, 0.97), rgba(38, 21, 55, 0.88) 52%, rgba(8, 12, 17, 0.82)), linear-gradient(180deg, rgba(8, 12, 17, 0.34), rgba(8, 12, 17, 0.74)), url("../images/chto-takoe-avtotyuning-i-chem-on-otlichaetsya-ot-stajlinga.jpg");
@@ -266,7 +266,6 @@
     border-radius: 10px;
   }
 }
-
 .main-constr {
   gap: 28px;
 }
@@ -402,4 +401,4 @@
   .constr-info {
     grid-template-columns: 1fr;
   }
-}
+}/*# sourceMappingURL=create.css.map */

@@ -71,7 +71,7 @@
 }
 .login-page .login-wrapper .go-reg:hover {
   color: #CBE857;
-}/*# sourceMappingURL=register.css.map */
+}
 
 .login-page {
   background-image: radial-gradient(circle at 18% 18%, rgba(198, 141, 255, 0.24), transparent 34%), linear-gradient(120deg, rgba(8, 12, 17, 0.97), rgba(38, 21, 55, 0.86) 52%, rgba(8, 12, 17, 0.76)), linear-gradient(180deg, rgba(8, 12, 17, 0.28), rgba(8, 12, 17, 0.76)), url("../images/PkAAAgPsfuA-960.jpg");
@@ -94,7 +94,6 @@
     padding: 28px 0;
   }
 }
-
 .login-page {
   min-height: calc(100vh - 72px);
 }
@@ -130,3 +129,4 @@
   border-radius: 8px;
   color: #0a0f14;
 }
+/*# sourceMappingURL=register.css.map */
