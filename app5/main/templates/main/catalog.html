@@ -1,4 +1,5 @@
 {% extends 'main/layout.html' %}
+{% load static %}
 
 {% block title %}Каталог{% endblock %}
 
@@ -46,7 +47,6 @@
 
 <section class="catalog-search-shell info-section" data-reveal>
   <div class="info-content">
-    <!-- position: sticky; top: 72px; z-index: 100; -->
     <form class="catalog-search">
       <label class="sr-only" for="catalog-search">Поиск по каталогу</label>
       <input id="catalog-search" type="search" placeholder="Поиск по названию, артикулу или бренду...">
@@ -69,7 +69,6 @@
 
     <div class="catalog-layout">
       <aside class="catalog-filters" data-filter-panel>
-        <!-- Sort param: name_asc / name_desc / price_asc / price_desc / default -->
         <div class="filter-card">
           <div class="filter-card__head">
             <h3>Сортировка</h3>
@@ -89,15 +88,15 @@
             <label>
               <span>От</span>
               <div class="field-wrap">
-                <input type="number" placeholder="120">
-                <i>$</i>
+                <input type="number" placeholder="2800">
+                <i>₽</i>
               </div>
             </label>
             <label>
               <span>До</span>
               <div class="field-wrap">
-                <input type="number" placeholder="650">
-                <i>$</i>
+                <input type="number" placeholder="31200">
+                <i>₽</i>
               </div>
             </label>
           </div>
@@ -112,7 +111,7 @@
               <option selected>Выберите тип детали</option>
               <option>Тормозные колодки</option>
               <option>Тормозные диски</option>
-              <option>Рычаги подвески</option>
+              <option>Подвеска</option>
               <option>Амортизаторы</option>
             </select>
           </label>
@@ -129,6 +128,7 @@
               <option>ATE</option>
               <option>TRW</option>
               <option>KYB</option>
+              <option>Osram</option>
             </select>
           </label>
         </div>
@@ -150,15 +150,15 @@
             <span>Материал</span>
             <div class="checkbox-group">
               <label><input type="checkbox" checked> Керамика</label>
-              <label><input type="checkbox"> Низкометаллические</label>
+              <label><input type="checkbox"> Металл</label>
             </div>
           </div>
           <div class="dynamic-row">
-            <span>Датчик износа</span>
+            <span>Наличие</span>
             <label class="select-row">
               <select>
-                <option selected>В комплекте</option>
-                <option>Не входит</option>
+                <option selected>В наличии</option>
+                <option>Под заказ</option>
               </select>
             </label>
           </div>
@@ -169,130 +169,36 @@
 
       <div class="catalog-products">
         <div class="catalog-stats">
-          <span>Найдено 186 товаров</span>
+          <span>Найдено {{ results_count }} товаров</span>
           <span>3 колонки / 2 колонки / 1 колонка</span>
         </div>
 
         <div class="product-grid">
-          <article class="product-card product-card--stock" data-card data-product-card data-href="{% url 'product_detail' %}" tabindex="0" role="link">
-            <div class="product-card__media"><span>Фото</span></div>
+          {% for product in products %}
+          <article class="product-card {{ product.stock_class }}" data-card data-product-card data-href="{{ product.detail_url }}" tabindex="0" role="link">
+            <div class="product-card__media">
+              <img src="{% static product.image %}" alt="{{ product.name }}">
+            </div>
             <div class="product-card__body">
-              <div class="stock-badge">В наличии</div>
-              <h3>Brembo Prime Brake Pads Set P 85 020</h3>
-              <p>Brembo</p>
-              <strong>$189</strong>
-              <div class="product-card__cart" data-cart-state>
-                <button class="add-cart" type="button" data-cart-add>В корзину</button>
-                <div class="card-qty" aria-label="Количество">
-                  <button type="button" data-qty-minus>-</button>
-                  <span data-qty-value>1</span>
-                  <button type="button" data-qty-plus>+</button>
-                  <i>&#10003;</i>
-                </div>
-              </div>
-              <span class="card-cart-badge">&#10003;</span>
+              <div class="stock-badge">{{ product.stock_label }}</div>
+              <h3>{{ product.name }}</h3>
+              <p>{{ product.brand }}</p>
+              <p>{{ product.short_description }}</p>
+              <strong>{{ product.price_display }}</strong>
+              <form class="product-card__cart" method="post" action="{% url 'cart_add' %}">
+                {% csrf_token %}
+                <input type="hidden" name="product_id" value="{{ product.id }}">
+                <input type="hidden" name="quantity" value="1">
+                <button class="add-cart" type="submit">
+                  {% if product.in_cart %}Добавить ещё{% else %}В корзину{% endif %}
+                </button>
+              </form>
+              {% if product.quantity %}
+              <span class="card-cart-badge is-visible">{{ product.quantity }}</span>
+              {% endif %}
             </div>
           </article>
-
-          <article class="product-card product-card--low" data-card data-product-card data-href="{% url 'product_detail' %}" tabindex="0" role="link">
-            <div class="product-card__media"><span>Фото</span></div>
-            <div class="product-card__body">
-              <div class="stock-badge">Заканчивается</div>
-              <h3>ATE PowerDisc Front Brake Rotor 24.0325-0150.1</h3>
-              <p>ATE</p>
-              <strong>$224</strong>
-              <div class="product-card__cart" data-cart-state>
-                <button class="add-cart" type="button" data-cart-add>В корзину</button>
-                <div class="card-qty" aria-label="Количество">
-                  <button type="button" data-qty-minus>-</button>
-                  <span data-qty-value>1</span>
-                  <button type="button" data-qty-plus>+</button>
-                  <i>&#10003;</i>
-                </div>
-              </div>
-              <span class="card-cart-badge">&#10003;</span>
-            </div>
-          </article>
-
-          <article class="product-card product-card--stock" data-card data-product-card data-href="{% url 'product_detail' %}" tabindex="0" role="link">
-            <div class="product-card__media"><span>Фото</span></div>
-            <div class="product-card__body">
-              <div class="stock-badge">В наличии</div>
-              <h3>TRW Front Control Arm Kit JTC1423 + JTC1424</h3>
-              <p>TRW</p>
-              <strong>$312</strong>
-              <div class="product-card__cart" data-cart-state>
-                <button class="add-cart" type="button" data-cart-add>В корзину</button>
-                <div class="card-qty" aria-label="Количество">
-                  <button type="button" data-qty-minus>-</button>
-                  <span data-qty-value>1</span>
-                  <button type="button" data-qty-plus>+</button>
-                  <i>&#10003;</i>
-                </div>
-              </div>
-              <span class="card-cart-badge">&#10003;</span>
-            </div>
-          </article>
-
-          <article class="product-card product-card--stock" data-card data-product-card data-href="{% url 'product_detail' %}" tabindex="0" role="link">
-            <div class="product-card__media"><span>Фото</span></div>
-            <div class="product-card__body">
-              <div class="stock-badge">В наличии</div>
-              <h3>KYB Excel-G Rear Shock Absorber 348006</h3>
-              <p>KYB</p>
-              <strong>$146</strong>
-              <div class="product-card__cart" data-cart-state>
-                <button class="add-cart" type="button" data-cart-add>В корзину</button>
-                <div class="card-qty" aria-label="Количество">
-                  <button type="button" data-qty-minus>-</button>
-                  <span data-qty-value>1</span>
-                  <button type="button" data-qty-plus>+</button>
-                  <i>&#10003;</i>
-                </div>
-              </div>
-              <span class="card-cart-badge">&#10003;</span>
-            </div>
-          </article>
-
-          <article class="product-card product-card--low" data-card data-product-card data-href="{% url 'product_detail' %}" tabindex="0" role="link">
-            <div class="product-card__media"><span>Фото</span></div>
-            <div class="product-card__body">
-              <div class="stock-badge">Заканчивается</div>
-              <h3>MANN Oil Filter HU 816 X for turbo petrol engines</h3>
-              <p>MANN-FILTER</p>
-              <strong>$28</strong>
-              <div class="product-card__cart" data-cart-state>
-                <button class="add-cart" type="button" data-cart-add>В корзину</button>
-                <div class="card-qty" aria-label="Количество">
-                  <button type="button" data-qty-minus>-</button>
-                  <span data-qty-value>1</span>
-                  <button type="button" data-qty-plus>+</button>
-                  <i>&#10003;</i>
-                </div>
-              </div>
-              <span class="card-cart-badge">&#10003;</span>
-            </div>
-          </article>
-
-          <article class="product-card product-card--stock" data-card data-product-card data-href="{% url 'product_detail' %}" tabindex="0" role="link">
-            <div class="product-card__media"><span>Фото</span></div>
-            <div class="product-card__body">
-              <div class="stock-badge">В наличии</div>
-              <h3>Osram Night Breaker Laser H7 Twin Pack</h3>
-              <p>Osram</p>
-              <strong>$54</strong>
-              <div class="product-card__cart" data-cart-state>
-                <button class="add-cart" type="button" data-cart-add>В корзину</button>
-                <div class="card-qty" aria-label="Количество">
-                  <button type="button" data-qty-minus>-</button>
-                  <span data-qty-value>1</span>
-                  <button type="button" data-qty-plus>+</button>
-                  <i>&#10003;</i>
-                </div>
-              </div>
-              <span class="card-cart-badge">&#10003;</span>
-            </div>
-          </article>
+          {% endfor %}
         </div>
       </div>
     </div>
@@ -344,46 +250,19 @@
 
   document.querySelectorAll('[data-product-card]').forEach((card) => {
     const href = card.dataset.href;
-    const cart = card.querySelector('[data-cart-state]');
-    const addButton = card.querySelector('[data-cart-add]');
-    const qtyValue = card.querySelector('[data-qty-value]');
-    const minusButton = card.querySelector('[data-qty-minus]');
-    const plusButton = card.querySelector('[data-qty-plus]');
-
-    const setCardState = (quantity) => {
-      const nextQuantity = Math.max(0, quantity);
-      card.classList.toggle('is-added', nextQuantity > 0);
-      qtyValue.textContent = String(Math.max(1, nextQuantity));
-    };
-
-    addButton?.addEventListener('click', (event) => {
-      event.stopPropagation();
-      setCardState(1);
-    });
-
-    minusButton?.addEventListener('click', (event) => {
-      event.stopPropagation();
-      const current = Number(qtyValue.textContent);
-      setCardState(current - 1);
-    });
-
-    plusButton?.addEventListener('click', (event) => {
-      event.stopPropagation();
-      const current = Number(qtyValue.textContent);
-      setCardState(current + 1);
-    });
-
-    cart?.addEventListener('click', (event) => {
-      event.stopPropagation();
+    card.querySelectorAll('form, button, a').forEach((interactive) => {
+      interactive.addEventListener('click', (event) => {
+        event.stopPropagation();
+      });
     });
 
     card.addEventListener('click', (event) => {
-      if (event.target.closest('[data-cart-state]')) return;
+      if (event.target.closest('form, button, a')) return;
       if (href) window.location.href = href;
     });
 
     card.addEventListener('keydown', (event) => {
-      if ((event.key === 'Enter' || event.key === ' ') && !event.target.closest('[data-cart-state]')) {
+      if ((event.key === 'Enter' || event.key === ' ') && !event.target.closest('form, button, a')) {
         event.preventDefault();
         if (href) window.location.href = href;
       }

@@ -1,0 +1,188 @@
+Watching for file changes with StatReloader
+[10/May/2026 03:50:03] "GET / HTTP/1.1" 200 9085
+[10/May/2026 03:50:03,199] - Broken pipe from ('127.0.0.1', 50234)
+[10/May/2026 03:50:23] "GET / HTTP/1.1" 200 9085
+[10/May/2026 03:50:23] "GET /static/main/css/style.css?v=20260510-1 HTTP/1.1" 200 35038
+[10/May/2026 03:50:24] "GET /static/main/images/f7b63bd4-b7ba-49a3-a2f6-e60b12d8cdc8.png HTTP/1.1" 200 1844737
+Not Found: /favicon.ico
+[10/May/2026 03:50:24] "GET /favicon.ico HTTP/1.1" 404 4827
+[10/May/2026 03:50:26] "GET /accounts/register/ HTTP/1.1" 302 0
+[10/May/2026 03:50:26] "GET / HTTP/1.1" 200 9085
+[10/May/2026 03:50:35] "GET /register/ HTTP/1.1" 302 0
+[10/May/2026 03:50:35] "GET /accounts/register/ HTTP/1.1" 302 0
+[10/May/2026 03:50:35] "GET / HTTP/1.1" 200 9085
+[10/May/2026 03:51:10] "GET /register/ HTTP/1.1" 302 0
+[10/May/2026 03:51:10,871] - Broken pipe from ('127.0.0.1', 52999)
+[10/May/2026 03:51:11] "GET /accounts/register/ HTTP/1.1" 200 3285
+[10/May/2026 03:51:11,506] - Broken pipe from ('127.0.0.1', 53002)
+[10/May/2026 03:51:33] "GET /register/ HTTP/1.1" 302 0
+[10/May/2026 03:51:33,321] - Broken pipe from ('127.0.0.1', 60463)
+[10/May/2026 03:51:34] "GET /accounts/register/ HTTP/1.1" 200 3285
+[10/May/2026 03:51:34,054] - Broken pipe from ('127.0.0.1', 60468)
+C:\Users\dello\Desktop\myapp\app5\accounts\views.py changed, reloading.
+Watching for file changes with StatReloader
+[10/May/2026 03:52:30] "GET /accounts/register/ HTTP/1.1" 200 3285
+[10/May/2026 03:52:31,024] - Broken pipe from ('127.0.0.1', 60499)
+[10/May/2026 03:52:45] "GET /accounts/register/ HTTP/1.1" 200 3285
+[10/May/2026 03:52:45] "GET /static/main/css/style.css?v=20260510-1 HTTP/1.1" 304 0
+[10/May/2026 04:03:10] "GET / HTTP/1.1" 200 9085
+[10/May/2026 04:03:10] "GET /static/main/css/style.css?v=20260510-1 HTTP/1.1" 304 0
+[10/May/2026 04:03:11] "GET /accounts/register/ HTTP/1.1" 200 3285
+[10/May/2026 04:05:01] "GET /accounts/login/ HTTP/1.1" 302 0
+[10/May/2026 04:05:01] "GET / HTTP/1.1" 200 9085
+[10/May/2026 04:05:04] "GET /accounts/register/ HTTP/1.1" 200 3285
+C:\Users\dello\Desktop\myapp\app5\main\views.py changed, reloading.
+Watching for file changes with StatReloader
+[10/May/2026 04:09:45] "GET /login/ HTTP/1.1" 302 0
+[10/May/2026 04:09:45,861] - Broken pipe from ('127.0.0.1', 51770)
+[10/May/2026 04:09:47] "GET /accounts/login/ HTTP/1.1" 200 2665
+[10/May/2026 04:09:47,219] - Broken pipe from ('127.0.0.1', 51773)
+[10/May/2026 04:10:22] "GET /accounts/register/ HTTP/1.1" 200 3285
+[10/May/2026 04:10:22] "GET /static/main/css/style.css?v=20260510-1 HTTP/1.1" 304 0
+[10/May/2026 04:10:25] "GET /accounts/login/ HTTP/1.1" 302 0
+[10/May/2026 04:10:25] "GET / HTTP/1.1" 200 9085
+C:\Users\dello\Desktop\myapp\app5\app5\settings.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dello\Desktop\myapp\app5\accounts\urls.py changed, reloading.
+Watching for file changes with StatReloader
+[10/May/2026 04:19:00] "GET / HTTP/1.1" 200 9579
+[10/May/2026 04:19:00,526] - Broken pipe from ('127.0.0.1', 63747)
+[10/May/2026 04:19:31] "GET /accounts/profile/ HTTP/1.1" 302 0
+[10/May/2026 04:19:31] "GET /accounts/login/?next=/accounts/profile/ HTTP/1.1" 200 3253
+[10/May/2026 04:19:31,908] - Broken pipe from ('127.0.0.1', 54414)
+[10/May/2026 04:20:27] "GET / HTTP/1.1" 200 9971
+[10/May/2026 04:20:27] "GET /static/main/css/style.css?v=20260510-2 HTTP/1.1" 200 37777
+[10/May/2026 04:20:28] "GET / HTTP/1.1" 200 9971
+[10/May/2026 04:20:40] "GET /catalog/ HTTP/1.1" 200 19715
+[10/May/2026 04:20:40] "GET /static/main/css/style.css?v=20260510-2 HTTP/1.1" 304 0
+[10/May/2026 04:20:40] "GET /static/main/images/PkAAAgPsfuA-960.jpg HTTP/1.1" 200 147098
+[10/May/2026 04:20:40] "GET /static/main/images/chto-takoe-avtotyuning-i-chem-on-otlichaetsya-ot-stajlinga.jpg HTTP/1.1" 200 185355
+[10/May/2026 04:20:40] "GET /static/main/images/arttuning-1.png HTTP/1.1" 200 686421
+[10/May/2026 04:20:40] "GET /static/main/images/bg-order-camaro.jpg HTTP/1.1" 200 2242785
+[10/May/2026 04:20:41] "GET /accounts/profile/ HTTP/1.1" 200 2707
+[10/May/2026 04:20:49] "GET /cart/ HTTP/1.1" 200 4129
+[10/May/2026 04:20:58] "GET /catalog/ HTTP/1.1" 200 19715
+[10/May/2026 04:20:58] "GET /static/main/css/style.css?v=20260510-2 HTTP/1.1" 304 0
+[10/May/2026 04:21:02] "POST /cart/add/ HTTP/1.1" 302 0
+[10/May/2026 04:21:02] "GET /cart/ HTTP/1.1" 200 6171
+[10/May/2026 04:21:06] "GET /cart/ HTTP/1.1" 200 6171
+[10/May/2026 04:21:08] "POST /cart/remove/ HTTP/1.1" 302 0
+[10/May/2026 04:21:08] "GET /cart/ HTTP/1.1" 200 4129
+[10/May/2026 04:21:10] "POST /accounts/logout/ HTTP/1.1" 302 0
+[10/May/2026 04:21:10] "GET / HTTP/1.1" 200 9579
+[10/May/2026 04:21:20] "GET /catalog/ HTTP/1.1" 200 19323
+[10/May/2026 04:21:20] "GET /static/main/css/style.css?v=20260510-2 HTTP/1.1" 304 0
+[10/May/2026 04:21:37] "GET /accounts/register/ HTTP/1.1" 200 3779
+[10/May/2026 04:21:37] "GET /static/main/css/style.css?v=20260510-2 HTTP/1.1" 304 0
+[10/May/2026 04:21:39] "GET /accounts/login/ HTTP/1.1" 200 3159
+C:\Users\dello\Desktop\myapp\app5\accounts\forms.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dello\Desktop\myapp\app5\accounts\views.py changed, reloading.
+Watching for file changes with StatReloader
+[10/May/2026 04:28:11] "GET /accounts/login/ HTTP/1.1" 200 3181
+[10/May/2026 04:28:11] "GET /static/main/css/style.css?v=20260510-2 HTTP/1.1" 304 0
+[10/May/2026 04:28:22] "POST /accounts/login/ HTTP/1.1" 302 0
+[10/May/2026 04:28:22] "GET / HTTP/1.1" 200 9971
+[10/May/2026 04:28:26] "POST /accounts/logout/ HTTP/1.1" 302 0
+[10/May/2026 04:28:26] "GET / HTTP/1.1" 200 9579
+[10/May/2026 04:28:34] "GET /accounts/register/ HTTP/1.1" 200 3779
+[10/May/2026 04:28:36] "GET /accounts/register/ HTTP/1.1" 200 3779
+[10/May/2026 04:28:38] "GET /accounts/login/ HTTP/1.1" 200 3181
+[10/May/2026 04:28:47] "POST /accounts/login/ HTTP/1.1" 200 3359
+[10/May/2026 04:28:58] "POST /accounts/login/ HTTP/1.1" 302 0
+[10/May/2026 04:28:58] "GET / HTTP/1.1" 200 9971
+[10/May/2026 04:29:08] "GET /catalog/ HTTP/1.1" 200 19715
+[10/May/2026 04:30:11] "GET /accounts/profile/ HTTP/1.1" 200 2707
+[10/May/2026 04:30:11] "GET /static/main/css/style.css?v=20260510-2 HTTP/1.1" 304 0
+[10/May/2026 04:30:14] "GET /catalog/ HTTP/1.1" 200 19715
+[10/May/2026 04:30:16] "GET /cart/ HTTP/1.1" 200 4129
+[10/May/2026 04:30:19] "GET /catalog/ HTTP/1.1" 200 19715
+[10/May/2026 04:30:23] "POST /cart/add/ HTTP/1.1" 302 0
+[10/May/2026 04:30:23] "GET /cart/ HTTP/1.1" 200 6171
+[10/May/2026 04:30:27] "GET /checkout/ HTTP/1.1" 200 4487
+[10/May/2026 04:30:27] "GET /static/main/css/order.css?v=20260509-3 HTTP/1.1" 200 6180
+[10/May/2026 04:31:04] "GET /accounts/profile/ HTTP/1.1" 200 2707
+[10/May/2026 04:31:05] "GET /catalog/ HTTP/1.1" 200 19800
+[10/May/2026 04:31:54] "GET /cart/ HTTP/1.1" 200 6171
+[10/May/2026 04:31:54] "GET /static/main/css/style.css?v=20260510-2 HTTP/1.1" 304 0
+[10/May/2026 04:31:57] "POST /cart/update/ HTTP/1.1" 302 0
+[10/May/2026 04:31:57] "GET /cart/ HTTP/1.1" 200 6171
+[10/May/2026 04:32:08] "POST /cart/update/ HTTP/1.1" 302 0
+[10/May/2026 04:32:08] "GET /cart/ HTTP/1.1" 200 6171
+[10/May/2026 04:32:12] "GET /checkout/ HTTP/1.1" 200 4487
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[10/May/2026 04:32:39] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 4945
+[10/May/2026 04:32:39] "GET /static/main/css/order.css.map HTTP/1.1" 200 1213
+C:\Users\dello\Desktop\myapp\app5\app5\urls.py changed, reloading.
+Watching for file changes with StatReloader
+[10/May/2026 04:58:43] "GET /checkout/ HTTP/1.1" 200 18262
+[10/May/2026 04:58:43] "GET /static/main/css/style.css?v=20260510-3 HTTP/1.1" 200 40451
+[10/May/2026 04:59:42] "GET /checkout/ HTTP/1.1" 200 18262
+[10/May/2026 04:59:42] "GET /static/main/css/style.css?v=20260510-3 HTTP/1.1" 304 0
+[10/May/2026 04:59:46] "GET / HTTP/1.1" 200 9971
+[10/May/2026 04:59:49] "GET /catalog/ HTTP/1.1" 200 19800
+[10/May/2026 04:59:49] "GET /static/main/images/bg-order-camaro.jpg HTTP/1.1" 304 0
+[10/May/2026 04:59:49] "GET /static/main/images/PkAAAgPsfuA-960.jpg HTTP/1.1" 304 0
+[10/May/2026 04:59:49] "GET /static/main/images/chto-takoe-avtotyuning-i-chem-on-otlichaetsya-ot-stajlinga.jpg HTTP/1.1" 304 0
+[10/May/2026 04:59:49] "GET /static/main/images/arttuning-1.png HTTP/1.1" 304 0
+[10/May/2026 05:00:05] "GET /cart/ HTTP/1.1" 200 6171
+[10/May/2026 05:00:08] "GET /checkout/ HTTP/1.1" 200 18262
+[10/May/2026 05:00:08] "GET /static/main/css/style.css?v=20260510-3 HTTP/1.1" 304 0
+[10/May/2026 05:00:11] "GET /catalog/ HTTP/1.1" 200 19800
+[10/May/2026 05:00:13] "GET / HTTP/1.1" 200 9971
+[10/May/2026 05:00:29] "POST /accounts/logout/ HTTP/1.1" 302 0
+[10/May/2026 05:00:29] "GET / HTTP/1.1" 200 9579
+[10/May/2026 10:00:34] "GET / HTTP/1.1" 200 9579
+[10/May/2026 10:00:34] "GET /static/main/css/style.css?v=20260510-3 HTTP/1.1" 304 0
+[10/May/2026 10:00:52] "GET /accounts/login/ HTTP/1.1" 200 3181
+[10/May/2026 10:01:00,188] - Broken pipe from ('127.0.0.1', 55878)
+[10/May/2026 10:01:01,698] - Broken pipe from ('127.0.0.1', 52018)
+[10/May/2026 10:01:02,752] - Broken pipe from ('127.0.0.1', 57963)
+[10/May/2026 10:01:03,107] - Broken pipe from ('127.0.0.1', 53943)
+[10/May/2026 10:01:03,602] - Broken pipe from ('127.0.0.1', 65146)
+[10/May/2026 10:01:03,639] - Broken pipe from ('127.0.0.1', 62953)
+[10/May/2026 10:01:03] "POST /accounts/login/ HTTP/1.1" 302 0
+[10/May/2026 10:01:03] "GET / HTTP/1.1" 200 9971
+[10/May/2026 10:01:22] "GET /accounts/profile/ HTTP/1.1" 200 2707
+[10/May/2026 10:01:26] "GET /cart/ HTTP/1.1" 200 4129
+[10/May/2026 10:01:29] "GET /catalog/ HTTP/1.1" 200 19715
+[10/May/2026 10:01:29] "GET /static/main/images/PkAAAgPsfuA-960.jpg HTTP/1.1" 304 0
+[10/May/2026 10:01:29] "GET /static/main/images/bg-order-camaro.jpg HTTP/1.1" 304 0
+[10/May/2026 10:01:29] "GET /static/main/images/chto-takoe-avtotyuning-i-chem-on-otlichaetsya-ot-stajlinga.jpg HTTP/1.1" 304 0
+[10/May/2026 10:01:29] "GET /static/main/images/arttuning-1.png HTTP/1.1" 304 0
+[10/May/2026 10:01:34] "POST /cart/add/ HTTP/1.1" 302 0
+[10/May/2026 10:01:34] "GET /cart/ HTTP/1.1" 200 6171
+[10/May/2026 10:01:36] "GET /cart/ HTTP/1.1" 200 6171
+[10/May/2026 10:01:39] "GET /checkout/ HTTP/1.1" 200 18262
+[10/May/2026 10:02:05] "GET /catalog/ HTTP/1.1" 200 19800
+[10/May/2026 10:02:44] "POST /accounts/logout/ HTTP/1.1" 302 0
+[10/May/2026 10:02:44] "GET / HTTP/1.1" 200 9579
+[10/May/2026 10:02:47] "GET /accounts/register/ HTTP/1.1" 200 3779
+[10/May/2026 10:04:13] "POST /accounts/register/ HTTP/1.1" 200 4098
+[10/May/2026 10:04:33] "POST /accounts/register/ HTTP/1.1" 200 4039
+[10/May/2026 10:04:52] "POST /accounts/register/ HTTP/1.1" 200 4026
+[10/May/2026 10:05:09] "POST /accounts/register/ HTTP/1.1" 302 0
+[10/May/2026 10:05:09] "GET / HTTP/1.1" 200 9971
+[10/May/2026 10:05:18] "GET /accounts/profile/ HTTP/1.1" 200 2707
+[10/May/2026 10:05:36] "GET / HTTP/1.1" 200 9971
+[10/May/2026 10:06:02] "GET /accounts/profile/ HTTP/1.1" 200 2707
+[10/May/2026 10:06:04] "GET /catalog/ HTTP/1.1" 200 19715
+[10/May/2026 10:06:09] "GET /catalog/product/?product=brembo-prime-p85-020 HTTP/1.1" 200 13097
+[10/May/2026 10:06:36] "POST /cart/add/ HTTP/1.1" 302 0
+[10/May/2026 10:06:36] "GET /cart/ HTTP/1.1" 200 6171
+[10/May/2026 10:06:38] "POST /cart/update/ HTTP/1.1" 302 0
+[10/May/2026 10:06:38] "GET /cart/ HTTP/1.1" 200 6171
+[10/May/2026 10:06:39] "POST /cart/update/ HTTP/1.1" 302 0
+[10/May/2026 10:06:39] "GET /cart/ HTTP/1.1" 200 6171
+[10/May/2026 10:06:41] "POST /cart/update/ HTTP/1.1" 302 0
+[10/May/2026 10:06:41] "GET /cart/ HTTP/1.1" 200 6171
+[10/May/2026 10:06:41] "POST /cart/update/ HTTP/1.1" 302 0
+[10/May/2026 10:06:41] "GET /cart/ HTTP/1.1" 200 6171
+[10/May/2026 10:06:43] "POST /cart/remove/ HTTP/1.1" 302 0
+[10/May/2026 10:06:44] "GET /cart/ HTTP/1.1" 200 4129
+[10/May/2026 10:06:46] "GET /catalog/ HTTP/1.1" 200 19715
+[10/May/2026 10:06:51] "GET /catalog/product/?product=brembo-prime-p85-020 HTTP/1.1" 200 13097
+[10/May/2026 10:06:57] "POST /cart/add/ HTTP/1.1" 302 0
+[10/May/2026 10:06:57] "GET /cart/ HTTP/1.1" 200 6171
+[10/May/2026 10:07:01] "POST /cart/remove/ HTTP/1.1" 302 0
+[10/May/2026 10:07:01] "GET /cart/ HTTP/1.1" 200 4129

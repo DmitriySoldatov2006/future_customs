@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev:all": "bash -lc 'set -e; if [ ! -d venv ]; then if command -v python3 >/dev/null 2>&1; then python3 -m venv venv; else python -m venv venv; fi; if [ -f requirements.txt ]; then ./venv/bin/pip install -r requirements.txt; else ./venv/bin/pip install Django; fi; fi; cd app5; ../venv/bin/python manage.py migrate --noinput; ../venv/bin/python manage.py runserver 8000'",
+    "dev:all": "node scripts/dev-all.mjs",
     "dev": "npm run dev:all"
   },
   "dependencies": {

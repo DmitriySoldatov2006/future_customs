@@ -1,0 +1,52 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}Вход в аккаунт{% endblock %}
+
+{% block content %}
+<div class="parallax-bg" data-parallax-layer data-speed="-0.16"></div>
+
+<section class="login-page info-section">
+    <div class="info-content">
+        <div class="login-wrapper filter-card">
+            <p class="section-kicker">Аккаунт</p>
+            <h1>Вход в аккаунт</h1>
+
+            <form method="post">
+                {% csrf_token %}
+
+                {% if request.GET.next %}
+                <input type="hidden" name="next" value="{{ request.GET.next }}">
+                {% elif request.POST.next %}
+                <input type="hidden" name="next" value="{{ request.POST.next }}">
+                {% endif %}
+
+                <div>
+                    <label for="{{ form.email.id_for_label }}">Электронная почта или логин</label>
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                    <span role="alert">{{ form.email.errors.0 }}</span>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <label for="{{ form.password.id_for_label }}">Пароль</label>
+                    {{ form.password }}
+                    {% if form.password.errors %}
+                    <span role="alert">{{ form.password.errors.0 }}</span>
+                    {% endif %}
+                </div>
+
+                {% if form.non_field_errors %}
+                <div role="alert">
+                    {{ form.non_field_errors.0 }}
+                </div>
+                {% endif %}
+
+                <button class="hero-button" type="submit">Войти</button>
+            </form>
+
+            <h2>Нет аккаунта? <a class="go-reg" href="{% url 'register' %}">Зарегистрироваться</a></h2>
+        </div>
+    </div>
+</section>
+{% endblock %}

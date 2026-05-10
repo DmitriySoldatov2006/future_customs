@@ -1,0 +1,117 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block title %}Корзина{% endblock %}
+
+{% block content %}
+<div class="parallax-bg" data-parallax-layer data-speed="-0.14"></div>
+
+<section class="cart-page info-section">
+  <div class="info-content">
+    <p class="section-kicker">Ваш заказ</p>
+    <h1>Корзина</h1>
+
+    {% if cart_items %}
+    <div class="cart-shell" data-reveal>
+      <div class="cart-list">
+        {% for item in cart_items %}
+        <article class="cart-item" data-card>
+          <a class="cart-item__image product-card__media" href="{{ item.detail_url }}">
+            <img src="{% static item.image %}" alt="{{ item.name }}">
+          </a>
+
+          <div class="cart-item__summary">
+            <a class="cart-item__title" href="{{ item.detail_url }}">{{ item.name }}</a>
+            <p>{{ item.short_description }}</p>
+          </div>
+
+          <form class="cart-item__quantity quantity-picker" method="post" action="{% url 'cart_update' %}" data-cart-update>
+            {% csrf_token %}
+            <input type="hidden" name="product_id" value="{{ item.id }}">
+            <button type="button" data-qty-minus>-</button>
+            <input type="number" name="quantity" value="{{ item.quantity }}" min="1" inputmode="numeric">
+            <button type="button" data-qty-plus>+</button>
+          </form>
+
+          <div class="cart-item__price">
+            <strong>{{ item.total_price_display }}</strong>
+            <span>{{ item.unit_price_display }} × {{ item.quantity }}</span>
+          </div>
+
+          <form class="cart-item__remove" method="post" action="{% url 'cart_remove' %}">
+            {% csrf_token %}
+            <input type="hidden" name="product_id" value="{{ item.id }}">
+            <button class="cart-remove" type="submit">Удалить</button>
+          </form>
+        </article>
+        {% endfor %}
+      </div>
+
+      <div class="cart-actions">
+        <div class="cart-actions__section">
+          <a class="hero-link" href="{% url 'catalog' %}">Продолжить покупки</a>
+        </div>
+        <div class="cart-actions__section cart-actions__section--center">
+          <span>Итого</span>
+          <strong>Итого: {{ cart_total_display }}</strong>
+        </div>
+        <div class="cart-actions__section cart-actions__section--end">
+          <a class="hero-button" href="{% url 'checkout_view' %}">Оформить заказ</a>
+        </div>
+      </div>
+    </div>
+    {% else %}
+    <div class="cart-empty filter-card" data-reveal>
+      <h2>Ваша корзина пуста</h2>
+      <p>Добавьте товары из каталога, и мы подготовим заказ с проверкой совместимости по VIN.</p>
+      <a class="hero-button" href="{% url 'catalog' %}">Продолжить покупки</a>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script type="module">
+  import { inView, animate } from 'motion';
+
+  document.querySelectorAll('[data-reveal]').forEach((el) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(44px)';
+    inView(el, () => {
+      animate(el, { opacity: [0, 1], y: [44, 0] }, { duration: 0.65, ease: 'easeOut' });
+    }, { amount: 0.2 });
+  });
+
+  document.querySelectorAll('[data-card]').forEach((card, i) => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(26px)';
+    inView(card, () => {
+      animate(card, { opacity: [0, 1], y: [26, 0] }, { duration: 0.5, delay: i * 0.05, ease: 'easeOut' });
+    }, { amount: 0.25 });
+  });
+
+  document.querySelectorAll('[data-cart-update]').forEach((form) => {
+    const input = form.querySelector('input[name="quantity"]');
+    const minus = form.querySelector('[data-qty-minus]');
+    const plus = form.querySelector('[data-qty-plus]');
+
+    const submitWithQuantity = (nextValue) => {
+      input.value = String(Math.max(1, nextValue));
+      form.requestSubmit();
+    };
+
+    minus?.addEventListener('click', () => {
+      submitWithQuantity(Number(input.value || 1) - 1);
+    });
+
+    plus?.addEventListener('click', () => {
+      submitWithQuantity(Number(input.value || 1) + 1);
+    });
+
+    input?.addEventListener('change', () => {
+      submitWithQuantity(Number(input.value || 1));
+    });
+  });
+</script>
+{% endblock %}
