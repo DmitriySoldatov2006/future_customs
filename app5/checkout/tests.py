@@ -24,6 +24,7 @@ class CheckoutFlowTests(TestCase):
             slug='checkout-product-1',
             short_description='\u041f\u0435\u0440\u0432\u044b\u0439 \u0442\u043e\u0432\u0430\u0440',
             price='18900.00',
+            stock_quantity=2,
             in_stock=True,
         )
         self.second_product = Product.objects.create(
@@ -32,6 +33,7 @@ class CheckoutFlowTests(TestCase):
             slug='checkout-product-2',
             short_description='\u0412\u0442\u043e\u0440\u043e\u0439 \u0442\u043e\u0432\u0430\u0440',
             price='2800.00',
+            stock_quantity=1,
             in_stock=True,
         )
 
@@ -84,6 +86,12 @@ class CheckoutFlowTests(TestCase):
         self.assertEqual(order.items.count(), 2)
         self.assertEqual(order.items.get(product_id=str(self.first_product.pk)).quantity, 2)
         self.assertEqual(self.client.session.get('cart'), None)
+        self.first_product.refresh_from_db()
+        self.second_product.refresh_from_db()
+        self.assertEqual(self.first_product.stock_quantity, 0)
+        self.assertEqual(self.second_product.stock_quantity, 0)
+        self.assertFalse(self.first_product.in_stock)
+        self.assertFalse(self.second_product.in_stock)
 
     def test_checkout_post_attaches_authenticated_user(self):
         user = User.objects.create_user(

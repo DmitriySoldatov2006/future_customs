@@ -3,8 +3,6 @@
 {% block title %}{{ product.name }}{% endblock %}
 
 {% block content %}
-<div class="parallax-bg" data-parallax-layer data-speed="-0.12"></div>
-
 <section class="product-page info-section">
   <div class="info-content">
     <nav class="breadcrumb" aria-label="Навигация">
@@ -21,17 +19,31 @@
       <div class="product-gallery">
         <div class="product-gallery__main">
           {% if product.image_url %}
-          <img class="product-gallery__image" src="{{ product.image_url }}" alt="{{ product.name }}">
+          <img class="product-gallery__image" src="{{ product.image_url }}" alt="{{ product.name }}" data-product-main-image>
           {% else %}
           <div class="product-card__media">
             <span>Нет фото</span>
           </div>
           {% endif %}
         </div>
+        {% if product.image_urls|length > 1 %}
+        <div class="product-gallery__thumbs" data-product-gallery-thumbs>
+          {% for image_url in product.image_urls %}
+          <button
+            type="button"
+            class="product-gallery__thumb{% if forloop.first %} is-active{% endif %}"
+            data-product-thumb
+            data-image-url="{{ image_url }}"
+            aria-label="Показать изображение {{ forloop.counter }}"
+          >
+            <img class="product-gallery__thumb-image" src="{{ image_url }}" alt="{{ product.name }}">
+          </button>
+          {% endfor %}
+        </div>
+        {% endif %}
       </div>
 
       <div class="product-summary">
-        <p class="section-kicker">Карточка товара</p>
         <h1>{{ product.name }}</h1>
         <div class="product-meta">
           {% if product.brand %}{{ product.brand }}{% endif %}
@@ -41,19 +53,19 @@
         </div>
         <div class="product-price-row">
           <strong>{{ product.price_display }}</strong>
-          <span class="stock-badge">{{ product.stock_label }}</span>
+          <span class="stock-badge{% if not product.is_available %} product-card--low__badge{% endif %}">{{ product.stock_label }}</span>
         </div>
-        <p class="product-copy">{{ product.short_description }}</p>
-
         <form class="purchase-box" method="post" action="{% url 'cart_add' %}">
           {% csrf_token %}
           <input type="hidden" name="product_id" value="{{ product.id }}">
           <div class="quantity-picker" data-quantity>
-            <button type="button" data-qty-minus>-</button>
-            <input type="number" name="quantity" value="{% if product.quantity %}{{ product.quantity }}{% else %}1{% endif %}" min="1">
-            <button type="button" data-qty-plus>+</button>
+            <button type="button" data-qty-minus{% if not product.is_available %} disabled{% endif %}>-</button>
+            <input type="number" name="quantity" value="{% if product.is_available %}{% if product.quantity %}{{ product.quantity }}{% else %}1{% endif %}{% else %}0{% endif %}" min="{% if product.is_available %}1{% else %}0{% endif %}" max="{{ product.stock_quantity }}" {% if not product.is_available %}disabled{% endif %}>
+            <button type="button" data-qty-plus{% if not product.is_available %} disabled{% endif %}>+</button>
           </div>
-          <button class="hero-button purchase-box__cta" type="submit">Добавить в корзину</button>
+          <button class="hero-button purchase-box__cta{% if not product.is_available %} is-sold-out{% endif %}" type="submit"{% if not product.is_available %} disabled{% endif %}>
+            {% if product.is_available %}Добавить в корзину{% else %}Закончилось{% endif %}
+          </button>
         </form>
 
         <a class="wishlist-link" href="{% url 'cart_view' %}">Перейти в корзину</a>
@@ -65,11 +77,39 @@
 <section class="info-section info-section--alt" data-reveal>
   <div class="info-content product-detail-sections">
     <div class="detail-copy">
-      <p class="section-kicker">Описание</p>
       <h2>Описание</h2>
       {% for paragraph in product.description %}
       <p>{{ paragraph }}</p>
       {% endfor %}
+    </div>
+
+    <div class="detail-specs">
+      <h2>Характеристики</h2>
+      <div class="spec-table">
+        {% if product.brand %}
+        <div>
+          <span>Производитель</span>
+          <b>{{ product.brand }}</b>
+        </div>
+        {% endif %}
+        {% if product.compatible_vehicle %}
+        <div>
+          <span>Совместимые автомобили</span>
+          <b>{{ product.compatible_vehicle }}</b>
+        </div>
+        {% endif %}
+        {% for key, characteristic in product.characteristics.items %}
+        <div>
+          <span>{{ characteristic.label }}</span>
+          <b>{{ characteristic.value }}</b>
+        </div>
+        {% empty %}
+        <div>
+          <span>Данные</span>
+          <b>Характеристики пока не указаны.</b>
+        </div>
+        {% endfor %}
+      </div>
     </div>
   </div>
 </section>
@@ -78,7 +118,7 @@
 <section class="info-section" data-reveal>
   <div class="info-content">
     <p class="section-kicker">Похожие товары</p>
-    <h2>Похожие товары</h2>
+    <h2>Вам может понравиться</h2>
     <div class="related-row">
       {% for related_product in related_products %}
       <article class="product-card {{ related_product.stock_class }}" data-product-card data-href="{{ related_product.detail_url }}" tabindex="0" role="link">
@@ -98,7 +138,9 @@
             {% csrf_token %}
             <input type="hidden" name="product_id" value="{{ related_product.id }}">
             <input type="hidden" name="quantity" value="1">
-            <button class="add-cart" type="submit">В корзину</button>
+            <button class="add-cart" type="submit"{% if not related_product.is_available %} disabled{% endif %}>
+              {% if related_product.is_available %}В корзину{% else %}Закончилось{% endif %}
+            </button>
           </form>
           {% if related_product.quantity %}
           <span class="card-cart-badge is-visible">{{ related_product.quantity }}</span>
@@ -127,11 +169,24 @@
   const quantity = document.querySelector('[data-quantity]');
   if (quantity) {
     const input = quantity.querySelector('input');
+    const max = Number(input.max || 0);
     quantity.querySelector('[data-qty-minus]').addEventListener('click', () => {
       input.value = Math.max(1, Number(input.value) - 1);
     });
     quantity.querySelector('[data-qty-plus]').addEventListener('click', () => {
-      input.value = Number(input.value) + 1;
+      const nextValue = Number(input.value) + 1;
+      input.value = max > 0 ? Math.min(max, nextValue) : nextValue;
+    });
+  }
+
+  const mainImage = document.querySelector('[data-product-main-image]');
+  const galleryThumbs = [...document.querySelectorAll('[data-product-thumb]')];
+  if (mainImage && galleryThumbs.length) {
+    galleryThumbs.forEach((thumb) => {
+      thumb.addEventListener('click', () => {
+        mainImage.src = thumb.dataset.imageUrl;
+        galleryThumbs.forEach((item) => item.classList.toggle('is-active', item === thumb));
+      });
     });
   }
 

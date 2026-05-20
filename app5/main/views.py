@@ -5,12 +5,8 @@ def index(request):
     return render(request, 'main/index.html')
 
 
-def create(request):
-    return render(request, 'main/create.html')
-
-
 def basket(request):
-    return redirect('cart_view')
+  return redirect('cart_view')
 
 
 def order(request):

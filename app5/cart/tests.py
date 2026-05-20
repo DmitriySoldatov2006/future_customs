@@ -16,6 +16,7 @@ class CartFlowTests(TestCase):
             slug='test-product',
             short_description='\u041e\u043f\u0438\u0441\u0430\u043d\u0438\u0435',
             price='18900.00',
+            stock_quantity=10,
             in_stock=True,
         )
 
@@ -87,6 +88,17 @@ class CartFlowTests(TestCase):
         self.assertEqual(payload['quantity'], 0)
         self.assertEqual(payload['cart_count'], 0)
         self.assertNotIn(str(self.product.pk), self.client.session.get('cart', {}))
+
+    def test_cart_add_caps_quantity_by_available_stock(self):
+        self.product.stock_quantity = 2
+        self.product.save(update_fields=['stock_quantity'])
+
+        self.client.post(
+            reverse('cart_add'),
+            {'product_id': self.product.pk, 'quantity': 5},
+        )
+
+        self.assertEqual(self.client.session['cart'][str(self.product.pk)]['quantity'], 2)
 
     def test_cart_remove_deletes_item(self):
         self.client.post(reverse('cart_add'), {'product_id': self.product.pk, 'quantity': 1})

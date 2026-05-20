@@ -2,6 +2,9 @@ export const DEFAULT_FILTERS = Object.freeze({
   sort: 'default',
   partType: '',
   brand: '',
+  carBrand: '',
+  carModel: '',
+  carGeneration: '',
   minPrice: '',
   maxPrice: '',
   characteristics: {},
@@ -53,6 +56,9 @@ export function hasActiveCriteria({ query = '', filters = {} } = {}) {
     normalizeText(query)
       || merged.partType
       || merged.brand
+      || merged.carBrand
+      || merged.carModel
+      || merged.carGeneration
       || merged.minPrice
       || merged.maxPrice
       || merged.sort !== 'default'
@@ -71,6 +77,7 @@ export function filterProducts(products, { query = '', filters = {} } = {}) {
     if (normalizedQuery && !matchesQuery(product, normalizedQuery)) return false;
     if (merged.partType && getProductPartType(product) !== merged.partType) return false;
     if (merged.brand && String(product.brand ?? '') !== merged.brand) return false;
+    if (!matchesCompatibleVehicle(product, merged)) return false;
     if (!matchesCharacteristics(product, merged.characteristics)) return false;
 
     if (shouldApplyPrice) {
@@ -104,16 +111,69 @@ export function collectUniqueBrands(products) {
     .map((brand) => ({ value: brand, label: brand }));
 }
 
-export function collectBrandCharacteristics(products, brand) {
-  if (!brand) return [];
+export function collectUniqueCarBrands(products) {
+  const options = new Map();
+  products.forEach((product) => {
+    getProductCompatibleVehicles(product).forEach((vehicle) => {
+      const value = String(vehicle.car_brand_id ?? '').trim();
+      const label = String(vehicle.car_brand_name ?? '').trim();
+      if (!value || !label || options.has(value)) return;
+      options.set(value, label);
+    });
+  });
+  return [...options.entries()]
+    .map(([value, label]) => ({ value, label }))
+    .sort((a, b) => compareText(a.label, b.label));
+}
+
+export function collectUniqueCarModels(products, carBrand = '') {
+  const options = new Map();
+  products
+    .forEach((product) => {
+      getProductCompatibleVehicles(product)
+        .filter((vehicle) => !carBrand || String(vehicle.car_brand_id ?? '') === String(carBrand))
+        .forEach((vehicle) => {
+          const value = String(vehicle.car_model_id ?? '').trim();
+          const label = String(vehicle.car_model_name ?? '').trim();
+          if (!value || !label || options.has(value)) return;
+          options.set(value, label);
+        });
+    });
+  return [...options.entries()]
+    .map(([value, label]) => ({ value, label }))
+    .sort((a, b) => compareText(a.label, b.label));
+}
+
+export function collectUniqueCarGenerations(products, carBrand = '', carModel = '') {
+  const options = new Map();
+  products
+    .forEach((product) => {
+      getProductCompatibleVehicles(product)
+        .filter((vehicle) => !carBrand || String(vehicle.car_brand_id ?? '') === String(carBrand))
+        .filter((vehicle) => !carModel || String(vehicle.car_model_id ?? '') === String(carModel))
+        .forEach((vehicle) => {
+          const value = String(vehicle.car_generation_id ?? '').trim();
+          const label = String(vehicle.car_generation_name ?? '').trim();
+          if (!value || !label || options.has(value)) return;
+          options.set(value, label);
+        });
+    });
+  return [...options.entries()]
+    .map(([value, label]) => ({ value, label }))
+    .sort((a, b) => compareText(a.label, b.label));
+}
+
+export function collectPartTypeCharacteristics(products, partType) {
+  if (!partType) return [];
 
   const byKey = new Map();
   products
-    .filter((product) => String(product.brand ?? '') === brand)
+    .filter((product) => getProductPartType(product) === partType)
     .forEach((product) => {
       Object.entries(product.characteristics || {}).forEach(([key, rawCharacteristic]) => {
         const characteristic = normalizeCharacteristic(rawCharacteristic);
-        if (!characteristic.value) return;
+        const values = extractCharacteristicValues(rawCharacteristic);
+        if (!values.length) return;
         if (!byKey.has(key)) {
           byKey.set(key, {
             key,
@@ -121,7 +181,9 @@ export function collectBrandCharacteristics(products, brand) {
             values: new Set(),
           });
         }
-        byKey.get(key).values.add(characteristic.value);
+        values.forEach((value) => {
+          byKey.get(key).values.add(value);
+        });
       });
     });
 
@@ -169,6 +231,47 @@ function getProductPartType(product) {
   return String(product.part_type || product.category_slug || product.category_name || '');
 }
 
+function getProductCompatibleVehicles(product) {
+  const compatibleVehicles = Array.isArray(product.compatible_vehicles)
+    ? product.compatible_vehicles
+        .filter(Boolean)
+        .map((vehicle) => ({
+          car_brand_id: String(vehicle.car_brand_id ?? '').trim(),
+          car_brand_name: String(vehicle.car_brand_name ?? '').trim(),
+          car_model_id: String(vehicle.car_model_id ?? '').trim(),
+          car_model_name: String(vehicle.car_model_name ?? '').trim(),
+          car_generation_id: String(vehicle.car_generation_id ?? '').trim(),
+          car_generation_name: String(vehicle.car_generation_name ?? '').trim(),
+        }))
+        .filter((vehicle) => vehicle.car_brand_id)
+    : [];
+  if (compatibleVehicles.length) {
+    return compatibleVehicles;
+  }
+  const legacyVehicle = {
+    car_brand_id: String(product.car_brand_id ?? '').trim(),
+    car_brand_name: String(product.car_brand_name ?? '').trim(),
+    car_model_id: String(product.car_model_id ?? '').trim(),
+    car_model_name: String(product.car_model_name ?? '').trim(),
+    car_generation_id: String(product.car_generation_id ?? '').trim(),
+    car_generation_name: String(product.car_generation_name ?? '').trim(),
+  };
+  return legacyVehicle.car_brand_id ? [legacyVehicle] : [];
+}
+
+function matchesCompatibleVehicle(product, filters) {
+  const vehicles = getProductCompatibleVehicles(product);
+  if (!filters.carBrand && !filters.carModel && !filters.carGeneration) {
+    return true;
+  }
+  return vehicles.some((vehicle) => {
+    if (filters.carBrand && vehicle.car_brand_id !== String(filters.carBrand)) return false;
+    if (filters.carModel && vehicle.car_model_id !== String(filters.carModel)) return false;
+    if (filters.carGeneration && vehicle.car_generation_id !== String(filters.carGeneration)) return false;
+    return true;
+  });
+}
+
 function matchesQuery(product, normalizedQuery) {
   return [
     product.name,
@@ -183,12 +286,8 @@ function matchesCharacteristics(product, selectedCharacteristics) {
   return Object.entries(selectedCharacteristics).every(([key, selectedValues]) => {
     if (!selectedValues.length) return true;
 
-    const characteristic = normalizeCharacteristic(product.characteristics?.[key]);
-    if (!characteristic.value) return false;
-
-    const productValues = Array.isArray(characteristic.value)
-      ? characteristic.value.map(String)
-      : [String(characteristic.value)];
+    const productValues = extractCharacteristicValues(product.characteristics?.[key]);
+    if (!productValues.length) return false;
 
     return selectedValues.every((selectedValue) => productValues.includes(String(selectedValue)));
   });
@@ -205,4 +304,12 @@ function normalizeCharacteristic(rawCharacteristic) {
     label: '',
     value: rawCharacteristic,
   };
+}
+
+function extractCharacteristicValues(rawCharacteristic) {
+  const characteristic = normalizeCharacteristic(rawCharacteristic);
+  if (Array.isArray(characteristic.value)) {
+    return characteristic.value.map((value) => String(value)).filter(Boolean);
+  }
+  return [String(characteristic.value ?? '')].filter(Boolean);
 }

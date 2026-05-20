@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'main/css/style.css' %}?v=20260511-1">
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}?v=20260519-45">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
     <script type="importmap">
@@ -37,12 +37,16 @@
                 <li><a href="{% url 'catalog' %}" class="nav-link">Каталог</a></li>
                 <li><a href="{% url 'cart_view' %}" class="nav-link">Корзина (<span data-cart-count>{{ cart_count }}</span>)</a></li>
 
+                {% if request.user.is_superuser %}
+                    <li><a href="{% url 'admin_panel' %}" class="nav-link">Админ-панель</a></li>
+                {% endif %}
+
                 {% if request.user.is_authenticated %}
                     <li><a href="{% url 'profile' %}" class="nav-link">Профиль</a></li>
                     <li>
                         <form method="post" action="{% url 'logout' %}" class="nav-inline-form">
                             {% csrf_token %}
-                            <button type="submit" class="nav-link-btn">Выход</button>
+                            <button type="submit" class="nav-link-btn nav-link--accent">Выход</button>
                         </form>
                     </li>
                 {% else %}

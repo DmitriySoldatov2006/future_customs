@@ -3,30 +3,45 @@
 {% block title %}Изменить логин{% endblock %}
 
 {% block content %}
-<div class="parallax-bg" data-parallax-layer data-speed="-0.16"></div>
-
-<section class="login-page info-section profile-change-page">
+<section class="profile-page info-section profile-edit-page">
   <div class="info-content">
-    <div class="login-wrapper filter-card account-form-card">
-      <p class="section-kicker">Аккаунт</p>
-      <h1>Изменить логин</h1>
-      <p class="account-form-intro">Выберите логин, под которым будет удобно входить в аккаунт и оформлять заказы.</p>
+    <p class="section-kicker">Аккаунт</p>
+    <h1>Изменить логин</h1>
 
-      <form method="post">
-        {% csrf_token %}
-        <div>
-          <label for="{{ form.username.id_for_label }}">Логин</label>
-          {{ form.username }}
-          {% if form.username.errors %}
-          <span role="alert">{{ form.username.errors.0 }}</span>
-          {% endif %}
+    <div class="profile-stack">
+      <section class="filter-card profile-card profile-section profile-edit-card">
+        {% if form.non_field_errors %}
+        <div class="form-error-box" role="alert">
+          {{ form.non_field_errors.0 }}
         </div>
+        {% endif %}
 
-        <div class="account-form-actions">
-          <button class="hero-button" type="submit">Сохранить</button>
-          <a class="hero-link" href="{% url 'profile' %}">Отмена</a>
-        </div>
-      </form>
+        <form method="post" novalidate class="profile-edit-form">
+          {% csrf_token %}
+
+          <div class="auth-form-group{% if form.username.errors %} has-error{% endif %}">
+            <label class="form-label" for="{{ form.username.id_for_label }}"></label>
+            <input
+              type="text"
+              name="{{ form.username.html_name }}"
+              id="{{ form.username.id_for_label }}"
+              class="auth-input"
+              placeholder="Введите новый логин"
+              autocomplete="username"
+              value="{{ form.username.value|default_if_none:'' }}"
+              {% if form.username.errors %}aria-invalid="true"{% endif %}
+            >
+            {% if form.username.errors %}
+            <span class="form-error" role="alert">{{ form.username.errors.0 }}</span>
+            {% endif %}
+          </div>
+
+          <div class="account-form-actions profile-edit-actions">
+            <button class="profile-action-btn profile-action-btn--primary" type="submit">Сохранить</button>
+            <a class="profile-action-link" href="{% url 'profile' %}">Отмена</a>
+          </div>
+        </form>
+      </section>
     </div>
   </div>
 </section>

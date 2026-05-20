@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='product',
             name='brand',
-            field=models.CharField(blank=True, max_length=255, verbose_name='Бренд'),
+            field=models.CharField(blank=True, max_length=255, verbose_name='Производитель'),
         ),
         migrations.AddField(
             model_name='product',

@@ -1,0 +1,343 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block title %}Admin Panel{% endblock %}
+
+{% block content %}
+<section class="admin-panel-page info-section">
+  <div class="info-content">
+    <h1>Админ-панель</h1>
+
+    <div class="admin-panel-layout">
+      <div
+        class="admin-panel-nav-shell"
+        data-admin-nav
+        data-brands-endpoint="{% url 'admin_panel_create_brand' %}"
+      data-part-types-endpoint="{% url 'admin_panel_create_part_type' %}"
+      data-products-endpoint="{% url 'admin_panel_create_product' %}"
+      data-users-endpoint="{% url 'admin_panel_users' %}"
+      data-car-brands-endpoint="{% url 'admin_panel_car_brands' %}"
+      data-car-models-endpoint="{% url 'admin_panel_car_models' %}"
+      data-car-generations-endpoint="{% url 'admin_panel_car_generations' %}"
+    >
+        <button class="admin-panel-burger" type="button" data-admin-nav-toggle aria-expanded="false" aria-controls="admin-panel-nav-menu">
+          <span>Разделы</span>
+          <span class="admin-panel-burger__icon" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </button>
+        <div class="filter-card admin-panel-nav" id="admin-panel-nav-menu">
+        <div class="admin-panel-nav-group">
+          <p class="admin-panel-nav-label">Создание</p>
+          <button class="admin-panel-tab is-active" type="button" data-admin-tab="create-product">Добавить товар</button>
+          <button class="admin-panel-tab" type="button" data-admin-tab="create-part-type">Добавить катагорию</button>
+          <button class="admin-panel-tab" type="button" data-admin-tab="create-brand">Добавить производителя</button>
+          <button class="admin-panel-tab" type="button" data-admin-tab="create-car">Добавить автомобиль</button>
+        </div>
+
+          <div class="admin-panel-nav-group">
+            <p class="admin-panel-nav-label">Управление</p>
+            <button class="admin-panel-tab" type="button" data-admin-tab="products">Товары</button>
+            <button class="admin-panel-tab" type="button" data-admin-tab="part-types">Катагории</button>
+            <button class="admin-panel-tab" type="button" data-admin-tab="brands">Производители</button>
+            <button class="admin-panel-tab" type="button" data-admin-tab="cars">Марки и модели</button>
+            <button class="admin-panel-tab" type="button" data-admin-tab="users">Пользователи</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="admin-panel-sections">
+        <section class="filter-card admin-panel-section is-active" data-admin-section="create-product">
+        <div class="filter-card__head">
+          <h3>Добавить товар</h3>
+        </div>
+
+        <form class="admin-panel-form" data-product-form novalidate>
+          <div class="admin-form-grid">
+            <label class="admin-form-field">
+              <span>Название</span>
+              <input type="text" name="name" required>
+            </label>
+
+            <label class="admin-form-field">
+              <span>Артикул</span>
+              <input type="text" name="article">
+            </label>
+
+            <label class="admin-form-field">
+              <span>VIN</span>
+              <input type="text" name="vin_number">
+            </label>
+
+            <label class="admin-form-field">
+              <span>Цена</span>
+              <input type="number" name="price" min="0" step="0.01" inputmode="decimal" required>
+            </label>
+
+            <label class="admin-form-field">
+              <span>Количество в наличии</span>
+              <input type="number" name="stock_quantity" min="0" step="1" inputmode="numeric" required>
+            </label>
+
+            <label class="admin-form-field">
+              <span>Производитель</span>
+              <div class="select-row">
+                <select name="brand_id" required data-product-brand-select>
+                  <option value="">Выберите производителя</option>
+                </select>
+              </div>
+            </label>
+
+            <div class="filter-card filter-card--dynamic admin-vehicle-panel admin-form-field--wide">
+              <div class="filter-card__head">
+                <h3>Совместимые авто</h3>
+              </div>
+              <div class="admin-compatible-vehicles" data-product-compatible-vehicles></div>
+            </div>
+
+            <label class="admin-form-field">
+              <span>Катагория</span>
+              <div class="select-row">
+                <select name="category_id" required data-product-part-type-select>
+                  <option value="">Выберите катагорию</option>
+                </select>
+              </div>
+            </label>
+
+            <div class="filter-card filter-card--dynamic admin-characteristics-panel admin-form-field--wide" data-product-characteristics-section hidden>
+              <div class="filter-card__head">
+                <h3>Характеристики</h3>
+              </div>
+              <div class="admin-characteristics-fields" data-product-characteristics-fields></div>
+            </div>
+
+            <label class="admin-form-field admin-form-field--wide">
+              <span>Описание</span>
+              <textarea name="description" rows="5"></textarea>
+            </label>
+
+            <div class="admin-form-field admin-form-field--wide">
+              <span>Изображения</span>
+              <input class="admin-upload-input" type="file" accept="image/*" multiple data-product-images-input>
+              <div class="admin-upload-panel">
+                <div class="admin-upload-panel__controls">
+                  <button class="hero-link" type="button" data-product-images-trigger>Загрузить изображение</button>
+                </div>
+                <div class="admin-upload-list" data-product-images-list>
+                  <p class="admin-upload-empty">Изображения пока не выбраны.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-panel-actions">
+            <button class="hero-button" type="submit">Применить</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="filter-card admin-panel-section" data-admin-section="create-part-type" hidden>
+        <div class="filter-card__head">
+          <h3>Добавить катагорию</h3>
+        </div>
+
+        <form class="admin-panel-form" data-part-type-form novalidate>
+          <label class="admin-form-field admin-form-field--wide">
+            <span>Катагория</span>
+            <input type="text" name="name" required>
+          </label>
+
+          <div class="admin-characteristic-groups" data-characteristic-groups></div>
+
+          <div class="admin-panel-actions admin-panel-actions--part-type">
+            <button class="hero-link" type="button" data-add-characteristic-group>Добавить характеристику</button>
+          </div>
+
+          <div class="admin-panel-actions">
+            <button class="hero-button" type="submit">Применить</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="filter-card admin-panel-section" data-admin-section="create-brand" hidden>
+        <div class="filter-card__head">
+          <h3>Добавить производителя</h3>
+        </div>
+
+        <form class="admin-panel-form admin-panel-form--compact" data-brand-form novalidate>
+          <label class="admin-form-field admin-form-field--wide">
+            <span>Название производителя</span>
+            <input type="text" name="name" required>
+          </label>
+
+          <div class="admin-panel-actions">
+            <button class="hero-button" type="submit">Применить</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="filter-card admin-panel-section" data-admin-section="create-car" hidden>
+        <div class="filter-card__head">
+          <h3>Добавить автомобиль</h3>
+        </div>
+
+        <div class="admin-car-grid">
+          <form class="filter-card admin-car-card" data-car-brand-form novalidate>
+            <div class="filter-card__head">
+              <h3>Добавить марку</h3>
+            </div>
+
+            <label class="admin-form-field admin-form-field--wide">
+              <span>Марка автомобиля</span>
+              <input type="text" name="name" required data-car-brand-input>
+            </label>
+
+            <div class="admin-panel-actions">
+              <button class="hero-button" type="submit" data-car-brand-submit disabled>Добавить</button>
+            </div>
+          </form>
+
+          <form class="filter-card admin-car-card" data-car-model-form novalidate>
+            <div class="filter-card__head">
+              <h3>Добавить модель</h3>
+            </div>
+
+            <label class="admin-form-field admin-form-field--wide">
+              <span>Марка автомобиля</span>
+              <div class="select-row">
+                <select name="brand_id" required data-car-model-brand-select>
+                  <option value="">Выберите марку автомобиля</option>
+                </select>
+              </div>
+            </label>
+
+            <label class="admin-form-field admin-form-field--wide">
+              <span>Модель автомобиля</span>
+              <input type="text" name="name" required data-car-model-input>
+            </label>
+
+            <div class="admin-panel-actions">
+              <button class="hero-button" type="submit" data-car-model-submit disabled>Добавить</button>
+            </div>
+          </form>
+
+          <form class="filter-card admin-car-card" data-car-generation-form novalidate>
+            <div class="filter-card__head">
+              <h3>Добавить поколение</h3>
+            </div>
+
+            <label class="admin-form-field admin-form-field--wide">
+              <span>Марка автомобиля</span>
+              <div class="select-row">
+                <select name="brand_id" required data-car-generation-brand-select>
+                  <option value="">Выберите марку автомобиля</option>
+                </select>
+              </div>
+            </label>
+
+            <label class="admin-form-field admin-form-field--wide" data-car-generation-model-field hidden>
+              <span>Модель автомобиля</span>
+              <div class="select-row">
+                <select name="model_id" required data-car-generation-model-select disabled>
+                  <option value="">Выберите модель автомобиля</option>
+                </select>
+              </div>
+            </label>
+
+            <label class="admin-form-field admin-form-field--wide">
+              <span>Поколение автомобиля</span>
+              <input type="text" name="name" required data-car-generation-input>
+            </label>
+
+            <div class="admin-panel-actions">
+              <button class="hero-button" type="submit" data-car-generation-submit disabled>Добавить</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section class="filter-card admin-panel-section" data-admin-section="products" hidden>
+        <div class="filter-card__head">
+          <h3>Товары</h3>
+        </div>
+        <label class="admin-form-field admin-section-search">
+          <input type="search" placeholder="Поиск" data-admin-products-search>
+        </label>
+        <div class="admin-data-status" data-admin-products-status>Откройте раздел, чтобы загрузить товары.</div>
+        <div class="admin-entity-list" data-admin-products-list hidden></div>
+      </section>
+
+      <section class="filter-card admin-panel-section" data-admin-section="part-types" hidden>
+        <div class="filter-card__head">
+          <h3>Катагории</h3>
+        </div>
+        <label class="admin-form-field admin-section-search">
+          <input type="search" placeholder="Поиск" data-admin-part-types-search>
+        </label>
+        <div class="admin-data-status" data-admin-part-types-status>Откройте раздел, чтобы загрузить типы товара.</div>
+        <div class="admin-entity-list" data-admin-part-types-list hidden></div>
+      </section>
+
+      <section class="filter-card admin-panel-section" data-admin-section="brands" hidden>
+        <div class="filter-card__head">
+          <h3>Производители</h3>
+        </div>
+        <label class="admin-form-field admin-section-search">
+          <input type="search" placeholder="Поиск" data-admin-brands-search>
+        </label>
+        <div class="admin-data-status" data-admin-brands-status>Откройте раздел, чтобы загрузить производителей.</div>
+        <div class="admin-entity-list" data-admin-brands-list hidden></div>
+      </section>
+
+      <section class="filter-card admin-panel-section" data-admin-section="cars" hidden>
+        <div class="filter-card__head">
+          <h3>Марки и модели авто</h3>
+        </div>
+        <label class="admin-form-field admin-section-search">
+          <input type="search" placeholder="Поиск" data-admin-cars-search>
+        </label>
+        <div class="admin-data-status" data-admin-cars-status>Откройте раздел, чтобы загрузить марки и модели авто.</div>
+        <div class="admin-entity-list" data-admin-cars-list hidden></div>
+      </section>
+
+      <section class="filter-card admin-panel-section" data-admin-section="users" hidden>
+        <div class="filter-card__head">
+          <h3>Пользователи</h3>
+        </div>
+        <label class="admin-form-field admin-section-search">
+          <input type="search" placeholder="Поиск" data-admin-users-search>
+        </label>
+        <div class="admin-data-status" data-admin-users-status>Откройте раздел, чтобы загрузить пользователей.</div>
+        <div class="admin-entity-list" data-admin-users-list hidden></div>
+      </section>
+      </div>
+    </div>
+
+    <div class="admin-toast" data-admin-feedback hidden></div>
+
+    <div class="admin-modal" data-admin-modal hidden>
+      <div class="admin-modal__backdrop" data-admin-modal-close></div>
+      <div class="filter-card admin-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="admin-modal-title">
+        <div class="filter-card__head">
+          <h3 id="admin-modal-title">Подтверждение удаления</h3>
+        </div>
+        <p class="admin-modal__text" data-admin-modal-text>Вы уверены, что хотите удалить этот пункт?</p>
+        <div class="admin-panel-actions admin-modal__actions">
+          <button class="admin-danger-button" type="button" data-admin-modal-confirm>Да, удалить</button>
+          <button class="hero-link" type="button" data-admin-modal-close>Отмена</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{{ admin_panel_brands|json_script:"admin-panel-brands-data" }}
+{{ admin_panel_part_types|json_script:"admin-panel-part-types-data" }}
+{{ admin_panel_car_brands|json_script:"admin-panel-car-brands-data" }}
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'main/js/adminPanel.js' %}?v=20260520-36"></script>
+{% endblock %}

@@ -4,8 +4,6 @@
 {% block title %}Карточка товара{% endblock %}
 
 {% block content %}
-<div class="parallax-bg" data-parallax-layer data-speed="-0.12"></div>
-
 <section class="product-page info-section">
   <div class="info-content">
     <nav class="breadcrumb" aria-label="Навигация">
@@ -88,7 +86,7 @@
 <section class="info-section" data-reveal>
   <div class="info-content">
     <p class="section-kicker">Похожие товары</p>
-    <h2>Похожие товары</h2>
+    <h2>Вам может понравиться</h2>
     <div class="related-row">
       {% for related_product in related_products %}
       <article class="product-card {{ related_product.stock_class }}" data-product-card data-href="{{ related_product.detail_url }}" tabindex="0" role="link">

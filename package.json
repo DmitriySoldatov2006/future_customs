@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "dev:all": "node scripts/dev-all.mjs",
-    "dev": "npm run dev:all"
+    "dev": "npm run dev:all",
+    "test:catalog-filters": "node scripts/catalog-filter-tests.mjs",
+    "test:django": "python app5/manage.py test cart catalog"
   },
   "dependencies": {
     "framer-motion": "^12.38.0"

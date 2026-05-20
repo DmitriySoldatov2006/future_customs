@@ -6,6 +6,18 @@
 {% block content %}
 <div class="parallax-bg" data-parallax-layer data-speed="-0.18"></div>
 
+<section class="catalog-search-shell info-section">
+  <div class="info-content">
+    <form class="catalog-search" method="get" action="{% url 'catalog' %}" data-catalog-search>
+      <label class="sr-only" for="catalog-search">Поиск по каталогу</label>
+      <input id="catalog-search" type="search" name="q" value="{{ search_query }}" placeholder="Поиск по названию, артикулу или производителю..." data-search-input>
+      <button type="submit" aria-label="Найти">
+        <span></span>
+      </button>
+    </form>
+  </div>
+</section>
+
 <section class="catalog-hero">
   <div class="parallax-grid" data-parallax-layer data-speed="0.08"></div>
   <div class="catalog-hero__inner">
@@ -32,7 +44,7 @@
         <b>ввод</b>
       </div>
       <div class="panel-line">
-        <span>Проверка бренда и применимости</span>
+        <span>Проверка производителя и применимости</span>
         <b>онлайн</b>
       </div>
       <div class="panel-line">
@@ -45,24 +57,12 @@
   </div>
 </section>
 
-<section class="catalog-search-shell info-section" data-reveal>
-  <div class="info-content">
-    <form class="catalog-search" method="get" action="{% url 'catalog' %}" data-catalog-search>
-      <label class="sr-only" for="catalog-search">Поиск по каталогу</label>
-      <input id="catalog-search" type="search" name="q" value="{{ search_query }}" placeholder="Поиск по названию, артикулу или бренду..." data-search-input>
-      <button type="submit" aria-label="Найти">
-        <span></span>
-      </button>
-    </form>
-  </div>
-</section>
-
 <section class="catalog-main info-section info-section--alt" data-reveal>
   <div class="info-content">
     <div class="catalog-toolbar">
       <div>
         <p class="section-kicker">Каталог</p>
-        <h2>Тормозные системы, подвеска и OEM-позиции под ваш автомобиль</h2>
+        <h2>Всё что нужно вашему автомобилю</h2>
       </div>
       <button class="filter-toggle" type="button" data-filter-toggle>Фильтры</button>
     </div>
@@ -106,24 +106,53 @@
 
           <div class="filter-card">
             <div class="filter-card__head">
-              <h3>Тип детали</h3>
+              <h3>Категория</h3>
             </div>
             <label class="select-row">
               <select name="category" data-filter-field="partType" data-part-type-select>
-                <option value="">Все типы</option>
+                <option value="">Все категории</option>
+                {% for option in part_type_options %}
+                <option value="{{ option.value }}">{{ option.label }}</option>
+                {% endfor %}
               </select>
             </label>
           </div>
 
           <div class="filter-card">
             <div class="filter-card__head">
-              <h3>Бренд</h3>
+              <h3>Производитель</h3>
             </div>
             <label class="select-row">
               <select name="brand" data-filter-field="brand" data-brand-select>
-                <option value="">Все бренды</option>
+                <option value="">Все производители</option>
+                {% for option in brand_options %}
+                <option value="{{ option.value }}">{{ option.label }}</option>
+                {% endfor %}
               </select>
             </label>
+          </div>
+
+          <div class="filter-card">
+            <div class="filter-card__head">
+              <h3>Автомобиль</h3>
+            </div>
+            <div class="catalog-auto-filters">
+              <label class="select-row">
+                <select name="carBrand" data-filter-field="carBrand" data-car-brand-select>
+                  <option value="">Все марки</option>
+                </select>
+              </label>
+              <label class="select-row">
+                <select name="carModel" data-filter-field="carModel" data-car-model-select disabled>
+                  <option value="">Все модели</option>
+                </select>
+              </label>
+              <label class="select-row">
+                <select name="carGeneration" data-filter-field="carGeneration" data-car-generation-select disabled>
+                  <option value="">Все поколения</option>
+                </select>
+              </label>
+            </div>
           </div>
 
           <div class="filter-card filter-card--dynamic" data-characteristics-section hidden>
@@ -134,7 +163,6 @@
           </div>
 
           <div class="filter-actions">
-            <button class="apply-filters" type="submit" data-apply-filters disabled>Применить фильтры</button>
             <button class="reset-filters" type="button" data-reset-filters>Сбросить фильтры</button>
           </div>
         </form>
@@ -159,17 +187,18 @@
               <div class="stock-badge">{{ product.stock_label }}</div>
               <h3>{{ product.name }}</h3>
               <p>{% if product.brand %}{{ product.brand }}{% else %}{{ product.category_name }}{% endif %}</p>
-              <p>{{ product.short_description }}</p>
               <strong>{{ product.price_display }}</strong>
               <form class="product-card__cart" method="post" action="{% url 'cart_add' %}" data-cart-form>
                 {% csrf_token %}
                 <input type="hidden" name="product_id" value="{{ product.id }}">
                 <input type="hidden" name="quantity" value="1" data-cart-quantity>
-                <button class="add-cart" type="submit" data-add-cart>В корзину</button>
+                <button class="add-cart{% if not product.is_available %} is-sold-out{% endif %}" type="submit" data-add-cart{% if not product.is_available %} disabled{% endif %}>
+                  {% if product.is_available %}В корзину{% else %}Закончилось{% endif %}
+                </button>
                 <div class="card-qty" data-card-qty aria-label="Количество в корзине">
-                  <button type="button" data-cart-minus aria-label="Уменьшить количество">−</button>
+                  <button type="button" data-cart-minus aria-label="Уменьшить количество"{% if not product.is_available %} disabled{% endif %}>−</button>
                   <span data-cart-qty>{{ product.quantity|default:0 }}</span>
-                  <button type="button" data-cart-plus aria-label="Увеличить количество">+</button>
+                  <button type="button" data-cart-plus aria-label="Увеличить количество"{% if not product.is_available %} disabled{% endif %}>+</button>
                 </div>
               </form>
               <span class="card-cart-badge{% if product.quantity %} is-visible{% endif %}" data-card-badge>{{ product.quantity|default:0 }}</span>
@@ -212,18 +241,22 @@
 <script type="module">
   import {
     DEFAULT_FILTERS,
-    collectBrandCharacteristics,
+    collectPartTypeCharacteristics,
+    collectUniqueCarBrands,
+    collectUniqueCarGenerations,
+    collectUniqueCarModels,
     collectUniqueBrands,
     collectUniquePartTypes,
     filterProducts,
     hasActiveCriteria,
     isPriceRangeInvalid,
     sanitizePriceInput,
-  } from "{% static 'main/js/catalogFilters.mjs' %}?v=20260511-2";
+  } from "{% static 'main/js/catalogFilters.js' %}?v=20260519-2";
 
-  const setupRevealAnimations = async () => {
+  const initializeCatalogAnimations = async () => {
     try {
-      const { inView, animate } = await import('motion');
+      const { inView, animate } = await import('https://cdn.jsdelivr.net/npm/motion@11.11.17/+esm');
+
       document.querySelectorAll('[data-reveal]').forEach((el) => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(48px)';
@@ -240,14 +273,9 @@
         }, { amount: 0.25 });
       });
     } catch (error) {
-      document.querySelectorAll('[data-reveal], [data-card]').forEach((el) => {
-        el.style.opacity = '';
-        el.style.transform = '';
-      });
+      // Animations are optional; catalog interactions must keep working without CDN modules.
     }
   };
-
-  setupRevealAnimations();
 
   const productsDataNode = document.getElementById('catalog-products-data');
   const grid = document.querySelector('[data-product-grid]');
@@ -257,6 +285,9 @@
   const filterForm = document.querySelector('[data-filter-form]');
   const partTypeSelect = document.querySelector('[data-part-type-select]');
   const brandSelect = document.querySelector('[data-brand-select]');
+  const carBrandSelect = document.querySelector('[data-car-brand-select]');
+  const carModelSelect = document.querySelector('[data-car-model-select]');
+  const carGenerationSelect = document.querySelector('[data-car-generation-select]');
   const characteristicsSection = document.querySelector('[data-characteristics-section]');
   const characteristicsFields = document.querySelector('[data-characteristics-fields]');
   const priceError = document.querySelector('[data-price-error]');
@@ -265,12 +296,22 @@
   const loadError = document.querySelector('[data-load-error]');
   const reloadButton = document.querySelector('[data-reload-page]');
   const cartUpdateUrl = "{% url 'cart_update' %}";
+  const panel = document.querySelector('[data-filter-panel]');
+  const emptyStateTitle = emptyState?.querySelector('h3');
+  const emptyStateMessage = emptyState?.querySelector('p');
 
   let products = [];
-  try {
-    products = JSON.parse(productsDataNode?.textContent || '[]');
-  } catch (error) {
+  let hasLoadError = false;
+  if (!productsDataNode) {
+    hasLoadError = true;
     if (loadError) loadError.hidden = false;
+  } else {
+    try {
+      products = JSON.parse(productsDataNode.textContent || '[]');
+    } catch (error) {
+      hasLoadError = true;
+      if (loadError) loadError.hidden = false;
+    }
   }
 
   const productCards = [...document.querySelectorAll('[data-product-card]')];
@@ -317,6 +358,9 @@
     state.filters.sort = params.get('sort') || 'default';
     state.filters.partType = params.get('category') || params.get('type') || '';
     state.filters.brand = params.get('brand') || '';
+    state.filters.carBrand = params.get('carBrand') || '';
+    state.filters.carModel = params.get('carModel') || '';
+    state.filters.carGeneration = params.get('carGeneration') || '';
     state.filters.minPrice = sanitizePriceInput(params.get('minPrice') || '');
     state.filters.maxPrice = sanitizePriceInput(params.get('maxPrice') || '');
 
@@ -332,6 +376,9 @@
     if (state.query.trim()) params.set('q', state.query.trim());
     if (state.filters.partType) params.set('category', state.filters.partType);
     if (state.filters.brand) params.set('brand', state.filters.brand);
+    if (state.filters.carBrand) params.set('carBrand', state.filters.carBrand);
+    if (state.filters.carModel) params.set('carModel', state.filters.carModel);
+    if (state.filters.carGeneration) params.set('carGeneration', state.filters.carGeneration);
     if (state.filters.sort && state.filters.sort !== 'default') params.set('sort', state.filters.sort);
     if (state.filters.minPrice) params.set('minPrice', state.filters.minPrice);
     if (state.filters.maxPrice) params.set('maxPrice', state.filters.maxPrice);
@@ -349,15 +396,69 @@
     if (searchInput) searchInput.value = state.query;
     filterForm?.querySelectorAll('input[name="sort"]').forEach((input) => {
       input.checked = input.value === state.filters.sort;
+      input.closest('.sort-option')?.classList.toggle('is-active', input.checked);
     });
-    filterForm?.querySelector('[data-filter-field="minPrice"]')?.setAttribute('value', state.filters.minPrice);
-    filterForm?.querySelector('[data-filter-field="maxPrice"]')?.setAttribute('value', state.filters.maxPrice);
     const minInput = filterForm?.querySelector('[data-filter-field="minPrice"]');
     const maxInput = filterForm?.querySelector('[data-filter-field="maxPrice"]');
     if (minInput) minInput.value = state.filters.minPrice;
     if (maxInput) maxInput.value = state.filters.maxPrice;
     if (partTypeSelect) partTypeSelect.value = state.filters.partType;
     if (brandSelect) brandSelect.value = state.filters.brand;
+    if (carBrandSelect) carBrandSelect.value = state.filters.carBrand;
+    if (carModelSelect) carModelSelect.value = state.filters.carModel;
+    if (carGenerationSelect) carGenerationSelect.value = state.filters.carGeneration;
+  };
+
+  const renderVehicleControls = () => {
+    setSelectOptions(carBrandSelect, 'Все марки', collectUniqueCarBrands(products), state.filters.carBrand);
+
+    const carModelOptions = collectUniqueCarModels(products, state.filters.carBrand);
+    if (state.filters.carModel && !carModelOptions.some((option) => option.value === state.filters.carModel)) {
+      state.filters.carModel = '';
+      state.filters.carGeneration = '';
+    }
+    setSelectOptions(carModelSelect, 'Все модели', carModelOptions, state.filters.carModel);
+    if (carModelSelect) {
+      carModelSelect.disabled = !state.filters.carBrand || !carModelOptions.length;
+    }
+
+    const carGenerationOptions = collectUniqueCarGenerations(products, state.filters.carBrand, state.filters.carModel);
+    if (state.filters.carGeneration && !carGenerationOptions.some((option) => option.value === state.filters.carGeneration)) {
+      state.filters.carGeneration = '';
+    }
+    setSelectOptions(carGenerationSelect, 'Все поколения', carGenerationOptions, state.filters.carGeneration);
+    if (carGenerationSelect) {
+      carGenerationSelect.disabled = !state.filters.carModel || !carGenerationOptions.length;
+    }
+  };
+
+  const closeFilterPanel = () => {
+    panel?.classList.remove('is-open');
+  };
+
+  const updateEmptyState = (visibleProducts) => {
+    if (!emptyState) return;
+
+    if (hasLoadError) {
+      emptyState.hidden = true;
+      return;
+    }
+
+    const hasResults = visibleProducts.length > 0;
+    emptyState.hidden = hasResults;
+    if (hasResults) return;
+
+    const hasQuery = Boolean(state.query.trim());
+    if (emptyStateTitle) {
+      emptyStateTitle.textContent = hasQuery
+        ? 'По вашему запросу ничего не найдено'
+        : 'Ничего не найдено';
+    }
+    if (emptyStateMessage) {
+      emptyStateMessage.textContent = hasQuery
+        ? 'Попробуйте очистить поиск, изменить запрос или скорректировать фильтры.'
+        : 'Ничего не найдено. Попробуйте изменить параметры поиска или сбросить фильтры.';
+    }
   };
 
   const updatePriceError = () => {
@@ -383,13 +484,13 @@
     if (!characteristicsSection || !characteristicsFields) return;
     characteristicsFields.replaceChildren();
 
-    if (!state.filters.brand) {
+    if (!state.filters.partType) {
       state.filters.characteristics = {};
       characteristicsSection.hidden = true;
       return;
     }
 
-    const characteristics = collectBrandCharacteristics(products, state.filters.brand);
+    const characteristics = collectPartTypeCharacteristics(products, state.filters.partType);
     if (!characteristics.length) {
       state.filters.characteristics = {};
       characteristicsSection.hidden = true;
@@ -411,7 +512,7 @@
       row.append(label);
 
       const selectedValues = state.filters.characteristics[characteristic.key] || [];
-      if (characteristic.values.length <= 6) {
+      if (characteristic.values.length <= 6 && false) {
         const group = document.createElement('div');
         group.className = 'checkbox-group';
 
@@ -477,11 +578,12 @@
       if (card) grid.append(card);
     });
 
-    if (emptyState) {
-      emptyState.hidden = visibleProducts.length > 0;
-      grid.append(emptyState);
+    updateEmptyState(visibleProducts);
+    if (emptyState) grid.append(emptyState);
+    if (loadError) {
+      loadError.hidden = !hasLoadError;
+      grid.append(loadError);
     }
-    if (loadError) grid.append(loadError);
 
     if (resultCount) {
       resultCount.textContent = `Найдено ${visibleProducts.length} ${pluralizeProducts(visibleProducts.length)}`;
@@ -513,18 +615,20 @@
       ...DEFAULT_FILTERS,
       characteristics: {},
     };
-    setSelectOptions(partTypeSelect, 'Все типы', collectUniquePartTypes(products), '');
-    setSelectOptions(brandSelect, 'Все бренды', collectUniqueBrands(products), '');
+    setSelectOptions(partTypeSelect, 'Все категории', collectUniquePartTypes(products), '');
+    setSelectOptions(brandSelect, 'Все производители', collectUniqueBrands(products), '');
+    renderVehicleControls();
     syncControlsFromState();
     renderCharacteristicControls();
     runFilterPipeline();
+    closeFilterPanel();
   };
 
   const initializeCatalogControls = () => {
-    if (!products.length) return;
     readUrlState();
-    setSelectOptions(partTypeSelect, 'Все типы', collectUniquePartTypes(products), state.filters.partType);
-    setSelectOptions(brandSelect, 'Все бренды', collectUniqueBrands(products), state.filters.brand);
+    setSelectOptions(partTypeSelect, 'Все категории', collectUniquePartTypes(products), state.filters.partType);
+    setSelectOptions(brandSelect, 'Все производители', collectUniqueBrands(products), state.filters.brand);
+    renderVehicleControls();
     syncControlsFromState();
     renderCharacteristicControls();
     runFilterPipeline({ syncUrl: false });
@@ -545,6 +649,7 @@
     event.preventDefault();
     commitPriceInputs();
     runFilterPipeline();
+    closeFilterPanel();
   });
 
   filterForm?.querySelectorAll('input[name="sort"]').forEach((input) => {
@@ -556,13 +661,33 @@
 
   partTypeSelect?.addEventListener('change', () => {
     state.filters.partType = partTypeSelect.value;
+    state.filters.characteristics = {};
+    renderCharacteristicControls();
     runFilterPipeline();
   });
 
   brandSelect?.addEventListener('change', () => {
     state.filters.brand = brandSelect.value;
-    state.filters.characteristics = {};
-    renderCharacteristicControls();
+    runFilterPipeline();
+  });
+
+  carBrandSelect?.addEventListener('change', () => {
+    state.filters.carBrand = carBrandSelect.value;
+    state.filters.carModel = '';
+    state.filters.carGeneration = '';
+    renderVehicleControls();
+    runFilterPipeline();
+  });
+
+  carModelSelect?.addEventListener('change', () => {
+    state.filters.carModel = carModelSelect.value;
+    state.filters.carGeneration = '';
+    renderVehicleControls();
+    runFilterPipeline();
+  });
+
+  carGenerationSelect?.addEventListener('change', () => {
+    state.filters.carGeneration = carGenerationSelect.value;
     runFilterPipeline();
   });
 
@@ -590,17 +715,35 @@
   reloadButton?.addEventListener('click', () => window.location.reload());
 
   const stickySearch = document.querySelector('.catalog-search');
+  const filtersPanel = document.querySelector('.catalog-filters');
   const header = document.querySelector('header');
   const getStickyOffset = () => (header ? header.offsetHeight : 72);
   const syncStickyOffset = () => {
-    document.documentElement.style.setProperty('--catalog-sticky-top', `${getStickyOffset()}px`);
+    const stickyOffset = getStickyOffset();
+    document.documentElement.style.setProperty('--catalog-sticky-top', `${stickyOffset}px`);
+
+    if (!stickySearch) return;
+
+    const searchGap = 15;
+    const filtersGap = 16;
+    const filtersTop = stickyOffset + searchGap + stickySearch.offsetHeight + filtersGap;
+    document.documentElement.style.setProperty('--catalog-filters-top', `${filtersTop}px`);
+  };
+  const syncFiltersFade = () => {
+    if (!filtersPanel) return;
+
+    const canScroll = filtersPanel.scrollHeight - filtersPanel.clientHeight > 2;
+    const atTop = filtersPanel.scrollTop <= 2;
+    const atBottom = filtersPanel.scrollTop + filtersPanel.clientHeight >= filtersPanel.scrollHeight - 2;
+
+    filtersPanel.style.setProperty('--filters-fade-top', canScroll && !atTop ? '28px' : '0px');
+    filtersPanel.style.setProperty('--filters-fade-bottom', canScroll && !atBottom ? '28px' : '0px');
   };
   const updateStickyState = () => {
     if (!stickySearch) return;
     stickySearch.classList.toggle('is-stuck', stickySearch.getBoundingClientRect().top <= getStickyOffset() + 1);
   };
 
-  const panel = document.querySelector('[data-filter-panel]');
   document.querySelectorAll('[data-filter-toggle]').forEach((button) => {
     button.addEventListener('click', () => {
       if (panel) {
@@ -717,11 +860,15 @@
   });
 
   syncStickyOffset();
+  syncFiltersFade();
   updateStickyState();
   initializeCatalogControls();
+  initializeCatalogAnimations();
+  filtersPanel?.addEventListener('scroll', syncFiltersFade, { passive: true });
   window.addEventListener('scroll', updateStickyState, { passive: true });
   window.addEventListener('resize', () => {
     syncStickyOffset();
+    syncFiltersFade();
     updateStickyState();
   });
 </script>
